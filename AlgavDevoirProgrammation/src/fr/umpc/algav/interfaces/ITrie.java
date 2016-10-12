@@ -2,11 +2,11 @@ package fr.umpc.algav.interfaces;
 
 import java.util.ArrayList;
 
-public interface ITree {
+public interface ITrie {
 	
 	// Basic primitives
 	boolean isEmpty();
-	ITree insert(String word);
+	void insert(String word);
 	
 	// Advanced functions
 	boolean search(String word);
@@ -16,8 +16,8 @@ public interface ITree {
 	int height();
 	float averageDepth();
 	int prefix(String word);
-	ITree remove(String word);
+	ITrie remove(String word);
 	
 	// Show visual preview
-	void display(String value);
+	void print(String fileName);
 }

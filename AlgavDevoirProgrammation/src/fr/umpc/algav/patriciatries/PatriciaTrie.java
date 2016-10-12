@@ -3,7 +3,7 @@ package fr.umpc.algav.patriciatries;
 import java.util.ArrayList;
 
 import fr.umpc.algav.hybridtries.IHybridTrie;
-import fr.umpc.algav.interfaces.ITree;
+import fr.umpc.algav.interfaces.ITrie;
 
 public class PatriciaTrie implements IPatriciaTrie {
 
@@ -14,9 +14,8 @@ public class PatriciaTrie implements IPatriciaTrie {
 	}
 
 	@Override
-	public ITree insert(String word) {
+	public void insert(String word) {
 		// TODO Auto-generated method stub
-		return null;
 	}
 	
 	@Override
@@ -62,15 +61,14 @@ public class PatriciaTrie implements IPatriciaTrie {
 	}
 
 	@Override
-	public ITree remove(String word) {
+	public ITrie remove(String word) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void display(String value) {
+	public void print(String FileName) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
