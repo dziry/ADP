@@ -6,7 +6,7 @@ public class HybridTrieNode {
 
 	private char character;
 	private boolean isFinalNode;
-	private String uniqueId;
+	private String uniqueId; // to identify it when printing the tree
 	
 	private HybridTrieNode leftChild;
 	private HybridTrieNode middleChild;

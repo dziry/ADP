@@ -2,6 +2,7 @@ package fr.umpc.algav.hybridtries;
 
 import java.util.ArrayList;
 
+import fr.umpc.algav.errors.HybridTrieError;
 import fr.umpc.algav.interfaces.ITrie;
 import fr.umpc.algav.patriciatries.IPatriciaTrie;
 import fr.upmc.algav.tools.Writer;
@@ -21,6 +22,8 @@ public class HybridTrie implements IHybridTrie {
 
 	@Override
 	public void insert(String word) {
+		if (word == "" || word == null) throw new HybridTrieError("word should not be empty!");
+		else if (search(word) == true) throw new HybridTrieError("word exist!");
 		parent = insertRecursively(parent, word.toCharArray(), 0);
 	}
 	
@@ -33,7 +36,7 @@ public class HybridTrie implements IHybridTrie {
 		} else if (word[position] > node.getCharacter()) {
 			node.setRightChild(insertRecursively(node.getRightChild(), word, position));			
 		} else {
-			if (position+1 < word.length) {
+			if (position < word.length-1) {
 				node.setMiddleChild(insertRecursively(node.getMiddleChild(), word, position+1));
 			} else if (!node.isFinalNode()) {
 				node.setIsFinalNode(true);
@@ -44,14 +47,41 @@ public class HybridTrie implements IHybridTrie {
 
 	@Override
 	public boolean search(String word) {
-		// TODO Auto-generated method stub
-		return false;
+		return searchRecursively(parent, word.toCharArray(), 0);
+	}
+	
+	private boolean searchRecursively(HybridTrieNode node, char[] word, int position) {
+		if (node == null) {
+			return false;
+		}
+		if (word[position] < node.getCharacter()) {
+			return searchRecursively(node.getLeftChild(), word, position);
+		} else if (word[position] > node.getCharacter()) {
+			return searchRecursively(node.getRightChild(), word, position);
+		} else {
+			if (position < word.length-1) {
+				return searchRecursively(node.getMiddleChild(), word, position+1);
+			} else {
+				return node.isFinalNode()? true: false;
+			}
+		}
 	}
 
 	@Override
 	public int countWords() {
-		// TODO Auto-generated method stub
-		return 0;
+		return countWordsRecursively(parent, 0);
+	}
+	
+	private int countWordsRecursively(HybridTrieNode node, int wordsCounter) {
+		if (node != null) {
+			if (node.isFinalNode()) {
+				wordsCounter++;
+			}				
+			countWordsRecursively(node.getLeftChild(), wordsCounter);
+			countWordsRecursively(node.getRightChild(), wordsCounter);
+			countWordsRecursively(node.getMiddleChild(), wordsCounter);
+		}
+		return wordsCounter;
 	}
 
 	@Override
@@ -159,5 +189,4 @@ public class HybridTrie implements IHybridTrie {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 }

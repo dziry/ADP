@@ -8,7 +8,7 @@ public class Main {
 	public static void main(String[] args) {
 		
 		ITrie hybridTrie = new HybridTrie();
-		
+
 		hybridTrie.insert("lou");
 		hybridTrie.insert("leve");
 		hybridTrie.insert("les");
