@@ -7,6 +7,14 @@ import fr.umpc.algav.interfaces.ITrie;
 
 public class PatriciaTrie implements IPatriciaTrie {
 
+	private PatriciaTreeNode rootNode;
+	private final Alphabet usedAlphabet;
+
+	public PatriciaTrie(Alphabet usedAlphabet) {
+		this.usedAlphabet = usedAlphabet;
+		//this.rootNode = new PatriciaTreeNode(usedAlphabet.getNodeArity());
+	}
+
 	@Override
 	public boolean isEmpty() {
 		// TODO Auto-generated method stub
@@ -15,7 +23,9 @@ public class PatriciaTrie implements IPatriciaTrie {
 
 	@Override
 	public void insert(String word) {
-		// TODO Auto-generated method stub
+		if (isEmpty()) {
+
+		}
 	}
 	
 	@Override
