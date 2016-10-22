@@ -1,9 +1,9 @@
-package fr.umpc.algav.patriciatries;
+package fr.upmc.algav.patriciatries;
 
 import java.util.ArrayList;
 
-import fr.umpc.algav.hybridtries.IHybridTrie;
-import fr.umpc.algav.interfaces.ITrie;
+import fr.upmc.algav.hybridtries.IHybridTrie;
+import fr.upmc.algav.interfaces.ITrie;
 
 public class PatriciaTrie implements IPatriciaTrie {
 
@@ -25,6 +25,13 @@ public class PatriciaTrie implements IPatriciaTrie {
 	public void insert(String word) {
 		if (isEmpty()) {
 
+		}
+	}
+	
+	@Override
+	public void insert(ArrayList<String> words) {
+		for (String word : words) {
+			insert(word);
 		}
 	}
 	
@@ -92,5 +99,4 @@ public class PatriciaTrie implements IPatriciaTrie {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 }

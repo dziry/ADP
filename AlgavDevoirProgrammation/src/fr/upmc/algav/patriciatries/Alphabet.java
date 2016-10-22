@@ -1,4 +1,4 @@
-package fr.umpc.algav.patriciatries;
+package fr.upmc.algav.patriciatries;
 
 /**
  * Created by amadeus on 19.10.16.

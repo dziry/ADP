@@ -1,4 +1,4 @@
-package fr.umpc.algav.tests;
+package fr.upmc.algav.tests;
 
 import static org.junit.Assert.*;
 

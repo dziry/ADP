@@ -1,4 +1,4 @@
-package fr.umpc.algav.tests;
+package fr.upmc.algav.tests;
 
 import static org.junit.Assert.*;
 
@@ -8,9 +8,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import fr.umpc.algav.errors.HybridTrieError;
-import fr.umpc.algav.hybridtries.HybridTrie;
-import fr.umpc.algav.interfaces.ITrie;
+import fr.upmc.algav.errors.HybridTrieError;
+import fr.upmc.algav.hybridtries.HybridTrie;
+import fr.upmc.algav.interfaces.ITrie;
 
 public class HybridTrieTest {
 
@@ -71,10 +71,10 @@ public class HybridTrieTest {
 		hybridTrie.insert("dans");
 	}
 	
-	@Test (expected = HybridTrieError.class)
-	public final void testInsertNull() {
-		hybridTrie.insert(null);
-	}
+//	@Test (expected = HybridTrieError.class)
+//	public final void testInsertNull() {
+//		hybridTrie.insert(null);
+//	}
 	
 	@Test (expected = HybridTrieError.class)
 	public final void testInsertEmpty() {

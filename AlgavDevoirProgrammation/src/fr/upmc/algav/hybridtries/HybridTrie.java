@@ -1,10 +1,10 @@
-package fr.umpc.algav.hybridtries;
+package fr.upmc.algav.hybridtries;
 
 import java.util.ArrayList;
 
-import fr.umpc.algav.errors.HybridTrieError;
-import fr.umpc.algav.interfaces.ITrie;
-import fr.umpc.algav.patriciatries.IPatriciaTrie;
+import fr.upmc.algav.errors.HybridTrieError;
+import fr.upmc.algav.interfaces.ITrie;
+import fr.upmc.algav.patriciatries.IPatriciaTrie;
 import fr.upmc.algav.tools.Writer;
 
 public class HybridTrie implements IHybridTrie {
@@ -23,7 +23,7 @@ public class HybridTrie implements IHybridTrie {
 	@Override
 	public void insert(String word) {
 		if (word == "" || word == null) throw new HybridTrieError("word should not be empty!");
-		else if (search(word) == true) throw new HybridTrieError("word exist!");
+		else if (search(word) == true) { /* do nothing..*/ }
 		parent = insertRecursively(parent, word.toCharArray(), 0);
 	}
 	
@@ -45,6 +45,13 @@ public class HybridTrie implements IHybridTrie {
 		return node;
 	}
 
+	@Override
+	public void insert(ArrayList<String> words) {
+		for (String word : words) {
+			insert(word);
+		}
+	}
+	
 	@Override
 	public boolean search(String word) {
 		return searchRecursively(parent, word.toCharArray(), 0);
@@ -171,7 +178,6 @@ public class HybridTrie implements IHybridTrie {
         		fileObject.write("	\"" + previousNode.getId() + "\" [label=\""  + previousNode.getId().charAt(0) + "\"];\n");
         		fileObject.write("	\"" + nextNode.getId() + "\" [label=\"" + nextNode.getId().charAt(0) + "\"];\n");
         	}        	
-
         	printRecursively(nextNode, nextNode.getLeftChild(), Color.BLUE, fileObject);        
         	printRecursively(nextNode, nextNode.getMiddleChild(), Color.RED, fileObject);        	
         	printRecursively(nextNode, nextNode.getRightChild(), Color.GREEN, fileObject);           

@@ -1,4 +1,4 @@
-package fr.umpc.algav.patriciatries;
+package fr.upmc.algav.patriciatries;
 
 import java.util.ArrayList;
 
