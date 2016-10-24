@@ -5,7 +5,8 @@ import fr.upmc.algav.patriciatries.IPatriciaTrie;
 
 public interface IHybridTrie extends ITrie {
 
-	// Complex functions
+	// Complex functions	
+	boolean isBalanced();
 	IHybridTrie balance(IHybridTrie trie);
 	IPatriciaTrie toPatriciaTrie();
 }

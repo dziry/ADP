@@ -1,6 +1,5 @@
 package fr.upmc.algav.hybridtries;
 
-import java.awt.List;
 import java.util.ArrayList;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -117,11 +116,21 @@ public class HybridTrie implements IHybridTrie {
 	private String removeLastCaracter(String word) {
 		return word.substring(0, word.length() - 1);
 	}
-	
+		
 	@Override
-	public int countNull() {
-		// TODO Auto-generated method stub
-		return 0;
+	public int countNull() {				
+		return countNullRecursively(parent, 0);
+	}
+
+	private int countNullRecursively(HybridTrieNode node, int nullCounter) {
+		if (node != null) {
+			nullCounter = countNullRecursively(node.getLeftChild(), nullCounter);
+			nullCounter = countNullRecursively(node.getRightChild(), nullCounter);
+			nullCounter = countNullRecursively(node.getMiddleChild(), nullCounter);
+		} else {
+			nullCounter++;
+		}
+		return nullCounter;		
 	}
 
 	@Override
@@ -205,6 +214,12 @@ public class HybridTrie implements IHybridTrie {
         }
     }
 
+	@Override
+	public boolean isBalanced() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
 	@Override
 	public IPatriciaTrie toPatriciaTrie() {
 		// TODO Auto-generated method stub

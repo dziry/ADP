@@ -41,12 +41,7 @@ public class PatriciaTrieTest {
 	}
 
 	@Test
-	public final void testListWordsAscendingOrder() {				
-		// TODO
-	}
-	
-	@Test
-	public final void testListWordsDescendingOrder() {				
+	public final void testListWords() {				
 		// TODO
 	}
 

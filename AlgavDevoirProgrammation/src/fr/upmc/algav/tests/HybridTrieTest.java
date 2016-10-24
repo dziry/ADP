@@ -53,9 +53,15 @@ public class HybridTrieTest {
 
 	@Test
 	public final void testIsEmpty() {
+		ITrie hybridTrie = new HybridTrie();
+		assertTrue("hybridTrie is not empty", hybridTrie.isEmpty());
+	}
+	
+	@Test
+	public final void testIsNotEmpty() {
 		assertFalse("hybridTrie is not empty", hybridTrie.isEmpty());
 	}
-
+	
 	@Test
 	public final void testInsertWordsOneByOne() {
 		ITrie hybridTrie = new HybridTrie();
@@ -66,7 +72,9 @@ public class HybridTrieTest {
 		hybridTrie.insert("dans");
 		hybridTrie.insert("le");
 		hybridTrie.insert("lourds");
-		assertEquals("7 words added successfully", hybridTrie.countWords(), 7);
+		final int expectedHybridTrieSize = 7;
+		int calculatedHybridTrieSize = hybridTrie.countWords();
+		assertEquals(expectedHybridTrieSize + " words added successfully", calculatedHybridTrieSize, expectedHybridTrieSize);
 	}
 	
 	@SuppressWarnings("null")
@@ -93,14 +101,17 @@ public class HybridTrieTest {
 	}
 
 	@Test
-	public final void testSearch() {
-		assertTrue("words found", hybridTrie.search("lourds")
-		                       && hybridTrie.search("dans")
-		                       && hybridTrie.search("le"));
-		
-		assertFalse("words not found", hybridTrie.search("lourd")
-					                && hybridTrie.search("lour")
-					                && hybridTrie.search(""));
+	public final void testSearchPositive() {
+		assertTrue("words found", hybridTrie.search("lourds"));
+		assertTrue("words found", hybridTrie.search("dans"));
+		assertTrue("words found", hybridTrie.search("le"));		                       
+	}
+	
+	@Test
+	public final void testSearchNegtive() {	
+		assertFalse("words not found", hybridTrie.search("lourd"));
+		assertFalse("words not found", hybridTrie.search("lour"));
+		assertFalse("words not found", hybridTrie.search("d"));
 	}
 
 	@Test
@@ -130,7 +141,9 @@ public class HybridTrieTest {
 
 	@Test
 	public final void testCountNull() {
-		// TODO
+		final int expectedHybridTrieList = 69;
+		int calculatedHybridTrieList = hybridTrie.countNull();		
+		assertEquals(expectedHybridTrieList + " nil pointers found", calculatedHybridTrieList, expectedHybridTrieList);
 	}
 
 	@Test
@@ -159,12 +172,17 @@ public class HybridTrieTest {
 	}
 
 	@Test
-	public final void testToPatriciaTrie() {
+	public final void testIsBalanced() {
 		// TODO
 	}
-
+	
 	@Test
 	public final void testBalance() {
+		// TODO
+	}
+	
+	@Test
+	public final void testToPatriciaTrie() {
 		// TODO
 	}
 }
