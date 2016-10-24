@@ -1,8 +1,12 @@
 package fr.upmc.algav.tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -117,9 +121,12 @@ public class HybridTrieTest {
 	}
 	
 	@Test
-	public final void testListWords() {
-		// TODO
-	}
+	public final void testListWords() {				
+		Collections.sort(wordsList);
+		ArrayList<String> expectedHybridTrieList = wordsList;
+		ArrayList<String> calculatedHybridTrieList = hybridTrie.listWords();
+		assertEquals("listing words by ascending order", calculatedHybridTrieList, expectedHybridTrieList);
+	}	
 
 	@Test
 	public final void testCountNull() {

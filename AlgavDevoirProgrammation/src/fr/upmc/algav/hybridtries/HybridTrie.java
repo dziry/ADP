@@ -1,5 +1,6 @@
 package fr.upmc.algav.hybridtries;
 
+import java.awt.List;
 import java.util.ArrayList;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -95,11 +96,28 @@ public class HybridTrie implements IHybridTrie {
 	}
 
 	@Override
-	public ArrayList<String> listWords() {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<String> listWords() {			
+		return listWordsRecursively(parent, "", new ArrayList<String>());
 	}
 
+	private ArrayList<String> listWordsRecursively(HybridTrieNode node, String word, ArrayList<String> listWords) {
+		if (node != null) {
+			listWordsRecursively(node.getLeftChild(), word, listWords);
+			word += node.getCharacter();
+			if (node.isFinalNode()) {
+				listWords.add(word);
+			}
+			listWordsRecursively(node.getMiddleChild(), word, listWords);
+			word = removeLastCaracter(word);
+			listWordsRecursively(node.getRightChild(), word, listWords);
+		}		
+		return listWords;
+	}
+	
+	private String removeLastCaracter(String word) {
+		return word.substring(0, word.length() - 1);
+	}
+	
 	@Override
 	public int countNull() {
 		// TODO Auto-generated method stub
