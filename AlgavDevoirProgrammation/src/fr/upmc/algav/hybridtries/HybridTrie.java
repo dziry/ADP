@@ -7,7 +7,9 @@ import org.eclipse.jdt.annotation.NonNull;
 import fr.upmc.algav.errors.HybridTrieError;
 import fr.upmc.algav.interfaces.ITrie;
 import fr.upmc.algav.patriciatries.IPatriciaTrie;
-import fr.upmc.algav.tools.Writer;
+import fr.upmc.algav.tools.Color;
+import fr.upmc.algav.tools.Printer;
+import fr.upmc.algav.tools.Style;
 
 public class HybridTrie implements IHybridTrie {
 
@@ -144,16 +146,6 @@ public class HybridTrie implements IHybridTrie {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-	
-	private int countNods() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	
-	private int sumOfDepths(int depth) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 	@Override
 	public int prefix(@NonNull String word) {
@@ -169,48 +161,42 @@ public class HybridTrie implements IHybridTrie {
 
 	@Override
 	public void print(@NonNull String fileName) {
-		Writer fileObject = new Writer(fileName);
-		fileObject.write("digraph G {\n");
-		if (!parent.isFinalNode()) {
-			fileObject.write("	\"" + parent.getId() + "\";\n");
-		} else {
-			fileObject.write("	\"" + parent.getId() + "\" [color=red, " + "fontcolor=red];\n");
+		Printer printer = new Printer(fileName);
+		printer.begin();
+		if (!parent.isFinalNode()) {			
+			printer.printNode(parent);
+		} else {			
+			printer.printNode(parent, Color.BLACK, Color.BLACK, Style.DASHED);
     	}
-		printRecursively(null, parent, Color.BLUE, fileObject);
-		fileObject.write("}");
-		fileObject.close();
+		printRecursively(null, parent, Color.BLUE, printer);
+		printer.end();
 	}
 	
-	private enum Color {
-	    BLUE, RED, GREEN
-	}
-	
-	private void printRecursively(HybridTrieNode previousNode, HybridTrieNode nextNode, Color color, Writer fileObject) {    	
-        if (nextNode != null) {
-        	if (previousNode != null) {
-        		fileObject.write("	\"" + previousNode.getId() + "\" -> \"" + nextNode.getId() + "\"");
-        		if (color.equals(Color.BLUE)) {
-        			fileObject.write(" [color=blue];\n");
+	private void printRecursively(HybridTrieNode previousNode, HybridTrieNode nextNode, Color color, Printer printer) {    	
+		if (nextNode != null) {
+        	if (previousNode != null) {        		        		
+        		if (color.equals(Color.BLUE)) {        			
+        			printer.printEdge(previousNode, nextNode, Color.BLUE);
         		} else if (color.equals(Color.RED)) {
-        			fileObject.write(" [color=red];\n");
+        			printer.printEdge(previousNode, nextNode, Color.RED);
         		} else if(color.equals(Color.GREEN)) {
-        			fileObject.write(" [color=green];\n");
+        			printer.printEdge(previousNode, nextNode, Color.GREEN);
         		} 
         		if (nextNode.isFinalNode()) {        			
-        			if (color.equals(Color.BLUE)) {
-        				fileObject.write("	\"" + nextNode.getId() + "\" [color=blue," + " fontcolor=blue];\n");
+        			if (color.equals(Color.BLUE)) {        				        				
+        				printer.printNode(nextNode, Color.BLUE, Color.BLUE, Style.DASHED);
             		} else if (color.equals(Color.RED)) {
-            			fileObject.write("	\"" + nextNode.getId() + "\" [color=red," + " fontcolor=red];\n");
+            			printer.printNode(nextNode, Color.RED, Color.RED, Style.DASHED);
             		} else if(color.equals(Color.GREEN)) {
-            			fileObject.write("	\"" + nextNode.getId() + "\" [color=green," + " fontcolor=green];\n");
+            			printer.printNode(nextNode, Color.GREEN, Color.GREEN, Style.DASHED);
             		}
-        		}
-        		fileObject.write("	\"" + previousNode.getId() + "\" [label=\""  + previousNode.getId().charAt(0) + "\"];\n");
-        		fileObject.write("	\"" + nextNode.getId() + "\" [label=\"" + nextNode.getId().charAt(0) + "\"];\n");
+        		}        		
+        		printer.printNodeLabel(previousNode);        		
+        		printer.printNodeLabel(nextNode);
         	}        	
-        	printRecursively(nextNode, nextNode.getLeftChild(), Color.BLUE, fileObject);        
-        	printRecursively(nextNode, nextNode.getMiddleChild(), Color.RED, fileObject);        	
-        	printRecursively(nextNode, nextNode.getRightChild(), Color.GREEN, fileObject);           
+        	printRecursively(nextNode, nextNode.getLeftChild(), Color.BLUE, printer);        
+        	printRecursively(nextNode, nextNode.getMiddleChild(), Color.RED, printer);        	
+        	printRecursively(nextNode, nextNode.getRightChild(), Color.GREEN, printer);           
         }
     }
 
