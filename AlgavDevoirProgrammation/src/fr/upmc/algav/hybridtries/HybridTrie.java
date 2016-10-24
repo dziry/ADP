@@ -2,6 +2,8 @@ package fr.upmc.algav.hybridtries;
 
 import java.util.ArrayList;
 
+import org.eclipse.jdt.annotation.NonNull;
+
 import fr.upmc.algav.errors.HybridTrieError;
 import fr.upmc.algav.interfaces.ITrie;
 import fr.upmc.algav.patriciatries.IPatriciaTrie;
@@ -21,8 +23,8 @@ public class HybridTrie implements IHybridTrie {
 	}
 
 	@Override
-	public void insert(String word) {
-		if (word == "" || word == null) throw new HybridTrieError("word should not be empty!");
+	public void insert(@NonNull String word) {
+		if (word == "") throw new HybridTrieError("word should not be empty!");
 		else if (search(word) == true) { /* do nothing..*/ }
 		parent = insertRecursively(parent, word.toCharArray(), 0);
 	}
@@ -45,15 +47,16 @@ public class HybridTrie implements IHybridTrie {
 		return node;
 	}
 
+	@SuppressWarnings("null")
 	@Override
-	public void insert(ArrayList<String> words) {
+	public void insert(@NonNull ArrayList<String> words) {
 		for (String word : words) {
 			insert(word);
 		}
 	}
 	
 	@Override
-	public boolean search(String word) {
+	public boolean search(@NonNull String word) {
 		return searchRecursively(parent, word.toCharArray(), 0);
 	}
 	
@@ -79,14 +82,14 @@ public class HybridTrie implements IHybridTrie {
 		return countWordsRecursively(parent, 0);
 	}
 	
-	private int countWordsRecursively(HybridTrieNode node, int wordsCounter) {
+	private int countWordsRecursively(HybridTrieNode node, int wordsCounter) {		       
 		if (node != null) {
 			if (node.isFinalNode()) {
-				wordsCounter++;
+				wordsCounter++;				
 			}				
-			countWordsRecursively(node.getLeftChild(), wordsCounter);
-			countWordsRecursively(node.getRightChild(), wordsCounter);
-			countWordsRecursively(node.getMiddleChild(), wordsCounter);
+			wordsCounter = countWordsRecursively(node.getLeftChild(), wordsCounter);
+			wordsCounter = countWordsRecursively(node.getRightChild(), wordsCounter);
+			wordsCounter = countWordsRecursively(node.getMiddleChild(), wordsCounter);
 		}
 		return wordsCounter;
 	}
@@ -126,19 +129,19 @@ public class HybridTrie implements IHybridTrie {
 	}
 
 	@Override
-	public int prefix(String word) {
+	public int prefix(@NonNull String word) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public ITrie remove(String word) {
+	public ITrie remove(@NonNull String word) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void print(String fileName) {
+	public void print(@NonNull String fileName) {
 		Writer fileObject = new Writer(fileName);
 		fileObject.write("digraph G {\n");
 		if (!parent.isFinalNode()) {

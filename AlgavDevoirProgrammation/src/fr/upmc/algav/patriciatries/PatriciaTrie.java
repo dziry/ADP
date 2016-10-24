@@ -2,6 +2,8 @@ package fr.upmc.algav.patriciatries;
 
 import java.util.ArrayList;
 
+import org.eclipse.jdt.annotation.NonNull;
+
 import fr.upmc.algav.hybridtries.IHybridTrie;
 import fr.upmc.algav.interfaces.ITrie;
 
@@ -22,21 +24,22 @@ public class PatriciaTrie implements IPatriciaTrie {
 	}
 
 	@Override
-	public void insert(String word) {
+	public void insert(@NonNull String word) {
 		if (isEmpty()) {
 
 		}
 	}
 	
+	@SuppressWarnings("null")
 	@Override
-	public void insert(ArrayList<String> words) {
+	public void insert(@NonNull ArrayList<String> words) {
 		for (String word : words) {
 			insert(word);
 		}
 	}
 	
 	@Override
-	public boolean search(String word) {
+	public boolean search(@NonNull String word) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -72,19 +75,19 @@ public class PatriciaTrie implements IPatriciaTrie {
 	}
 
 	@Override
-	public int prefix(String word) {
+	public int prefix(@NonNull String word) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public ITrie remove(String word) {
+	public ITrie remove(@NonNull String word) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void print(String FileName) {
+	public void print(@NonNull String FileName) {
 		// TODO Auto-generated method stub
 	}
 

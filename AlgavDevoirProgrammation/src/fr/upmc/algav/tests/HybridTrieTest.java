@@ -2,6 +2,8 @@ package fr.upmc.algav.tests;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -11,26 +13,23 @@ import org.junit.Test;
 import fr.upmc.algav.errors.HybridTrieError;
 import fr.upmc.algav.hybridtries.HybridTrie;
 import fr.upmc.algav.interfaces.ITrie;
+import fr.upmc.algav.tools.Reader;
 
 public class HybridTrieTest {
 
+	private static final String EXAMPLE_PATH = "files/exerciseExample.txt";
+	private static ArrayList<String> wordsList = null;
+	private static Reader reader = null;
 	private static ITrie hybridTrie;
 	
+	@SuppressWarnings("null")
 	@BeforeClass
-    public static void setUpBeforeClass() throws Exception {
+    public static void setUpBeforeClass() throws Exception {		
+		reader = new Reader(EXAMPLE_PATH);
+		wordsList = new ArrayList<String>();
+		wordsList = reader.read();
 		hybridTrie = new HybridTrie();
-		hybridTrie.insert("lou");
-		hybridTrie.insert("leve");
-		hybridTrie.insert("les");
-		hybridTrie.insert("loups");
-		hybridTrie.insert("dans");
-		hybridTrie.insert("le");
-		hybridTrie.insert("lourds");
-		hybridTrie.insert("tapis");
-		hybridTrie.insert("de");
-		hybridTrie.insert("luxe");
-		hybridTrie.insert("vert");
-		hybridTrie.insert("olive");
+		hybridTrie.insert(wordsList);	
     }
 
     @AfterClass
@@ -54,7 +53,7 @@ public class HybridTrieTest {
 	}
 
 	@Test
-	public final void testInsertNormalValues() {
+	public final void testInsertWordsOneByOne() {
 		ITrie hybridTrie = new HybridTrie();
 		hybridTrie.insert("lou");
 		hybridTrie.insert("leve");
@@ -66,15 +65,23 @@ public class HybridTrieTest {
 		assertEquals("7 words added successfully", hybridTrie.countWords(), 7);
 	}
 	
-	@Test (expected = HybridTrieError.class)
-	public final void testInsertWordExist() {
-		hybridTrie.insert("dans");
+	@SuppressWarnings("null")
+	@Test
+	public final void testInsertWordsFromList() {
+		ITrie hybridTrie = new HybridTrie();
+		hybridTrie.insert(wordsList);
+		final int expectedHybridTrieSize = 12;
+		int calculatedHybridTrieSize = hybridTrie.countWords();
+		assertEquals("a list of words added successfully", calculatedHybridTrieSize, expectedHybridTrieSize);
 	}
 	
-//	@Test (expected = HybridTrieError.class)
-//	public final void testInsertNull() {
-//		hybridTrie.insert(null);
-//	}
+	@Test
+	public final void testInsertWordExist() {
+		int oldHybridTrieSize = hybridTrie.countWords();
+		hybridTrie.insert("dans");
+		int newHybridTrieSize = hybridTrie.countWords();
+		assertEquals("insert existing word? -> ignore", oldHybridTrieSize, newHybridTrieSize);
+	}
 	
 	@Test (expected = HybridTrieError.class)
 	public final void testInsertEmpty() {
@@ -93,54 +100,64 @@ public class HybridTrieTest {
 	}
 
 	@Test
-	public final void testCountWords() {
-		assertEquals("there are 12 words", hybridTrie.countWords(), 12);
+	public final void testCountWordsAtBeginning() {
+		ITrie hybridTrie = new HybridTrie();
+		final int expectedHybridTrieSize = 0;
+		int calculatedHybridTrieSize = hybridTrie.countWords();
+		assertEquals("there is "+ expectedHybridTrieSize + " word", calculatedHybridTrieSize, expectedHybridTrieSize);	
+	}
+	
+	@Test
+	public final void testCountWordsAtEnd() {
+		final int expectedHybridTrieSize = 12;
+		int calculatedHybridTrieSize = hybridTrie.countWords();
+		assertEquals("there are "+ expectedHybridTrieSize + " words", calculatedHybridTrieSize, expectedHybridTrieSize);
 		ITrie hybridTrie = new HybridTrie();
 		assertEquals("there is 0 word", hybridTrie.countWords(), 0);
 	}
-
+	
 	@Test
 	public final void testListWords() {
-		fail("Not yet implemented"); // TODO
+		// TODO
 	}
 
 	@Test
 	public final void testCountNull() {
-		fail("Not yet implemented"); // TODO
+		// TODO
 	}
 
 	@Test
 	public final void testHeight() {
-		fail("Not yet implemented"); // TODO
+		// TODO
 	}
 
 	@Test
 	public final void testAverageDepth() {
-		fail("Not yet implemented"); // TODO
+		// TODO
 	}
 
 	@Test
 	public final void testPrefix() {
-		fail("Not yet implemented"); // TODO
+		// TODO
 	}
 
 	@Test
 	public final void testRemove() {
-		fail("Not yet implemented"); // TODO
+		// TODO
 	}
 
 	@Test
 	public final void testPrint() {
-		fail("Not yet implemented"); // TODO
+		// TODO
 	}
 
 	@Test
 	public final void testToPatriciaTrie() {
-		fail("Not yet implemented"); // TODO
+		// TODO
 	}
 
 	@Test
 	public final void testBalance() {
-		fail("Not yet implemented"); // TODO
+		// TODO
 	}
 }

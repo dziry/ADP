@@ -21,8 +21,8 @@ public class Main {
 		System.out.println();
 		ITrie hybridTrieExerciseExample = new HybridTrie();
 		hybridTrieExerciseExample.insert(list);
-		hybridTrieExerciseExample.print("hybridTrieExerciseExample");
-				
+		hybridTrieExerciseExample.print("hybridTrieExerciseExample");		
+			
 		System.out.println("\nL'exemple de base | Full Text :\n");
 		Reader readerFull = new Reader("files/basicExample.txt");
 		list = readerFull.read();
