@@ -9,21 +9,25 @@ public class PatriciaTrie implements IPatriciaTrie {
 
 	private PatriciaTreeNode rootNode;
 	private final Alphabet usedAlphabet;
+	private int keyCount;
 
 	public PatriciaTrie(Alphabet usedAlphabet) {
 		this.usedAlphabet = usedAlphabet;
-		//this.rootNode = new PatriciaTreeNode(usedAlphabet.getNodeArity());
+		this.keyCount = 0;
+		this.rootNode = new PatriciaTreeNode(usedAlphabet.getNodeArity(), false);
 	}
 
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public void insert(String word) {
 		if (isEmpty()) {
+			// Tree is empty. Add node to root and store whole word in the according edge.
+			rootNode.updateChild(AlphabetHelper.getFirstCharOfWord(word), word, Alphabet.END_OF_WORD_CHAR_ID);
+		} else {
 
 		}
 	}

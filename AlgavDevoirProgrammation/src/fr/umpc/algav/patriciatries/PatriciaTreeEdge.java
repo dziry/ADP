@@ -14,4 +14,9 @@ public class PatriciaTreeEdge {
         this.edgeValue = edgeValue;
     }
 
+    public void updatePointer(String newEdgeValue) {
+
+    }
+
+
 }
