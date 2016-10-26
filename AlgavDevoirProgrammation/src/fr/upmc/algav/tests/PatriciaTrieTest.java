@@ -1,6 +1,4 @@
-package fr.umpc.algav.tests;
-
-import static org.junit.Assert.*;
+package fr.upmc.algav.tests;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -24,66 +22,66 @@ public class PatriciaTrieTest {
 
 	@Test
 	public final void testIsEmpty() {
-		fail("Not yet implemented"); // TODO
+		// TODO
 	}
 
 	@Test
 	public final void testInsert() {
-		fail("Not yet implemented"); // TODO
+		// TODO
 	}
 
 	@Test
 	public final void testSearch() {
-		fail("Not yet implemented"); // TODO
+		// TODO
 	}
 
 	@Test
 	public final void testCountWords() {
-		fail("Not yet implemented"); // TODO
+		// TODO
 	}
 
 	@Test
-	public final void testListWords() {
-		fail("Not yet implemented"); // TODO
+	public final void testListWords() {				
+		// TODO
 	}
 
 	@Test
 	public final void testCountNull() {
-		fail("Not yet implemented"); // TODO
+		// TODO
 	}
 
 	@Test
 	public final void testHeight() {
-		fail("Not yet implemented"); // TODO
+		// TODO
 	}
 
 	@Test
 	public final void testAverageDepth() {
-		fail("Not yet implemented"); // TODO
+		// TODO
 	}
 
 	@Test
 	public final void testPrefix() {
-		fail("Not yet implemented"); // TODO
+		// TODO
 	}
 
 	@Test
 	public final void testRemove() {
-		fail("Not yet implemented"); // TODO
+		// TODO
 	}
 
 	@Test
 	public final void testPrint() {
-		fail("Not yet implemented"); // TODO
+		// TODO
 	}
 
 	@Test
 	public final void testMerge() {
-		fail("Not yet implemented"); // TODO
+		// TODO
 	}
 
 	@Test
 	public final void testToHybridTrie() {
-		fail("Not yet implemented"); // TODO
+		// TODO
 	}
 }

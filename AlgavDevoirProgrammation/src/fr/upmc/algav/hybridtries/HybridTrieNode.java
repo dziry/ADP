@@ -1,4 +1,4 @@
-package fr.umpc.algav.hybridtries;
+package fr.upmc.algav.hybridtries;
 
 import java.util.UUID;
 

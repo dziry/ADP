@@ -1,4 +1,4 @@
-package fr.umpc.algav.errors;
+package fr.upmc.algav.errors;
 
 public class PatriciaTrieError extends Error {
 
