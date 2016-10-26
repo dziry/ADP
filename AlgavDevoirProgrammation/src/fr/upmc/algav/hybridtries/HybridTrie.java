@@ -2,8 +2,6 @@ package fr.upmc.algav.hybridtries;
 
 import java.util.ArrayList;
 
-import org.eclipse.jdt.annotation.NonNull;
-
 import fr.upmc.algav.errors.HybridTrieError;
 import fr.upmc.algav.interfaces.ITrie;
 import fr.upmc.algav.patriciatries.IPatriciaTrie;
@@ -25,7 +23,7 @@ public class HybridTrie implements IHybridTrie {
 	}
 
 	@Override
-	public void insert(@NonNull String word) {
+	public void insert(String word) {
 		if (word == "") throw new HybridTrieError("word should not be empty!");
 		else if (search(word) == true) { /* do nothing..*/ }
 		parent = insertRecursively(parent, word.toCharArray(), 0);
@@ -51,14 +49,14 @@ public class HybridTrie implements IHybridTrie {
 
 	@SuppressWarnings("null")
 	@Override
-	public void insert(@NonNull ArrayList<String> words) {
+	public void insert(ArrayList<String> words) {
 		for (String word : words) {
 			insert(word);
 		}
 	}
 	
 	@Override
-	public boolean search(@NonNull String word) {
+	public boolean search(String word) {
 		return searchRecursively(parent, word.toCharArray(), 0);
 	}
 	
@@ -148,19 +146,19 @@ public class HybridTrie implements IHybridTrie {
 	}
 
 	@Override
-	public int prefix(@NonNull String word) {
+	public int prefix(String word) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public ITrie remove(@NonNull String word) {
+	public ITrie remove(String word) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void print(@NonNull String fileName) {
+	public void print(String fileName) {
 		Printer printer = new Printer(fileName);
 		printer.begin();
 		if (!parent.isFinalNode()) {			
