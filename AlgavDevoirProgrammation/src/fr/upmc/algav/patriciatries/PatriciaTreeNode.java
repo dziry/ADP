@@ -6,23 +6,23 @@ import java.util.ArrayList;
  * Created by amadeus on 19.10.16.
  */
 public class PatriciaTreeNode {
-    private int key;
     private int arity;
     private boolean isLeaf;
     private ArrayList<PatriciaTreeEdge> edgesToChildren;
 
     public PatriciaTreeNode(int arity, boolean isLeaf) {
-        this(arity, isLeaf, -1);
-    }
-
-    public PatriciaTreeNode(int arity, boolean isLeaf, int key) {
         this.arity = arity;
         this.isLeaf = isLeaf;
-        this.key = key;
 
-        if (!isLeaf) {
+        if (isLeaf) {
             initNullEdges();
         }
+    }
+
+    public PatriciaTreeNode(int arity, ArrayList<PatriciaTreeEdge> edges) {
+        this(arity, false);
+
+        this.edgesToChildren = edges;
     }
 
     private void initNullEdges() {
@@ -33,33 +33,57 @@ public class PatriciaTreeNode {
         }
     }
 
-    public boolean representsKeyForWord() {
-        return key != -1;
+    public ArrayList<PatriciaTreeEdge> getEdges() {
+        return edgesToChildren;
     }
 
-    public void updateChild(int edgeIndex, String edgeValue, int childNodeKey) {
+    public PatriciaTreeEdge getEdgeByIndex(int edgeIndex) {
+        return isLeaf ? null : edgesToChildren.get(edgeIndex);
+    }
+
+    public void addNewEdgeWithWordAndResult(String edgeValue, int edgeIndex) {
+        checkIfTransformToInnerNode();
+
+        PatriciaTreeEdge edge = new PatriciaTreeEdge(this, new PatriciaTreeNode(arity, true),
+                                                     edgeValue, true, edgeIndex);
+        edgesToChildren.set(edgeIndex, edge);
+    }
+
+    public void addNewResultEdge() {
+        checkIfTransformToInnerNode();
+
+        PatriciaTreeEdge edge = new PatriciaTreeEdge(this, new PatriciaTreeNode(arity, true),
+                Alphabet.getEndOfWordCharacter(), true, Alphabet.getEdgeIndexForEndOfWordCharacter());
+
+        edgesToChildren.set(Alphabet.getEdgeIndexForEndOfWordCharacter(), edge);
+    }
+
+    public void addNewNonKeyEdge(PatriciaTreeEdge edge, int edgeIndex) {
+        checkIfTransformToInnerNode();
+
+        edgesToChildren.set(edgeIndex, edge);
+    }
+
+    private void checkIfTransformToInnerNode() {
         // If node was a leaf so far, make it an inner node and initialize all edges
         if (isLeaf) {
             isLeaf = false;
             initNullEdges();
         }
+    }
 
-        try {
-            PatriciaTreeEdge edge = edgesToChildren.get(edgeIndex);
+    public boolean hasOnlyNullEdges() {
+        boolean res = true;
 
-            if (edge == null) {
-                // The edge was so far a null pointer. Create a new one.
-                edge = new PatriciaTreeEdge(this, new PatriciaTreeNode(arity, true, childNodeKey), edgeValue);
-            } else {
-                // The edge already existed. Update edge.
-                edge.updatePointer(edgeValue);
+        if (!isLeaf) {
+            for (PatriciaTreeEdge childEdge : edgesToChildren) {
+                if (childEdge != null) {
+                    res = false;
+                    break;
+                }
             }
-
-            // Put the updated edge in the children list.
-            edgesToChildren.set(edgeIndex, edge);
-        } catch (IndexOutOfBoundsException e) {
-            // TODO: Handle this
         }
 
+        return res;
     }
 }
