@@ -13,22 +13,22 @@ import fr.upmc.algav.tools.Style;
 
 public class HybridTrie implements IHybridTrie {
 
-	private HybridTrieNode parent;
+	private HybridTrieNode root;
 	
 	public HybridTrie() {
-		this.parent = null;
+		this.root = null;
 	}
 
 	@Override
 	public boolean isEmpty() {
-		return parent == null;
+		return root == null;
 	}
 
 	@Override
 	public void insert(@NonNull String word) {
 		if (word == "") throw new HybridTrieError("word should not be empty!");
 		else if (search(word) == true) { /* do nothing..*/ }
-		parent = insertRecursively(parent, word.toCharArray(), 0);
+		root = insertRecursively(root, word.toCharArray(), 0);
 	}
 	
 	private HybridTrieNode insertRecursively(HybridTrieNode node, char[] word, int position) {
@@ -59,7 +59,7 @@ public class HybridTrie implements IHybridTrie {
 	
 	@Override
 	public boolean search(@NonNull String word) {
-		return searchRecursively(parent, word.toCharArray(), 0);
+		return searchRecursively(root, word.toCharArray(), 0);
 	}
 	
 	private boolean searchRecursively(HybridTrieNode node, char[] word, int position) {
@@ -81,7 +81,7 @@ public class HybridTrie implements IHybridTrie {
 
 	@Override
 	public int countWords() {
-		return countWordsRecursively(parent, 0);
+		return countWordsRecursively(root, 0);
 	}
 	
 	private int countWordsRecursively(HybridTrieNode node, int wordsCounter) {		       
@@ -98,7 +98,7 @@ public class HybridTrie implements IHybridTrie {
 
 	@Override
 	public ArrayList<String> listWords() {			
-		return listWordsRecursively(parent, "", new ArrayList<String>());
+		return listWordsRecursively(root, "", new ArrayList<String>());
 	}
 
 	private ArrayList<String> listWordsRecursively(HybridTrieNode node, String word, ArrayList<String> listWords) {
@@ -121,7 +121,7 @@ public class HybridTrie implements IHybridTrie {
 		
 	@Override
 	public int countNull() {				
-		return countNullRecursively(parent, 0);
+		return countNullRecursively(root, 0);
 	}
 
 	private int countNullRecursively(HybridTrieNode node, int nullCounter) {
@@ -137,14 +137,47 @@ public class HybridTrie implements IHybridTrie {
 
 	@Override
 	public int height() {
-		// TODO Auto-generated method stub
-		return 0;
+		return heightRecursively(root, -1, 0);
 	}
 
+	private int heightRecursively(HybridTrieNode node, int heightCounter, int heightResult) {
+		if (node != null) {			
+            if (heightCounter++ > heightResult && node.isFinalNode()) {
+            	heightResult = heightCounter;            	
+            }
+            heightResult = heightRecursively(node.getLeftChild(), heightCounter, heightResult);                       
+            heightResult = heightRecursively(node.getRightChild(), heightCounter, heightResult);                           
+            heightResult = heightRecursively(node.getMiddleChild(), heightCounter, heightResult);						
+		}
+		return heightResult;
+	}
+	
 	@Override
-	public float averageDepth() {
-		// TODO Auto-generated method stub
-		return 0;
+	public double averageDepth() {		
+		return (double)countTotalDepthRecursively(root, -1, 0) / (double)countnodesRecursively(root, 0);
+	}
+
+	public int countnodesRecursively(HybridTrieNode node, int nodesCounter) {
+		if (node != null) {
+			nodesCounter++;
+			nodesCounter = countnodesRecursively(node.getLeftChild(), nodesCounter);
+			nodesCounter = countnodesRecursively(node.getRightChild(), nodesCounter);
+			nodesCounter = countnodesRecursively(node.getMiddleChild(), nodesCounter);
+		}
+		return nodesCounter;
+	}
+
+	private int countTotalDepthRecursively(HybridTrieNode node, int depthCounter, int totalDepth) {
+		if (node != null) {			
+			depthCounter++;
+            if (node.isFinalNode()) {
+            	totalDepth += depthCounter;            	
+            }
+            totalDepth = countTotalDepthRecursively(node.getLeftChild(), depthCounter, totalDepth);                       
+            totalDepth = countTotalDepthRecursively(node.getRightChild(), depthCounter, totalDepth);                           
+            totalDepth = countTotalDepthRecursively(node.getMiddleChild(), depthCounter, totalDepth);						
+		}
+		return totalDepth;
 	}
 
 	@Override
@@ -163,18 +196,19 @@ public class HybridTrie implements IHybridTrie {
 	public void print(@NonNull String fileName) {
 		Printer printer = new Printer(fileName);
 		printer.begin();
-		if (!parent.isFinalNode()) {			
-			printer.printNode(parent);
+		if (!root.isFinalNode()) {			
+			printer.printNode(root);
 		} else {			
-			printer.printNode(parent, Color.BLACK, Color.BLACK, Style.DASHED);
+			printer.printNode(root, Color.BLACK, Color.BLACK, Style.DASHED);
     	}
-		printRecursively(null, parent, Color.BLUE, printer);
+		printer.printNodeLabel(root);
+		printRecursively(null, root, Color.BLUE, printer);
 		printer.end();
 	}
 	
 	private void printRecursively(HybridTrieNode previousNode, HybridTrieNode nextNode, Color color, Printer printer) {    	
 		if (nextNode != null) {
-        	if (previousNode != null) {        		        		
+        	if (previousNode != null) { 		        		
         		if (color.equals(Color.BLUE)) {        			
         			printer.printEdge(previousNode, nextNode, Color.BLUE);
         		} else if (color.equals(Color.RED)) {
@@ -191,7 +225,6 @@ public class HybridTrie implements IHybridTrie {
             			printer.printNode(nextNode, Color.GREEN, Color.GREEN, Style.DASHED);
             		}
         		}        		
-        		printer.printNodeLabel(previousNode);        		
         		printer.printNodeLabel(nextNode);
         	}        	
         	printRecursively(nextNode, nextNode.getLeftChild(), Color.BLUE, printer);        

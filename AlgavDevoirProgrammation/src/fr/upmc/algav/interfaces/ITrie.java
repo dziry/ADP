@@ -16,7 +16,7 @@ public interface ITrie {
 	ArrayList<String> listWords();
 	int countNull();
 	int height();
-	float averageDepth();
+	double averageDepth();
 	int prefix(@NonNull String word);
 	ITrie remove(@NonNull String word);
 	

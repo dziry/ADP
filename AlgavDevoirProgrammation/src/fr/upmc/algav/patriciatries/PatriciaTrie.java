@@ -69,7 +69,7 @@ public class PatriciaTrie implements IPatriciaTrie {
 	}
 
 	@Override
-	public float averageDepth() {
+	public double averageDepth() {
 		// TODO Auto-generated method stub
 		return 0;
 	}

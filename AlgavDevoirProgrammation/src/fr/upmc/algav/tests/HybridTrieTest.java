@@ -73,7 +73,7 @@ public class HybridTrieTest {
 		hybridTrie.insert("le");
 		hybridTrie.insert("lourds");
 		final int expectedHybridTrieSize = 7;
-		int calculatedHybridTrieSize = hybridTrie.countWords();
+		final int calculatedHybridTrieSize = hybridTrie.countWords();
 		assertEquals(expectedHybridTrieSize + " words added successfully", calculatedHybridTrieSize, expectedHybridTrieSize);
 	}
 	
@@ -83,15 +83,15 @@ public class HybridTrieTest {
 		ITrie hybridTrie = new HybridTrie();
 		hybridTrie.insert(wordsList);
 		final int expectedHybridTrieSize = 12;
-		int calculatedHybridTrieSize = hybridTrie.countWords();
+		final int calculatedHybridTrieSize = hybridTrie.countWords();
 		assertEquals("a list of words added successfully", calculatedHybridTrieSize, expectedHybridTrieSize);
 	}
 	
 	@Test
 	public final void testInsertWordExist() {
-		int oldHybridTrieSize = hybridTrie.countWords();
+		final int oldHybridTrieSize = hybridTrie.countWords();
 		hybridTrie.insert("dans");
-		int newHybridTrieSize = hybridTrie.countWords();
+		final int newHybridTrieSize = hybridTrie.countWords();
 		assertEquals("insert existing word? -> ignore", oldHybridTrieSize, newHybridTrieSize);
 	}
 	
@@ -118,42 +118,55 @@ public class HybridTrieTest {
 	public final void testCountWordsAtBeginning() {
 		ITrie hybridTrie = new HybridTrie();
 		final int expectedHybridTrieSize = 0;
-		int calculatedHybridTrieSize = hybridTrie.countWords();
+		final int calculatedHybridTrieSize = hybridTrie.countWords();
 		assertEquals("there is "+ expectedHybridTrieSize + " word", calculatedHybridTrieSize, expectedHybridTrieSize);	
 	}
 	
 	@Test
 	public final void testCountWordsAtEnd() {
 		final int expectedHybridTrieSize = 12;
-		int calculatedHybridTrieSize = hybridTrie.countWords();
+		final int calculatedHybridTrieSize = hybridTrie.countWords();
 		assertEquals("there are "+ expectedHybridTrieSize + " words", calculatedHybridTrieSize, expectedHybridTrieSize);
-		ITrie hybridTrie = new HybridTrie();
-		assertEquals("there is 0 word", hybridTrie.countWords(), 0);
 	}
 	
 	@Test
 	public final void testListWords() {				
 		Collections.sort(wordsList);
-		ArrayList<String> expectedHybridTrieList = wordsList;
-		ArrayList<String> calculatedHybridTrieList = hybridTrie.listWords();
+		final ArrayList<String> expectedHybridTrieList = wordsList;
+		final ArrayList<String> calculatedHybridTrieList = hybridTrie.listWords();
 		assertEquals("listing words by ascending order", calculatedHybridTrieList, expectedHybridTrieList);
 	}	
 
 	@Test
 	public final void testCountNull() {
 		final int expectedHybridTrieList = 69;
-		int calculatedHybridTrieList = hybridTrie.countNull();		
+		final int calculatedHybridTrieList = hybridTrie.countNull();		
 		assertEquals(expectedHybridTrieList + " nil pointers found", calculatedHybridTrieList, expectedHybridTrieList);
 	}
-
+	
 	@Test
-	public final void testHeight() {
-		// TODO
+	public final void testHeightAtBeginning() {
+		ITrie hybridTrie = new HybridTrie();
+		final int expectedHybridTrieHeight = 0;
+		final int calculatedHybridTrieHeight = hybridTrie.height();
+		assertEquals("the height is " + expectedHybridTrieHeight, calculatedHybridTrieHeight, expectedHybridTrieHeight);	
 	}
 
 	@Test
+	public final void testHeightAtEnd() {
+		final int expectedHybridTrieHeight = 6;
+		final int calculatedHybridTrieHeight = hybridTrie.height();
+		assertEquals("the height is " + expectedHybridTrieHeight, calculatedHybridTrieHeight, expectedHybridTrieHeight);	
+	}
+	
+	@Test
 	public final void testAverageDepth() {
-		// TODO
+		final int someDepths = 49;
+		final int someNodes = 34;
+		final double delta = 0.1; //FIXME
+		final double expectedHybridTrieAverageDepth = (double)someDepths / (double)someNodes;
+		final double calculatedHybridTrieAverageDepth = hybridTrie.averageDepth();
+		assertEquals("the average depth is " + expectedHybridTrieAverageDepth, calculatedHybridTrieAverageDepth, expectedHybridTrieAverageDepth, delta);
 	}
 
 	@Test
