@@ -130,15 +130,31 @@ public class HybridTrieTest {
 	}
 	
 	@Test
-	public final void testListWords() {				
+	public final void testListWordsAtBeginning() {				
+		final ArrayList<String> expectedHybridTrieList = null;
+		ITrie hybridTrie = new HybridTrie();
+		final ArrayList<String> calculatedHybridTrieList = hybridTrie.listWords();
+		assertEquals("listing words by ascending order", calculatedHybridTrieList, expectedHybridTrieList);
+	}	
+	
+	@Test
+	public final void testListWordsAtEnd() {				
 		Collections.sort(wordsList);
 		final ArrayList<String> expectedHybridTrieList = wordsList;
 		final ArrayList<String> calculatedHybridTrieList = hybridTrie.listWords();
 		assertEquals("listing words by ascending order", calculatedHybridTrieList, expectedHybridTrieList);
-	}	
+	}
 
 	@Test
-	public final void testCountNull() {
+	public final void testCountNullAtBeginning() {
+		final int expectedHybridTrieList = 0;
+		ITrie hybridTrie = new HybridTrie();
+		final int calculatedHybridTrieList = hybridTrie.countNull();		
+		assertEquals(expectedHybridTrieList + " nil pointer found", calculatedHybridTrieList, expectedHybridTrieList);
+	}
+	
+	@Test
+	public final void testCountNullAtEnd() {
 		final int expectedHybridTrieList = 69;
 		final int calculatedHybridTrieList = hybridTrie.countNull();		
 		assertEquals(expectedHybridTrieList + " nil pointers found", calculatedHybridTrieList, expectedHybridTrieList);
@@ -160,7 +176,16 @@ public class HybridTrieTest {
 	}
 	
 	@Test
-	public final void testAverageDepth() {
+	public final void testAverageDepthAtBeginning() {
+		final double delta = 0.1; //FIXME
+		final double expectedHybridTrieAverageDepth = 0;
+		ITrie hybridTrie = new HybridTrie();
+		final double calculatedHybridTrieAverageDepth = hybridTrie.averageDepth();
+		assertEquals("the average depth is " + expectedHybridTrieAverageDepth, calculatedHybridTrieAverageDepth, expectedHybridTrieAverageDepth, delta);
+	}
+	
+	@Test
+	public final void testAverageDepthAtEnd() {
 		final int someDepths = 49;
 		final int someNodes = 34;
 		final double delta = 0.1; //FIXME

@@ -1,9 +1,7 @@
 package fr.upmc.algav.hybridtries;
 
 import java.util.ArrayList;
-
 import org.eclipse.jdt.annotation.NonNull;
-
 import fr.upmc.algav.errors.HybridTrieError;
 import fr.upmc.algav.interfaces.ITrie;
 import fr.upmc.algav.patriciatries.IPatriciaTrie;
@@ -59,6 +57,7 @@ public class HybridTrie implements IHybridTrie {
 	
 	@Override
 	public boolean search(@NonNull String word) {
+		if (isEmpty()) return false;
 		return searchRecursively(root, word.toCharArray(), 0);
 	}
 	
@@ -81,6 +80,7 @@ public class HybridTrie implements IHybridTrie {
 
 	@Override
 	public int countWords() {
+		if (isEmpty()) return 0;
 		return countWordsRecursively(root, 0);
 	}
 	
@@ -97,7 +97,8 @@ public class HybridTrie implements IHybridTrie {
 	}
 
 	@Override
-	public ArrayList<String> listWords() {			
+	public ArrayList<String> listWords() {
+		if (isEmpty()) return null;
 		return listWordsRecursively(root, "", new ArrayList<String>());
 	}
 
@@ -120,7 +121,8 @@ public class HybridTrie implements IHybridTrie {
 	}
 		
 	@Override
-	public int countNull() {				
+	public int countNull() {
+		if (isEmpty()) return 0;
 		return countNullRecursively(root, 0);
 	}
 
@@ -137,6 +139,7 @@ public class HybridTrie implements IHybridTrie {
 
 	@Override
 	public int height() {
+		if (isEmpty()) return 0;
 		return heightRecursively(root, -1, 0);
 	}
 
@@ -153,7 +156,8 @@ public class HybridTrie implements IHybridTrie {
 	}
 	
 	@Override
-	public double averageDepth() {		
+	public double averageDepth() {
+		if (isEmpty()) return 0.0;
 		return (double)countTotalDepthRecursively(root, -1, 0) / (double)countnodesRecursively(root, 0);
 	}
 
