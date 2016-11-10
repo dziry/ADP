@@ -220,7 +220,23 @@ public class HybridTrieTest extends AbstractTrieTest {
 	
 	@Test
 	public final void testRemove() {
-		// TODO
+		// TODO				
+		hybridTrie.insert("l");
+		
+		hybridTrie.print("original");		
+		
+		hybridTrie.remove("luxe");
+		hybridTrie.remove("leve");
+		hybridTrie.remove("les");
+		hybridTrie.remove("lourds");
+		hybridTrie.remove("loups");
+		
+		hybridTrie.remove("le");
+		hybridTrie.remove("lou");
+
+		hybridTrie.remove("l");
+		
+		hybridTrie.print("remove");
 	}
 
 	@Test
