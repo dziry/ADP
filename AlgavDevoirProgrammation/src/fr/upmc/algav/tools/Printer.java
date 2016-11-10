@@ -2,8 +2,6 @@ package fr.upmc.algav.tools;
 
 import java.util.HashMap;
 
-import org.eclipse.jdt.annotation.NonNull;
-
 import fr.upmc.algav.hybridtries.HybridTrieNode;
 
 public class Printer {
@@ -12,7 +10,7 @@ public class Printer {
 	private static HashMap<Color, String> color;
 	private static HashMap<Style, String> style;
 	
-	public Printer(@NonNull String fileName) {
+	public Printer(String fileName) {
 		Printer.fileObject = new Writer(fileName);
 		color = new HashMap<Color, String>();
 		style = new HashMap<Style, String>();

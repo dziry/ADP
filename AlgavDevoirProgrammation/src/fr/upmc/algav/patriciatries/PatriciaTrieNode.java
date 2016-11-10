@@ -5,12 +5,12 @@ import java.util.ArrayList;
 /**
  * Created by amadeus on 19.10.16.
  */
-public class PatriciaTreeNode {
+public class PatriciaTrieNode {
     private int arity;
     private boolean isLeaf;
-    private ArrayList<PatriciaTreeEdge> edgesToChildren;
+    private ArrayList<PatriciaTrieEdge> edgesToChildren;
 
-    public PatriciaTreeNode(int arity, boolean isLeaf) {
+    public PatriciaTrieNode(int arity, boolean isLeaf) {
         this.arity = arity;
         this.isLeaf = isLeaf;
 
@@ -19,7 +19,7 @@ public class PatriciaTreeNode {
         }
     }
 
-    public PatriciaTreeNode(int arity, ArrayList<PatriciaTreeEdge> edges) {
+    public PatriciaTrieNode(int arity, ArrayList<PatriciaTrieEdge> edges) {
         this(arity, false);
 
         this.edgesToChildren = edges;
@@ -33,18 +33,18 @@ public class PatriciaTreeNode {
         }
     }
 
-    public ArrayList<PatriciaTreeEdge> getEdges() {
+    public ArrayList<PatriciaTrieEdge> getEdges() {
         return edgesToChildren;
     }
 
-    public PatriciaTreeEdge getEdgeByIndex(int edgeIndex) {
+    public PatriciaTrieEdge getEdgeByIndex(int edgeIndex) {
         return isLeaf ? null : edgesToChildren.get(edgeIndex);
     }
 
     public void addNewEdgeWithWordAndResult(String edgeValue, int edgeIndex) {
         checkIfTransformToInnerNode();
 
-        PatriciaTreeEdge edge = new PatriciaTreeEdge(this, new PatriciaTreeNode(arity, true),
+        PatriciaTrieEdge edge = new PatriciaTrieEdge(this, new PatriciaTrieNode(arity, true),
                                                      edgeValue, true, edgeIndex);
         edgesToChildren.set(edgeIndex, edge);
     }
@@ -52,13 +52,13 @@ public class PatriciaTreeNode {
     public void addNewResultEdge() {
         checkIfTransformToInnerNode();
 
-        PatriciaTreeEdge edge = new PatriciaTreeEdge(this, new PatriciaTreeNode(arity, true),
+        PatriciaTrieEdge edge = new PatriciaTrieEdge(this, new PatriciaTrieNode(arity, true),
                 Alphabet.getEndOfWordCharacter(), true, Alphabet.getEdgeIndexForEndOfWordCharacter());
 
         edgesToChildren.set(Alphabet.getEdgeIndexForEndOfWordCharacter(), edge);
     }
 
-    public void addNewNonKeyEdge(PatriciaTreeEdge edge, int edgeIndex) {
+    public void addNewNonKeyEdge(PatriciaTrieEdge edge, int edgeIndex) {
         checkIfTransformToInnerNode();
 
         edgesToChildren.set(edgeIndex, edge);
@@ -76,7 +76,7 @@ public class PatriciaTreeNode {
         boolean res = true;
 
         if (!isLeaf) {
-            for (PatriciaTreeEdge childEdge : edgesToChildren) {
+            for (PatriciaTrieEdge childEdge : edgesToChildren) {
                 if (childEdge != null) {
                     res = false;
                     break;

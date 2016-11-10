@@ -1,11 +1,10 @@
 package fr.upmc.algav.errors;
 
+@SuppressWarnings("serial")
 public class PatriciaTrieError extends Error {
 
-	private static final long serialVersionUID = 1L;
-	
 	public PatriciaTrieError(String message) {  
-		super("PatriciaTrieError : " + message); 
+		super(message); 
 	}  
 
 	public PatriciaTrieError(Throwable cause) {  
@@ -13,7 +12,6 @@ public class PatriciaTrieError extends Error {
 	}  
 
 	public PatriciaTrieError(String message, Throwable cause) {  
-		super("PatriciaTrieError : " + message, cause); 
+		super(message, cause); 
 	}
-
 }

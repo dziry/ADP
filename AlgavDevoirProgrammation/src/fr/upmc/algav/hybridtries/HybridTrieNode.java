@@ -22,15 +22,11 @@ public class HybridTrieNode {
 	}
 	
 	public char getCharacter() {
-		return this.character;
+		return character;
 	}
 	
 	public boolean isFinalNode() {
 		return isFinalNode;
-	}
-	
-	public void setIsFinalNode(boolean isFinalNode) {
-		this.isFinalNode = isFinalNode;
 	}
 
 	public String getId() {
@@ -49,6 +45,14 @@ public class HybridTrieNode {
 		return rightChild;
 	}
 	
+	public void setCharacter(char character) {
+		this.character = character;
+	}
+	
+	public void setIsFinalNode(boolean isFinalNode) {
+		this.isFinalNode = isFinalNode;
+	}
+	
 	public void setLeftChild(HybridTrieNode leftChild) {
 		this.leftChild = leftChild;
 	}
@@ -59,5 +63,9 @@ public class HybridTrieNode {
 
 	public void setRightChild(HybridTrieNode rightChild) {
 		this.rightChild = rightChild;
+	}
+	
+	public boolean hasChildren () {
+		return leftChild != null || middleChild != null || rightChild != null;		
 	}
 }

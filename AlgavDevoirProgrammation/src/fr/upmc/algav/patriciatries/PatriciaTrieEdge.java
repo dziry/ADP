@@ -3,14 +3,14 @@ package fr.upmc.algav.patriciatries;
 /**
  * Created by amadeus on 19.10.16.
  */
-public class PatriciaTreeEdge {
-    private PatriciaTreeNode parentNode;
-    private PatriciaTreeNode childNode;
+public class PatriciaTrieEdge {
+    private PatriciaTrieNode parentNode;
+    private PatriciaTrieNode childNode;
     private String edgeValue;
     private boolean isKeyEdge;
     private int edgeToParentIndex;
 
-    public PatriciaTreeEdge(PatriciaTreeNode parentNode, PatriciaTreeNode childNode, String edgeValue,
+    public PatriciaTrieEdge(PatriciaTrieNode parentNode, PatriciaTrieNode childNode, String edgeValue,
                             boolean isKeyEdge, int edgeToParentIndex) {
 
         this.parentNode = parentNode;
@@ -24,15 +24,15 @@ public class PatriciaTreeEdge {
         return edgeValue;
     }
 
-    public PatriciaTreeNode getChildNode() {
+    public PatriciaTrieNode getChildNode() {
         return childNode;
     }
 
-    public PatriciaTreeNode getParentNode() {
+    public PatriciaTrieNode getParentNode() {
         return parentNode;
     }
 
-    public void updateChildNode(PatriciaTreeNode node) {
+    public void updateChildNode(PatriciaTrieNode node) {
         this.childNode = node;
     }
 

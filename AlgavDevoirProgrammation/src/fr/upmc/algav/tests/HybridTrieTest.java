@@ -19,21 +19,20 @@ import fr.upmc.algav.hybridtries.HybridTrie;
 import fr.upmc.algav.interfaces.ITrie;
 import fr.upmc.algav.tools.Reader;
 
-public class HybridTrieTest {
+public class HybridTrieTest extends AbstractTrieTest {
 
 	private static final String EXAMPLE_PATH = "files/exerciseExample.txt";
 	private static ArrayList<String> wordsList = null;
 	private static Reader reader = null;
-	private static ITrie hybridTrie;
-	
-	@SuppressWarnings("null")
+	private static ITrie hybridTrie = null;
+		
 	@BeforeClass
     public static void setUpBeforeClass() throws Exception {		
 		reader = new Reader(EXAMPLE_PATH);
 		wordsList = new ArrayList<String>();
 		wordsList = reader.read();
 		hybridTrie = new HybridTrie();
-		hybridTrie.insert(wordsList);	
+		hybridTrie.insert(wordsList);		
     }
 
     @AfterClass
@@ -47,18 +46,15 @@ public class HybridTrieTest {
 
 	@Test
 	public final void testHybridTrie() {
-		ITrie hybridTrie = new HybridTrie();
-		assertNotNull("hybridTrie not null", hybridTrie);
+		assertNotNull("hybridTrie not null", new HybridTrie());
 	}
 
 	@Test
 	public final void testIsEmpty() {
-		ITrie hybridTrie = new HybridTrie();
-		assertTrue("hybridTrie is not empty", hybridTrie.isEmpty());
-	}
-	
-	@Test
-	public final void testIsNotEmpty() {
+		// before adding words
+		assertTrue("hybridTrie is not empty", new HybridTrie().isEmpty());
+
+		// after adding words
 		assertFalse("hybridTrie is not empty", hybridTrie.isEmpty());
 	}
 	
@@ -77,7 +73,6 @@ public class HybridTrieTest {
 		assertEquals(expectedHybridTrieSize + " words added successfully", calculatedHybridTrieSize, expectedHybridTrieSize);
 	}
 	
-	@SuppressWarnings("null")
 	@Test
 	public final void testInsertWordsFromList() {
 		ITrie hybridTrie = new HybridTrie();
@@ -96,109 +91,133 @@ public class HybridTrieTest {
 	}
 	
 	@Test (expected = HybridTrieError.class)
-	public final void testInsertEmpty() {
+	public final void testInsertNullWord() {
+		final String word = null;
+		hybridTrie.insert(word);
+	}
+
+	@Test (expected = HybridTrieError.class)
+	public final void testInsertEmptyWord() {
 		hybridTrie.insert("");
 	}
 
-	@Test
-	public final void testSearchPositive() {
-		assertTrue("words found", hybridTrie.search("lourds"));
-		assertTrue("words found", hybridTrie.search("dans"));
-		assertTrue("words found", hybridTrie.search("le"));		                       
+	@Test (expected = HybridTrieError.class)
+	public final void testInsertNullWords() {
+		final ArrayList<String> words = null;
+		hybridTrie.insert(words);
+	}
+	
+	@Test (expected = HybridTrieError.class)
+	public final void testInsertEmptyWords() {
+		final ArrayList<String> words = new ArrayList<String>();
+		hybridTrie.insert(words);
 	}
 	
 	@Test
-	public final void testSearchNegtive() {	
-		assertFalse("words not found", hybridTrie.search("lourd"));
-		assertFalse("words not found", hybridTrie.search("lour"));
-		assertFalse("words not found", hybridTrie.search("d"));
+	public final void runNominalTestSearch() {				
+//		// before adding words
+//		testSearch(new HybridTrie(), "lourds", false);
+//		testSearch(new HybridTrie(), "dans", false);
+//		
+//		// after adding words
+//		testSearch(hybridTrie, "lourds", true);
+//		testSearch(hybridTrie, "dans", true);
+//		testSearch(hybridTrie, "le", true);
+//		testSearch(hybridTrie, "lourd", false);
+//		testSearch(hybridTrie, "lour", false);
+//		testSearch(hybridTrie, "d", false);
 	}
-
-	@Test
-	public final void testCountWordsAtBeginning() {
-		ITrie hybridTrie = new HybridTrie();
-		final int expectedHybridTrieSize = 0;
-		final int calculatedHybridTrieSize = hybridTrie.countWords();
-		assertEquals("there is "+ expectedHybridTrieSize + " word", calculatedHybridTrieSize, expectedHybridTrieSize);	
+	
+	@Test (expected = HybridTrieError.class)
+	public final void runExceptionalTestSearch_1() {
+		// case word is null
+		testSearch(hybridTrie, null, false);
+	}
+	
+	@Test (expected = HybridTrieError.class)
+	public final void runExceptionalTestSearch_2() {
+		// case word is empty
+		testSearch(hybridTrie, "", false);
 	}
 	
 	@Test
-	public final void testCountWordsAtEnd() {
-		final int expectedHybridTrieSize = 12;
-		final int calculatedHybridTrieSize = hybridTrie.countWords();
-		assertEquals("there are "+ expectedHybridTrieSize + " words", calculatedHybridTrieSize, expectedHybridTrieSize);
+	public final void runNominalTestCountWords() {				
+		// before adding words
+		testCountWords(new HybridTrie(), 0);
+		
+		// after adding words
+		testCountWords(hybridTrie, 12);
 	}
 	
 	@Test
-	public final void testListWordsAtBeginning() {				
-		final ArrayList<String> expectedHybridTrieList = null;
-		ITrie hybridTrie = new HybridTrie();
-		final ArrayList<String> calculatedHybridTrieList = hybridTrie.listWords();
-		assertEquals("listing words by ascending order", calculatedHybridTrieList, expectedHybridTrieList);
-	}	
-	
-	@Test
-	public final void testListWordsAtEnd() {				
+	public final void runNominalTestListWords() {				
+		// before adding words
+		testListWords(new HybridTrie(), null);
+		
+		// after adding words
 		Collections.sort(wordsList);
-		final ArrayList<String> expectedHybridTrieList = wordsList;
-		final ArrayList<String> calculatedHybridTrieList = hybridTrie.listWords();
-		assertEquals("listing words by ascending order", calculatedHybridTrieList, expectedHybridTrieList);
+		testListWords(hybridTrie, wordsList);
 	}
-
+		
 	@Test
-	public final void testCountNullAtBeginning() {
-		final int expectedHybridTrieList = 0;
-		ITrie hybridTrie = new HybridTrie();
-		final int calculatedHybridTrieList = hybridTrie.countNull();		
-		assertEquals(expectedHybridTrieList + " nil pointer found", calculatedHybridTrieList, expectedHybridTrieList);
+	public final void runNominalTestCountNull() {
+		// before adding words
+		testCountNull(new HybridTrie(), 0);
+		
+		// after adding words
+		testCountNull(hybridTrie, 69);
 	}
 	
 	@Test
-	public final void testCountNullAtEnd() {
-		final int expectedHybridTrieList = 69;
-		final int calculatedHybridTrieList = hybridTrie.countNull();		
-		assertEquals(expectedHybridTrieList + " nil pointers found", calculatedHybridTrieList, expectedHybridTrieList);
-	}
-	
-	@Test
-	public final void testHeightAtBeginning() {
-		ITrie hybridTrie = new HybridTrie();
-		final int expectedHybridTrieHeight = 0;
-		final int calculatedHybridTrieHeight = hybridTrie.height();
-		assertEquals("the height is " + expectedHybridTrieHeight, calculatedHybridTrieHeight, expectedHybridTrieHeight);	
+	public final void runNominalTestHeight() {
+		// before adding words
+		testHeight(new HybridTrie(), 0);
+		
+		// after adding words
+		testHeight(hybridTrie, 6);
 	}
 
 	@Test
-	public final void testHeightAtEnd() {
-		final int expectedHybridTrieHeight = 6;
-		final int calculatedHybridTrieHeight = hybridTrie.height();
-		assertEquals("the height is " + expectedHybridTrieHeight, calculatedHybridTrieHeight, expectedHybridTrieHeight);	
-	}
-	
-	@Test
-	public final void testAverageDepthAtBeginning() {
-		final double delta = 0.1; //FIXME
-		final double expectedHybridTrieAverageDepth = 0;
-		ITrie hybridTrie = new HybridTrie();
-		final double calculatedHybridTrieAverageDepth = hybridTrie.averageDepth();
-		assertEquals("the average depth is " + expectedHybridTrieAverageDepth, calculatedHybridTrieAverageDepth, expectedHybridTrieAverageDepth, delta);
-	}
-	
-	@Test
-	public final void testAverageDepthAtEnd() {
-		final int someDepths = 49;
-		final int someNodes = 34;
-		final double delta = 0.1; //FIXME
-		final double expectedHybridTrieAverageDepth = (double)someDepths / (double)someNodes;
-		final double calculatedHybridTrieAverageDepth = hybridTrie.averageDepth();
-		assertEquals("the average depth is " + expectedHybridTrieAverageDepth, calculatedHybridTrieAverageDepth, expectedHybridTrieAverageDepth, delta);
+	public final void runNominalTestAverageDepth() {
+		// before adding words
+		testAverageDepth(new HybridTrie(), 0);
+
+		// after adding words
+		final double someDepths = 49.0;
+		final double someNodes = 34.0;
+		testAverageDepth(hybridTrie, someDepths/someNodes);
 	}
 
 	@Test
-	public final void testPrefix() {
-		// TODO
+	public final void runNominalTestPrefix() {
+		// before adding words
+		testPrefix(new HybridTrie(), "lou", 0);
+		testPrefix(new HybridTrie(), "ta", 0);
+		testPrefix(new HybridTrie(), "l", 0);
+		
+		// after adding words
+		testPrefix(hybridTrie, "lou", 3);
+		testPrefix(hybridTrie, "ta", 1);
+		testPrefix(hybridTrie, "lox", 0);
+		testPrefix(hybridTrie, "lourds", 1);
+		testPrefix(hybridTrie, "lourd.", 0);
+		testPrefix(hybridTrie, "le", 3);
+		testPrefix(hybridTrie, "t", 1);
+		testPrefix(hybridTrie, "l", 7);
 	}
-
+	
+	@Test (expected = HybridTrieError.class)
+	public final void runExceptionalTestPrefix_1() {
+		// case word is null
+		testPrefix(hybridTrie, null, -1);
+	}
+	
+	@Test (expected = HybridTrieError.class)
+	public final void runExceptionalTestPrefix_2() {
+		// case word is empty
+		testPrefix(hybridTrie, "", -1);
+	}
+	
 	@Test
 	public final void testRemove() {
 		// TODO

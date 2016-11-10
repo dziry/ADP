@@ -17,7 +17,7 @@ public interface ITrie {
 	int height();
 	double averageDepth();
 	int prefix(String word);
-	ITrie remove(String word);
+	boolean remove(String word);
 	
 	// Show visual preview
 	void print(String fileName);

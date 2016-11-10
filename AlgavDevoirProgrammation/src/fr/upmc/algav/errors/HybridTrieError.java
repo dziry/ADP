@@ -1,11 +1,10 @@
 package fr.upmc.algav.errors;
 
+@SuppressWarnings("serial")
 public class HybridTrieError extends Error {
-
-	private static final long serialVersionUID = 1L;
 	
 	public HybridTrieError(String message) {  
-		super("HybridTrieError : " + message); 
+		super(message); 
 	}  
 
 	public HybridTrieError(Throwable cause) {  
@@ -13,7 +12,6 @@ public class HybridTrieError extends Error {
 	}  
 
 	public HybridTrieError(String message, Throwable cause) {  
-		super("HybridTrieError : " + message, cause); 
+		super(message, cause); 
 	}
-
 }

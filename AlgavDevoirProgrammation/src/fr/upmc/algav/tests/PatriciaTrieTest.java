@@ -6,7 +6,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class PatriciaTrieTest {
+public class PatriciaTrieTest extends AbstractTrieTest {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {}
@@ -21,67 +21,67 @@ public class PatriciaTrieTest {
 	public void tearDown() throws Exception {}
 
 	@Test
-	public final void testIsEmpty() {
+	public final void runNominalTestIsEmpty() {
 		// TODO
 	}
 
 	@Test
-	public final void testInsert() {
+	public final void runNominalTestInsert() {
 		// TODO
 	}
 
 	@Test
-	public final void testSearch() {
+	public final void runNominalTestSearch() {
 		// TODO
 	}
 
 	@Test
-	public final void testCountWords() {
+	public final void runNominalTestCountWords() {
 		// TODO
 	}
 
 	@Test
-	public final void testListWords() {				
+	public final void runNominalTestListWords() {				
 		// TODO
 	}
 
 	@Test
-	public final void testCountNull() {
+	public final void runNominalTestCountNull() {
 		// TODO
 	}
 
 	@Test
-	public final void testHeight() {
+	public final void runNominalTestHeight() {
 		// TODO
 	}
 
 	@Test
-	public final void testAverageDepth() {
+	public final void runNominalTestAverageDepth() {
 		// TODO
 	}
 
 	@Test
-	public final void testPrefix() {
+	public final void runNominalTestPrefix() {
 		// TODO
 	}
 
 	@Test
-	public final void testRemove() {
+	public final void runNominalTestRemove() {
 		// TODO
 	}
 
 	@Test
-	public final void testPrint() {
+	public final void runNominalTestPrint() {
 		// TODO
 	}
 
 	@Test
-	public final void testMerge() {
+	public final void runNominalTestMerge() {
 		// TODO
 	}
 
 	@Test
-	public final void testToHybridTrie() {
+	public final void runNominalTestToHybridTrie() {
 		// TODO
 	}
 }

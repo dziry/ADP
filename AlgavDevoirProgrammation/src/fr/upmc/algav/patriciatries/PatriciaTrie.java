@@ -2,21 +2,19 @@ package fr.upmc.algav.patriciatries;
 
 import java.util.ArrayList;
 
-import fr.upmc.algav.patriciatries.helper.AlphabetHelper;
-
 import fr.upmc.algav.hybridtries.IHybridTrie;
-import fr.upmc.algav.interfaces.ITrie;
+import fr.upmc.algav.patriciatries.helper.AlphabetHelper;
 
 public class PatriciaTrie implements IPatriciaTrie {
 
-	private PatriciaTreeNode rootNode;
+	private PatriciaTrieNode rootNode;
 	private final Alphabet usedAlphabet;
 	private int wordCount;
 
 	public PatriciaTrie(Alphabet usedAlphabet) {
 		this.usedAlphabet = usedAlphabet;
 		this.wordCount = 0;
-		this.rootNode = new PatriciaTreeNode(usedAlphabet.getNodeArity(), false);
+		this.rootNode = new PatriciaTrieNode(usedAlphabet.getNodeArity(), false);
 	}
 
 	@Override
@@ -29,11 +27,11 @@ public class PatriciaTrie implements IPatriciaTrie {
 		insertCharacterSequenceInTree(rootNode, word);
 	}
 
-	private void insertCharacterSequenceInTree(PatriciaTreeNode currentNode, String word) {
+	private void insertCharacterSequenceInTree(PatriciaTrieNode currentNode, String word) {
 		// Use the index of the first character of the word to get the edge that is the only
 		// possible option for this word.
 		int indexOfFirstCharacterOfWord = AlphabetHelper.getIndexForFirstCharOfWord(word);
-		PatriciaTreeEdge currentSequence = currentNode.getEdgeByIndex(indexOfFirstCharacterOfWord);
+		PatriciaTrieEdge currentSequence = currentNode.getEdgeByIndex(indexOfFirstCharacterOfWord);
 
 		if (currentSequence == null) {
 			// There's no edge yet labeled with at least the first character of the word.
@@ -94,14 +92,14 @@ public class PatriciaTrie implements IPatriciaTrie {
 				String remainingEdgePrefixValue = currentSequence.getEdgeValue().substring(equalCharactersIndex);
 				String remainingWord = word.substring(equalCharactersIndex);
 				// Store the current's edge current child node because we need it later.
-				final PatriciaTreeNode oldCurrentEdgeChildNode = currentSequence.getChildNode();
+				final PatriciaTrieNode oldCurrentEdgeChildNode = currentSequence.getChildNode();
 
 				// Create the new child node for the current edge.
-				PatriciaTreeNode newCurrentEdgeChildNode = new PatriciaTreeNode(usedAlphabet.getNodeArity(), false);
+				PatriciaTrieNode newCurrentEdgeChildNode = new PatriciaTrieNode(usedAlphabet.getNodeArity(), false);
 
 				// Create new edge with the remaining characters of the current edge's prefix as edge value.
 				int indexForNewEdge = AlphabetHelper.getIndexForFirstCharOfWord(remainingEdgePrefixValue);
-				PatriciaTreeEdge remainingPrefixEdge = new PatriciaTreeEdge(
+				PatriciaTrieEdge remainingPrefixEdge = new PatriciaTrieEdge(
 						newCurrentEdgeChildNode,
 						oldCurrentEdgeChildNode,
 						remainingEdgePrefixValue, false, indexForNewEdge
@@ -169,9 +167,9 @@ public class PatriciaTrie implements IPatriciaTrie {
 	}
 
 	@Override
-	public ITrie remove(String word) {
+	public boolean remove(String word) {
 		// TODO Auto-generated method stub
-		return null;
+		return false;
 	}
 
 	@Override
