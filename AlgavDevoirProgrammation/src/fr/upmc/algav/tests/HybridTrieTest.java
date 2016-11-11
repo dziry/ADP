@@ -30,16 +30,16 @@ public class HybridTrieTest extends AbstractTrieTest {
     public static void setUpBeforeClass() throws Exception {		
 		reader = new Reader(EXAMPLE_PATH);
 		wordsList = new ArrayList<String>();
-		wordsList = reader.read();
+		wordsList = reader.read();		
 		hybridTrie = new HybridTrie();
-		hybridTrie.insert(wordsList);		
+		hybridTrie.insert(wordsList);
     }
 
     @AfterClass
     public static void tearDownAfterClass() throws Exception {}
     
 	@Before
-	public void setUp() throws Exception {}
+	public void setUp() throws Exception { }
 
 	@After
 	public void tearDown() throws Exception {}
@@ -115,17 +115,17 @@ public class HybridTrieTest extends AbstractTrieTest {
 	
 	@Test
 	public final void runNominalTestSearch() {				
-//		// before adding words
-//		testSearch(new HybridTrie(), "lourds", false);
-//		testSearch(new HybridTrie(), "dans", false);
-//		
-//		// after adding words
-//		testSearch(hybridTrie, "lourds", true);
-//		testSearch(hybridTrie, "dans", true);
-//		testSearch(hybridTrie, "le", true);
-//		testSearch(hybridTrie, "lourd", false);
-//		testSearch(hybridTrie, "lour", false);
-//		testSearch(hybridTrie, "d", false);
+		// before adding words
+		testSearch(new HybridTrie(), "lourds", false);
+		testSearch(new HybridTrie(), "dans", false);
+		
+		// after adding words
+		testSearch(hybridTrie, "lourds", true);
+		testSearch(hybridTrie, "dans", true);
+		testSearch(hybridTrie, "le", true);
+		testSearch(hybridTrie, "lourd", false);
+		testSearch(hybridTrie, "lour", false);
+		testSearch(hybridTrie, "d", false);
 	}
 	
 	@Test (expected = HybridTrieError.class)
@@ -155,8 +155,9 @@ public class HybridTrieTest extends AbstractTrieTest {
 		testListWords(new HybridTrie(), null);
 		
 		// after adding words
-		Collections.sort(wordsList);
-		testListWords(hybridTrie, wordsList);
+		ArrayList<String> wordsListClone = new ArrayList<String>(wordsList);		
+		Collections.sort(wordsListClone);
+		testListWords(hybridTrie, wordsListClone);
 	}
 		
 	@Test
@@ -219,26 +220,44 @@ public class HybridTrieTest extends AbstractTrieTest {
 	}
 	
 	@Test
-	public final void testRemove() {
-		// TODO				
+	public final void runNominalTestRemove() {
+		// before adding words
+		testRemove(new HybridTrie(), "luxe", -1, -1);
+		
+		// setUp before start removing words
+		ITrie hybridTrie = new HybridTrie();
+		hybridTrie.insert(wordsList);
 		hybridTrie.insert("l");
-		
-		hybridTrie.print("original");		
-		
-		hybridTrie.remove("luxe");
-		hybridTrie.remove("leve");
-		hybridTrie.remove("les");
-		hybridTrie.remove("lourds");
-		hybridTrie.remove("loups");
-		
-		hybridTrie.remove("le");
-		hybridTrie.remove("lou");
-
-		hybridTrie.remove("l");
-		
-		hybridTrie.print("remove");
+		hybridTrie.print("original");
+			
+		// after adding words
+		testRemove(hybridTrie, "luxe", hybridTrie.countNull() - 6, hybridTrie.height() - 0);
+		testRemove(hybridTrie, "leve", hybridTrie.countNull() - 4, hybridTrie.height() - 0);
+		testRemove(hybridTrie, "les", hybridTrie.countNull() - 2, hybridTrie.height() - 0);
+		testRemove(hybridTrie, "lou", hybridTrie.countNull() - 0, hybridTrie.height() - 0);
+		testRemove(hybridTrie, "lourds", hybridTrie.countNull() - 6, hybridTrie.height() - 0);
+		testRemove(hybridTrie, "loups", hybridTrie.countNull() - 8, hybridTrie.height() - 0);
+		testRemove(hybridTrie, "le", hybridTrie.countNull() - 2, hybridTrie.height() - 0);
+		testRemove(hybridTrie, "l", hybridTrie.countNull() - 2, hybridTrie.height() - 1);
+		testRemove(hybridTrie, "olive", hybridTrie.countNull() - 10, hybridTrie.height() - 1);
+		testRemove(hybridTrie, "tapis", hybridTrie.countNull() - 10, hybridTrie.height() - 0);
+		testRemove(hybridTrie, "vert", hybridTrie.countNull() - 8, hybridTrie.height() - 1);
+		testRemove(hybridTrie, "dans", hybridTrie.countNull() - 6, hybridTrie.height() - 2);
+		testRemove(hybridTrie, "de", hybridTrie.countNull() - 5, hybridTrie.height() - 1);
 	}
 
+	@Test (expected = HybridTrieError.class)
+	public final void runExceptionalTestRemove_1() {
+		// case word is null
+		testRemove(hybridTrie, null, -1, -1);
+	}
+	
+	@Test (expected = HybridTrieError.class)
+	public final void runExceptionalTestRemove_2() {
+		// case word is empty
+		testRemove(hybridTrie, "", -1, -1);
+	}
+	
 	@Test
 	public final void testPrint() {
 		// TODO
