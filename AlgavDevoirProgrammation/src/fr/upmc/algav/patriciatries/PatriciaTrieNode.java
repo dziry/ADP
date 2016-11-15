@@ -1,5 +1,7 @@
 package fr.upmc.algav.patriciatries;
 
+import fr.upmc.algav.patriciatries.helper.AlphabetHelper;
+
 import java.util.ArrayList;
 
 /**
@@ -8,82 +10,67 @@ import java.util.ArrayList;
 public class PatriciaTrieNode {
     private int arity;
     private boolean isLeaf;
-    private ArrayList<PatriciaTrieEdge> edgesToChildren;
+    private ArrayList<String> edgeValues;
+    private ArrayList<PatriciaTrieNode> childNodes;
 
     public PatriciaTrieNode(int arity, boolean isLeaf) {
         this.arity = arity;
         this.isLeaf = isLeaf;
+        this.edgeValues = new ArrayList<>();
+        this.childNodes = new ArrayList<>();
 
-        if (isLeaf) {
+        if (!isLeaf) {
             initNullEdges();
         }
     }
 
-    public PatriciaTrieNode(int arity, ArrayList<PatriciaTrieEdge> edges) {
-        this(arity, false);
-
-        this.edgesToChildren = edges;
-    }
-
     private void initNullEdges() {
-        this.edgesToChildren = new ArrayList<>();
-
         for (int i = 0; i < arity; i++) {
-            this.edgesToChildren.add(null);
+            edgeValues.add(null);
+            childNodes.add(null);
         }
     }
 
-    public ArrayList<PatriciaTrieEdge> getEdges() {
-        return edgesToChildren;
+    public String getConcernedEdgeForValue(String value) {
+        return edgeValues.get(AlphabetHelper.getIndexForFirstCharOfWord(value));
     }
 
-    public PatriciaTrieEdge getEdgeByIndex(int edgeIndex) {
-        return isLeaf ? null : edgesToChildren.get(edgeIndex);
+    public void addNewValuedResultEdge(String edgeValueToInsert) {
+        testForNodeStateChange();
+        addEdge(AlphabetHelper.getIndexForFirstCharOfWord(edgeValueToInsert),
+                AlphabetHelper.makeResultWord(edgeValueToInsert));
     }
 
-    public void addNewEdgeWithWordAndResult(String edgeValue, int edgeIndex) {
-        checkIfTransformToInnerNode();
-
-        PatriciaTrieEdge edge = new PatriciaTrieEdge(this, new PatriciaTrieNode(arity, true),
-                                                     edgeValue, true, edgeIndex);
-        edgesToChildren.set(edgeIndex, edge);
+    public void addNewResultOnlyEdge() {
+        testForNodeStateChange();
+        addEdge(Alphabet.getEdgeIndexForEndOfWordCharacter(), Alphabet.getEndOfWordCharacter());
     }
 
-    public void addNewResultEdge() {
-        checkIfTransformToInnerNode();
-
-        PatriciaTrieEdge edge = new PatriciaTrieEdge(this, new PatriciaTrieNode(arity, true),
-                Alphabet.getEndOfWordCharacter(), true, Alphabet.getEdgeIndexForEndOfWordCharacter());
-
-        edgesToChildren.set(Alphabet.getEdgeIndexForEndOfWordCharacter(), edge);
+    private void addEdge(int edgeIndex, String edgeValue) {
+        edgeValues.set(edgeIndex, edgeValue);
+        childNodes.set(edgeIndex, new PatriciaTrieNode(arity, true));
     }
 
-    public void addNewNonKeyEdge(PatriciaTrieEdge edge, int edgeIndex) {
-        checkIfTransformToInnerNode();
-
-        edgesToChildren.set(edgeIndex, edge);
-    }
-
-    private void checkIfTransformToInnerNode() {
-        // If node was a leaf so far, make it an inner node and initialize all edges
+    private void testForNodeStateChange() {
         if (isLeaf) {
             isLeaf = false;
             initNullEdges();
         }
     }
 
-    public boolean hasOnlyNullEdges() {
-        boolean res = true;
+    public boolean isLeaf() {
+        return isLeaf;
+    }
 
-        if (!isLeaf) {
-            for (PatriciaTrieEdge childEdge : edgesToChildren) {
-                if (childEdge != null) {
-                    res = false;
-                    break;
-                }
-            }
-        }
+    public boolean hasEdgeValue(String edgeValue) {
+        return edgeValues.contains(edgeValue);
+    }
 
-        return res;
+    public PatriciaTrieNode getChildNodeForEdgeValue(String edgeValue) {
+        return isLeaf ? null : childNodes.get(edgeValues.indexOf(edgeValue));
+    }
+
+    public void setEdge(String edgeValue, PatriciaTrieNode childNode) {
+
     }
 }

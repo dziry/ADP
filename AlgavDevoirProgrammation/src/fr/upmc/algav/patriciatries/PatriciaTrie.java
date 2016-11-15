@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import fr.upmc.algav.hybridtries.IHybridTrie;
 import fr.upmc.algav.patriciatries.helper.AlphabetHelper;
+import fr.upmc.algav.patriciatries.helper.PatriciaTrieHelper;
 
 public class PatriciaTrie implements IPatriciaTrie {
 
@@ -14,12 +15,12 @@ public class PatriciaTrie implements IPatriciaTrie {
 	public PatriciaTrie(Alphabet usedAlphabet) {
 		this.usedAlphabet = usedAlphabet;
 		this.wordCount = 0;
-		this.rootNode = new PatriciaTrieNode(usedAlphabet.getNodeArity(), false);
+		this.rootNode = new PatriciaTrieNode(usedAlphabet.getNodeArity(), true);
 	}
 
 	@Override
 	public boolean isEmpty() {
-		return rootNode.hasOnlyNullEdges();
+		return rootNode.isLeaf();
 	}
 
 	@Override
@@ -28,91 +29,53 @@ public class PatriciaTrie implements IPatriciaTrie {
 	}
 
 	private void insertCharacterSequenceInTree(PatriciaTrieNode currentNode, String word) {
-		// Use the index of the first character of the word to get the edge that is the only
-		// possible option for this word.
-		int indexOfFirstCharacterOfWord = AlphabetHelper.getIndexForFirstCharOfWord(word);
-		PatriciaTrieEdge currentSequence = currentNode.getEdgeByIndex(indexOfFirstCharacterOfWord);
-
-		if (currentSequence == null) {
-			// There's no edge yet labeled with at least the first character of the word.
-			// E.g. Inserted word = "dog"
-			// -> We can insert the full word as new edge and mark this edge as result edge.
-			currentNode.addNewEdgeWithWordAndResult(word, indexOfFirstCharacterOfWord);
+		if (currentNode.isLeaf()) {
+			// There are now edges yet to test. Just insert the whole word as new edge.
+			currentNode.addNewValuedResultEdge(word);
 		} else {
-			// There's a edge that contains at least the first character of the word as prefix.
-			// E.g. Inserted word = "dogma" and edge prefix = "dog"
-			// or Inserted word = "cats" and edge prefix = "c"
-			// -> Test how much common characters the edge prefix and the word have.
-			char[] edgeValueChars = currentSequence.getEdgeValue().toCharArray();
-			char[] wordChars = word.toCharArray();
-			int equalCharactersIndex = 0;
+			// There are already edge values for this node
+			String commonPrefix = PatriciaTrieHelper.getCommonPrefix(currentNode, word);
 
-			// As long as we're finding common characters, test the next character.
-			while (true) {
-				try {
-					if (edgeValueChars[equalCharactersIndex] == wordChars[equalCharactersIndex]) {
-						// We have found a new common character!
-						equalCharactersIndex++;
-					} else {
-						// First difference in edge prefix and inserted word.
-						// -> End the comparison.
-						break;
-					}
-				} catch (ArrayIndexOutOfBoundsException e) {
-					// Reached the end of the word, the edge prefix or both.
-					// -> End the comparison.
-					break;
-				}
-			}
-
-			int remainingCharsForEdgePrefix = edgeValueChars.length - equalCharactersIndex;
-			int remainingCharsForWord = wordChars.length - equalCharactersIndex;
-
-			if (remainingCharsForEdgePrefix <= 0) {
-				// The inserted word contains the whole edge prefix.
-
-				if (remainingCharsForWord <= 0) {
-					// The word itself is also finished.
-					// E.g. Inserted word = "why" and edge prefix = "why"
-					// -> We add a result edge for signaling that a word ends here.
-					currentNode.addNewResultEdge();
-				} else {
-					// The word itself is not yet finished.
-					// E.g. Inserted word = "however" and edge prefix = "how"
-					// -> Insert the remaining characters of the word for the child node of the current edge.
-					String remainingWord = word.substring(equalCharactersIndex);
-					insertCharacterSequenceInTree(currentSequence.getChildNode(), remainingWord);
-				}
+			if (commonPrefix == null) {
+				// We have no shared prefix. Just insert the whole word as new edge
+				currentNode.addNewValuedResultEdge(word);
 			} else {
-				// The inserted word contains only a part of the edge prefix.
-				// E.g. Inserted word = "talking", Edge Value = "talked"
-				// -> We have to split the path!
+				String edgeValue = currentNode.getConcernedEdgeForValue(word);
+				String wordWithoutCommonPrefix = word.substring(commonPrefix.length());
+				String edgeValueWithoutCommonPrefix = edgeValue.substring(commonPrefix.length());
 
-				String commonPrefix = currentSequence.getEdgeValue().substring(0, equalCharactersIndex);
-				String remainingEdgePrefixValue = currentSequence.getEdgeValue().substring(equalCharactersIndex);
-				String remainingWord = word.substring(equalCharactersIndex);
-				// Store the current's edge current child node because we need it later.
-				final PatriciaTrieNode oldCurrentEdgeChildNode = currentSequence.getChildNode();
+				if (edgeValueWithoutCommonPrefix.length() <= 0) {
+					// The inserted word contains the whole edge prefix.
 
-				// Create the new child node for the current edge.
-				PatriciaTrieNode newCurrentEdgeChildNode = new PatriciaTrieNode(usedAlphabet.getNodeArity(), false);
+					if (wordWithoutCommonPrefix.length() <= 0) {
+						// The word itself is also finished.
+						// E.g. Inserted word = "why" and edge prefix = "why"
+						// -> We add a result edge for signaling that a word ends here.
+						currentNode.addNewResultOnlyEdge();
+					} else {
+						// The word itself is not yet finished.
+						// E.g. Inserted word = "however" and edge prefix = "how"
+						// -> Insert the remaining characters of the word for the child node of the current edge.
+						insertCharacterSequenceInTree(currentNode.getChildNodeForEdgeValue(edgeValue),
+														wordWithoutCommonPrefix);
+					}
+				} else {
+					// The inserted word contains only a part of the edge prefix.
+					// E.g. Inserted word = "talking", Edge Value = "talked"
+					// -> We have to split the path!
 
-				// Create new edge with the remaining characters of the current edge's prefix as edge value.
-				int indexForNewEdge = AlphabetHelper.getIndexForFirstCharOfWord(remainingEdgePrefixValue);
-				PatriciaTrieEdge remainingPrefixEdge = new PatriciaTrieEdge(
-						newCurrentEdgeChildNode,
-						oldCurrentEdgeChildNode,
-						remainingEdgePrefixValue, false, indexForNewEdge
-				);
+					// Store the current's edge current child node because we need it later.
+					final PatriciaTrieNode oldCurrentEdgeChildNode = currentNode.getChildNodeForEdgeValue(edgeValue);
 
-				// Add the new edge to the new child node of the current edge.
-				newCurrentEdgeChildNode.addNewNonKeyEdge(remainingPrefixEdge, indexForNewEdge);
-				// Add the new child node to the current edge.
-				currentSequence.updateChildNode(newCurrentEdgeChildNode);
-				// Set the common prefix of the inserted word and the previous prefix as value for the current edge.
-				currentSequence.updateEdgeValue(commonPrefix);
-				// Do the same insertion for the remaining characters of the word
-				insertCharacterSequenceInTree(newCurrentEdgeChildNode, remainingWord);
+					// Create the new child node for the current edge.
+					PatriciaTrieNode newCurrentEdgeChildNode = new PatriciaTrieNode(usedAlphabet.getNodeArity(), false);
+					// Add the old child node as child node of the newly created child node
+					newCurrentEdgeChildNode.setEdge(edgeValueWithoutCommonPrefix, oldCurrentEdgeChildNode);
+					// Add the new child node to the current node
+					currentNode.setEdge(commonPrefix, newCurrentEdgeChildNode);
+					// Do the same insertion for the remaining characters of the word
+					insertCharacterSequenceInTree(newCurrentEdgeChildNode, wordWithoutCommonPrefix);
+				}
 			}
 		}
 	}
@@ -126,8 +89,21 @@ public class PatriciaTrie implements IPatriciaTrie {
 	
 	@Override
 	public boolean search(String word) {
-		// TODO Auto-generated method stub
-		return false;
+		return searchWord(word, rootNode);
+	}
+
+	private boolean searchWord(String word, PatriciaTrieNode currentNode) {
+		boolean res = false;
+
+		if (word != null) {
+			if (word.isEmpty()) {
+				res = PatriciaTrieHelper.nodeContainsResultOnlyEdge(currentNode);
+			} else {
+				// TODO
+			}
+		}
+
+		return res;
 	}
 
 	@Override

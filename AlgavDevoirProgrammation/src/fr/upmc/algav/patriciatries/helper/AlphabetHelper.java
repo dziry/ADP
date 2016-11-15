@@ -1,5 +1,7 @@
 package fr.upmc.algav.patriciatries.helper;
 
+import fr.upmc.algav.patriciatries.Alphabet;
+
 /**
  * Created by amadeus on 20.10.16.
  */
@@ -33,5 +35,9 @@ public class AlphabetHelper {
 
     public static int getcharIdForChar(char c) {
         return Character.getNumericValue(c);
+    }
+
+    public static String makeResultWord(String word) {
+        return word + Alphabet.getEndOfWordCharacter();
     }
 }
