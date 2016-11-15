@@ -17,7 +17,7 @@ public class Writer {
 		try {
 			FileWriter fileWriter = new FileWriter(filePath, false);
 			this.outPut = new BufferedWriter(fileWriter);
-			System.out.print("Creating the file..\n");
+			System.out.println("Creating the file..");
 		}
 		catch(IOException ioe) {
 			System.out.print("Writer() error : ");
@@ -29,7 +29,7 @@ public class Writer {
 		try {						
 			outPut.write(text);			
 			outPut.flush();
-			System.out.print("Writing in the file..\n");			
+			System.out.print(".");			
 		}
 		catch(IOException ioe) {
 			System.out.print("write() error : ");
@@ -40,7 +40,7 @@ public class Writer {
 	public void close() {
 		try {									
 			outPut.close();
-			System.out.print("Closing the file..\n");
+			System.out.println("\nClosing the file..");
 			System.out.println("It can be found in : " + filePath);
 			System.out.println("Use this command line to open it : xdot " + fileName);
 			System.out.println("If xdot is is not installed, tape first : sudo apt install xdot");
