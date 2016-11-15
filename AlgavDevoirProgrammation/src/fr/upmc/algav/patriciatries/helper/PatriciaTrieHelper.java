@@ -20,14 +20,22 @@ public class PatriciaTrieHelper {
     }
 
     private static String getCommonPrefixForNodeAndValue(PatriciaTrieNode node, String word) {
-        if (word.isEmpty()) {
-            // We haven't found a shared prefix for the node and the word
-            return null;
-        } else if (node.hasEdgeValue(word)) {
-            // The node contains the whole word as edge value
-            return word;
-        } else {
-            return getCommonPrefixForNodeAndValue(node, word.substring(0, word.length() - 1));
+        String commonPrefix = "";
+
+        String edgeValue = node.getConcernedEdgeForValue(word);
+        int index = 0;
+
+        if (edgeValue != null) {
+            try {
+                while (edgeValue.charAt(index) == word.charAt(index)) {
+                    commonPrefix += edgeValue.charAt(index);
+                    index++;
+                }
+            } catch (IndexOutOfBoundsException e) {
+                // No longer the same prefix
+            }
         }
+
+        return commonPrefix.isEmpty() ? null : commonPrefix;
     }
 }

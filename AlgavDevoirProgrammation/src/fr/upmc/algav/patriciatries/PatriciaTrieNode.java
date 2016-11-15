@@ -3,6 +3,8 @@ package fr.upmc.algav.patriciatries;
 import fr.upmc.algav.patriciatries.helper.AlphabetHelper;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 /**
  * Created by amadeus on 19.10.16.
@@ -12,8 +14,10 @@ public class PatriciaTrieNode {
     private boolean isLeaf;
     private ArrayList<String> edgeValues;
     private ArrayList<PatriciaTrieNode> childNodes;
+    private int nodeId;
 
-    public PatriciaTrieNode(int arity, boolean isLeaf) {
+    public PatriciaTrieNode(int nodeId, int arity, boolean isLeaf) {
+        this.nodeId = nodeId;
         this.arity = arity;
         this.isLeaf = isLeaf;
         this.edgeValues = new ArrayList<>();
@@ -35,20 +39,20 @@ public class PatriciaTrieNode {
         return edgeValues.get(AlphabetHelper.getIndexForFirstCharOfWord(value));
     }
 
-    public void addNewValuedResultEdge(String edgeValueToInsert) {
+    public void addNewValuedResultEdge(int nodeId, String edgeValueToInsert) {
         testForNodeStateChange();
-        addEdge(AlphabetHelper.getIndexForFirstCharOfWord(edgeValueToInsert),
+        addEdge(nodeId, AlphabetHelper.getIndexForFirstCharOfWord(edgeValueToInsert),
                 AlphabetHelper.makeResultWord(edgeValueToInsert));
     }
 
-    public void addNewResultOnlyEdge() {
+    public void addNewResultOnlyEdge(int nodeId) {
         testForNodeStateChange();
-        addEdge(Alphabet.getEdgeIndexForEndOfWordCharacter(), Alphabet.getEndOfWordCharacter());
+        addEdge(nodeId, Alphabet.getEdgeIndexForEndOfWordCharacter(), Alphabet.getEndOfWordCharacter());
     }
 
-    private void addEdge(int edgeIndex, String edgeValue) {
+    private void addEdge(int nodeId, int edgeIndex, String edgeValue) {
         edgeValues.set(edgeIndex, edgeValue);
-        childNodes.set(edgeIndex, new PatriciaTrieNode(arity, true));
+        childNodes.set(edgeIndex, new PatriciaTrieNode(nodeId, arity, true));
     }
 
     private void testForNodeStateChange() {
@@ -71,6 +75,28 @@ public class PatriciaTrieNode {
     }
 
     public void setEdge(String edgeValue, PatriciaTrieNode childNode) {
+        testForNodeStateChange();
 
+        int edgeIndex = AlphabetHelper.getIndexForFirstCharOfWord(edgeValue);
+        edgeValues.set(edgeIndex, edgeValue);
+        childNodes.set(edgeIndex, childNode);
+    }
+
+    public LinkedHashMap<String, PatriciaTrieNode> getAllNonNullEdgesToChildNodes() {
+        LinkedHashMap<String, PatriciaTrieNode> res = new LinkedHashMap<>();
+
+        if (!edgeValues.isEmpty() && !childNodes.isEmpty()) {
+            for (int i = 0; i < arity; i++) {
+                if (edgeValues.get(i) != null && childNodes.get(i) != null) {
+                    res.put(edgeValues.get(i), childNodes.get(i));
+                }
+            }
+        }
+
+        return res;
+    }
+
+    public int getNodeId() {
+        return nodeId;
     }
 }

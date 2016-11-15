@@ -356,7 +356,7 @@ public class HybridTrie implements IHybridTrie {
 	@Override
 	public void print(String fileName) {
 		Printer printer = new Printer(fileName);
-		printer.begin();
+		printer.beginDirected();
 		if (!root.isFinalNode()) {
 			printer.printNode(root);
 		} else {

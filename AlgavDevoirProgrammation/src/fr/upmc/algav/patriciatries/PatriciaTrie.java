@@ -1,21 +1,30 @@
 package fr.upmc.algav.patriciatries;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import fr.upmc.algav.hybridtries.IHybridTrie;
-import fr.upmc.algav.patriciatries.helper.AlphabetHelper;
 import fr.upmc.algav.patriciatries.helper.PatriciaTrieHelper;
+import fr.upmc.algav.tools.Printer;
 
 public class PatriciaTrie implements IPatriciaTrie {
 
 	private PatriciaTrieNode rootNode;
 	private final Alphabet usedAlphabet;
-	private int wordCount;
+	private int nodeCount;
 
 	public PatriciaTrie(Alphabet usedAlphabet) {
 		this.usedAlphabet = usedAlphabet;
-		this.wordCount = 0;
-		this.rootNode = new PatriciaTrieNode(usedAlphabet.getNodeArity(), true);
+		this.nodeCount = 0;
+		this.rootNode = new PatriciaTrieNode(getNewNodeId(), usedAlphabet.getNodeArity(), true);
+	}
+
+	private int getNewNodeId() {
+		final int newNodeId = nodeCount;
+		nodeCount++;
+
+		return newNodeId;
 	}
 
 	@Override
@@ -31,14 +40,14 @@ public class PatriciaTrie implements IPatriciaTrie {
 	private void insertCharacterSequenceInTree(PatriciaTrieNode currentNode, String word) {
 		if (currentNode.isLeaf()) {
 			// There are now edges yet to test. Just insert the whole word as new edge.
-			currentNode.addNewValuedResultEdge(word);
+			currentNode.addNewValuedResultEdge(getNewNodeId(), word);
 		} else {
 			// There are already edge values for this node
 			String commonPrefix = PatriciaTrieHelper.getCommonPrefix(currentNode, word);
 
 			if (commonPrefix == null) {
 				// We have no shared prefix. Just insert the whole word as new edge
-				currentNode.addNewValuedResultEdge(word);
+				currentNode.addNewValuedResultEdge(getNewNodeId(), word);
 			} else {
 				String edgeValue = currentNode.getConcernedEdgeForValue(word);
 				String wordWithoutCommonPrefix = word.substring(commonPrefix.length());
@@ -51,7 +60,7 @@ public class PatriciaTrie implements IPatriciaTrie {
 						// The word itself is also finished.
 						// E.g. Inserted word = "why" and edge prefix = "why"
 						// -> We add a result edge for signaling that a word ends here.
-						currentNode.addNewResultOnlyEdge();
+						currentNode.getChildNodeForEdgeValue(edgeValue).addNewResultOnlyEdge(getNewNodeId());
 					} else {
 						// The word itself is not yet finished.
 						// E.g. Inserted word = "however" and edge prefix = "how"
@@ -68,7 +77,8 @@ public class PatriciaTrie implements IPatriciaTrie {
 					final PatriciaTrieNode oldCurrentEdgeChildNode = currentNode.getChildNodeForEdgeValue(edgeValue);
 
 					// Create the new child node for the current edge.
-					PatriciaTrieNode newCurrentEdgeChildNode = new PatriciaTrieNode(usedAlphabet.getNodeArity(), false);
+					PatriciaTrieNode newCurrentEdgeChildNode = new PatriciaTrieNode(getNewNodeId(),
+													usedAlphabet.getNodeArity(), false);
 					// Add the old child node as child node of the newly created child node
 					newCurrentEdgeChildNode.setEdge(edgeValueWithoutCommonPrefix, oldCurrentEdgeChildNode);
 					// Add the new child node to the current node
@@ -149,8 +159,26 @@ public class PatriciaTrie implements IPatriciaTrie {
 	}
 
 	@Override
-	public void print(String FileName) {
-		// TODO Auto-generated method stub
+	public void print(String fileName) {
+		Printer printer = new Printer(fileName);
+		printer.beginUndirected();
+
+        printPatriciaTrie(rootNode, printer);
+
+        printer.end();
+    }
+
+	private static void printPatriciaTrie(PatriciaTrieNode currentNode, Printer printer) {
+		if (currentNode.isLeaf()) {
+            printer.printNode(currentNode);
+        } else {
+            HashMap<String, PatriciaTrieNode> existantEdgesToChildren = currentNode.getAllNonNullEdgesToChildNodes();
+
+            for (Map.Entry<String, PatriciaTrieNode> entry : existantEdgesToChildren.entrySet()) {
+                printer.printEdge(entry.getKey(), currentNode, entry.getValue());
+                printPatriciaTrie(entry.getValue(), printer);
+            }
+        }
 	}
 
 	@Override

@@ -3,6 +3,7 @@ package fr.upmc.algav.tools;
 import java.util.HashMap;
 
 import fr.upmc.algav.hybridtries.HybridTrieNode;
+import fr.upmc.algav.patriciatries.PatriciaTrieNode;
 
 public class Printer {
 
@@ -12,8 +13,8 @@ public class Printer {
 	
 	public Printer(String fileName) {
 		Printer.fileObject = new Writer(fileName);
-		color = new HashMap<Color, String>();
-		style = new HashMap<Style, String>();
+		color = new HashMap<>();
+		style = new HashMap<>();
 		
 		Printer.color.put(Color.BLUE, "blue");
 		Printer.color.put(Color.RED, "red");
@@ -31,8 +32,12 @@ public class Printer {
 		Printer.style.put(Style.DEFAULT, "default");
 	}
 
-	public void begin() {
+	public void beginDirected() {
 		fileObject.write("digraph G {\n");
+	}
+
+	public void beginUndirected() {
+		fileObject.write("graph G {\n");
 	}
 	
 	public void end() {
@@ -59,5 +64,22 @@ public class Printer {
 		fileObject.write("	\"" + startNode.getId() + 
 				     "\" -> \"" + arriveNode.getId() + 
 				   "\" [color=" + Printer.color.get(color) + "];\n");
-	}		
+	}
+
+	public void printNode(PatriciaTrieNode node) {
+		fileObject.write(" \"" + Integer.toString(node.getNodeId()) +
+				"\" [shape=ellipse style=filled fillcolor=black];\n");
+	}
+
+	public void printEdge(String edgeValue, PatriciaTrieNode parentNode, PatriciaTrieNode childNode) {
+		fileObject.write(
+				" \"" + Integer.toString(parentNode.getNodeId()) +
+				"\" [shape=ellipse style=filled fillcolor=black];\n" +
+				" \"" + Integer.toString(childNode.getNodeId()) +
+				"\" [shape=ellipse style=filled fillcolor=black];\n");
+
+		fileObject.write("     \"" + Integer.toString(parentNode.getNodeId()) +
+				"\" -- \"" + Integer.toString(childNode.getNodeId()) +
+				"\" [label=\"" + edgeValue + "\"];\n");
+	}
 }
