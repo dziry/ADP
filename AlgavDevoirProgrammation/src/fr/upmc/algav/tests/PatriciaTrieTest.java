@@ -69,7 +69,7 @@ public class PatriciaTrieTest extends AbstractTrieTest {
 	public final void runNominalTestRemove() {
 		// TODO
 	}
-
+	
 	@Test
 	public final void runNominalTestPrint() {
 		// TODO

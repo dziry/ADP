@@ -222,7 +222,7 @@ public class HybridTrieTest extends AbstractTrieTest {
 	@Test
 	public final void runNominalTestRemove() {
 		// before adding words
-		testRemove(new HybridTrie(), "luxe", -1, -1);
+		assertFalse("remove from an empty trie", new HybridTrie().remove("hello"));
 		
 		// setUp before start removing words
 		ITrie hybridTrie = new HybridTrie();
@@ -231,6 +231,8 @@ public class HybridTrieTest extends AbstractTrieTest {
 		hybridTrie.print("original");
 			
 		// after adding words
+		assertFalse("remove a word that does not exist in the trie", hybridTrie.remove("lourd"));
+		assertFalse("remove a word that does not exist in the trie", hybridTrie.remove("lourdss"));
 		testRemove(hybridTrie, "luxe", hybridTrie.countNull() - 6, hybridTrie.height() - 0);
 		testRemove(hybridTrie, "leve", hybridTrie.countNull() - 4, hybridTrie.height() - 0);
 		testRemove(hybridTrie, "les", hybridTrie.countNull() - 2, hybridTrie.height() - 0);
@@ -243,24 +245,24 @@ public class HybridTrieTest extends AbstractTrieTest {
 		testRemove(hybridTrie, "tapis", hybridTrie.countNull() - 10, hybridTrie.height() - 0);
 		testRemove(hybridTrie, "vert", hybridTrie.countNull() - 8, hybridTrie.height() - 1);
 		testRemove(hybridTrie, "dans", hybridTrie.countNull() - 6, hybridTrie.height() - 2);
-		testRemove(hybridTrie, "de", hybridTrie.countNull() - 5, hybridTrie.height() - 1);
+		testRemove(hybridTrie, "de", hybridTrie.countNull() - 5, hybridTrie.height() - 1);		
 	}
 
 	@Test (expected = HybridTrieError.class)
 	public final void runExceptionalTestRemove_1() {
 		// case word is null
-		testRemove(hybridTrie, null, -1, -1);
+		new HybridTrie().remove(null);
 	}
 	
 	@Test (expected = HybridTrieError.class)
 	public final void runExceptionalTestRemove_2() {
 		// case word is empty
-		testRemove(hybridTrie, "", -1, -1);
+		new HybridTrie().remove("");
 	}
 	
 	@Test
 	public final void testPrint() {
-		// TODO
+		// TODO		
 	}
 
 	@Test

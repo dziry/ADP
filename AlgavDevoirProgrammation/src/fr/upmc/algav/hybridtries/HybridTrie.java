@@ -271,8 +271,7 @@ public class HybridTrie implements IHybridTrie {
     				// if there is no end key as it does not exist within the tree
     				return false;
     			}
-    		}
-    		else if (position < key.length + 1) {
+    		} else if (position < key.length + 1) {
     			log = removeRecursively(node, node.getMiddleChild(), key, position + 1);
     		}
     	}
