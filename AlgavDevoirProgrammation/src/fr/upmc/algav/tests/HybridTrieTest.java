@@ -264,15 +264,13 @@ public class HybridTrieTest extends AbstractTrieTest {
 	public final void testPrint() {
 		// TODO		
 	}
-
-	@Test
-	public final void testIsBalanced() {
-		// TODO
-	}
 	
 	@Test
-	public final void testBalance() {
-		// TODO
+	public final void testInsertBalanced() {
+		// FIXME
+//		IHybridTrie balancedHybridTrie = new HybridTrie();
+//		balancedHybridTrie.insertBalanced(wordsList);
+//		balancedHybridTrie.print("balancedHybridTrie");
 	}
 	
 	@Test

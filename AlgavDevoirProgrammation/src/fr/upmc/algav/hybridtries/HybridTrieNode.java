@@ -4,9 +4,12 @@ import java.util.UUID;
 
 public class HybridTrieNode {
 
-	private char character;
-	private boolean isFinalNode;
-	private String uniqueId; // to identify it when printing the tree
+	private char character;	
+	
+	private int priority; // used when balancing the tree
+	private int stringPriority; // used when balancing the tree
+	
+	private String uniqueId; // used to identify the node when printing the tree
 	
 	private HybridTrieNode leftChild;
 	private HybridTrieNode middleChild;
@@ -14,7 +17,8 @@ public class HybridTrieNode {
 	
 	public HybridTrieNode(char character) {
 		this.character = character;
-		this.isFinalNode = false;
+		this.priority = 0;
+		this.stringPriority = 0; // nonterminal node, stringPriority value is 0
 		this.uniqueId = character + UUID.randomUUID().toString();
 		this.leftChild = null;
 		this.middleChild = null;
@@ -26,9 +30,17 @@ public class HybridTrieNode {
 	}
 	
 	public boolean isFinalNode() {
-		return isFinalNode;
+		return stringPriority != 0;
 	}
 
+	public int getPriority() {
+		return priority;
+	}
+	
+	public int getStringPriority() {
+		return stringPriority;
+	}
+	
 	public String getId() {
 		return uniqueId;
 	}
@@ -49,8 +61,12 @@ public class HybridTrieNode {
 		this.character = character;
 	}
 	
-	public void setIsFinalNode(boolean isFinalNode) {
-		this.isFinalNode = isFinalNode;
+	public void setIsFinalNode(int stringPriority) {
+		this.stringPriority = stringPriority;
+	}
+	
+	public void setPriority(int priority) {
+		this.priority = priority;
 	}
 	
 	public void setLeftChild(HybridTrieNode leftChild) {

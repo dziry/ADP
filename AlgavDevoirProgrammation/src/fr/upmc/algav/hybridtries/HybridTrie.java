@@ -1,6 +1,8 @@
 package fr.upmc.algav.hybridtries;
 
 import java.util.ArrayList;
+import java.util.PrimitiveIterator.OfInt;
+import java.util.concurrent.ThreadLocalRandom;
 
 import fr.upmc.algav.errors.HybridTrieError;
 import fr.upmc.algav.patriciatries.IPatriciaTrie;
@@ -10,7 +12,8 @@ import fr.upmc.algav.tools.Style;
 
 public class HybridTrie implements IHybridTrie {
 
-	private HybridTrieNode root;	
+	private HybridTrieNode root;
+	private final static int MAX_WORDS = 100;
 
 	public HybridTrie() {
 		this.root = null;
@@ -46,7 +49,7 @@ public class HybridTrie implements IHybridTrie {
 				// go middle, if equal (if we don't exceed the key)
 				node.setMiddleChild(insertRecursively(node.getMiddleChild(), key, position + 1));
 			} else if (!node.isFinalNode()) {
-				node.setIsFinalNode(true);
+				node.setIsFinalNode(1);
 			}
 		}
 		return node;
@@ -266,7 +269,7 @@ public class HybridTrie implements IHybridTrie {
     		if (position == key.length - 1) {
     			if (node.isFinalNode()) {
     				// node is an end node, remove the end value
-    				node.setIsFinalNode(false);
+    				node.setIsFinalNode(0);
     			} else {
     				// if there is no end key as it does not exist within the tree
     				return false;
@@ -394,19 +397,79 @@ public class HybridTrie implements IHybridTrie {
 	}
 
 	@Override
-	public boolean isBalanced() {
-		// TODO Auto-generated method stub
-		return false;
+	public void insertBalanced(String word) {
+		if (word == null || word.isEmpty()) {
+			throw new HybridTrieError("insertBalanced(word): word should not be null or empty!");
+		} else if (search(word) == true) {
+			/* word exist? -> ignore.. */ 
+		}
+		root = insertBalancedRecursively(root, word.toCharArray(), 0);
 	}
 
+	private static HybridTrieNode insertBalancedRecursively(HybridTrieNode node, char[] key, int position) {
+		if (node == null) {
+			node = new HybridTrieNode(key[position]);
+		}
+		if (key[position] < node.getCharacter()) {
+			node.setLeftChild(insertBalancedRecursively(node.getLeftChild(), key, position));
+			if (node.getLeftChild().getPriority() > node.getPriority()) {
+				node = rotateWithLeft(node);
+			}
+		} else if (key[position] > node.getCharacter()) {
+			node.setRightChild(insertBalancedRecursively(node.getRightChild(), key, position));
+			if (node.getRightChild().getPriority() > node.getPriority()) {
+				node = rotateWithRight(node);
+			}
+		} else {
+			if (position < key.length - 1) {
+				node.setMiddleChild(insertBalancedRecursively(node.getMiddleChild(), key, position + 1));
+			} else if (!node.isFinalNode()) {
+				node.setIsFinalNode(randomInteger(1, MAX_WORDS));
+				node.setPriority(max(node.getStringPriority(), node.getMiddleChild().getPriority())); // FIXME
+			}
+		}
+		return node;
+	}
+
+	// used for insertBalanced
+	private static HybridTrieNode rotateWithLeft(HybridTrieNode nodeX) {
+		HybridTrieNode nodeY = nodeX.getLeftChild();
+		nodeX.setLeftChild(nodeY.getRightChild());
+		nodeY.setRightChild(nodeX);
+		return nodeY;
+	}
+	
+	// used for insertBalanced
+	private static HybridTrieNode rotateWithRight(HybridTrieNode nodeX) {
+		HybridTrieNode nodeY = nodeX.getRightChild();
+		nodeX.setRightChild(nodeY.getLeftChild());
+		nodeY.setLeftChild(nodeX);
+		return nodeY;
+	}
+
+	// generate a random unique integer, used for insertBalanced
+	private static int randomInteger(int min, int max) {
+		OfInt iterator = ThreadLocalRandom.current().ints(min, max).distinct().iterator();
+		return iterator.next();
+	}
+	
+	// return the max between two numbers, used for insertBalanced
+	private static int max(int n1, int n2) {		
+		return (n1 > n2) ? n1 : n2;
+	}
+	
+	@Override
+	public void insertBalanced(ArrayList<String> words) {
+		if (words == null || words.size() < 1) {
+			throw new HybridTrieError("insertBalanced(words): words should not be null or empty!");
+		}
+		for (String word : words) {
+			insertBalanced(word);
+		}
+	}
+	
 	@Override
 	public IPatriciaTrie toPatriciaTrie() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public IHybridTrie balance(IHybridTrie trie) {
 		// TODO Auto-generated method stub
 		return null;
 	}
