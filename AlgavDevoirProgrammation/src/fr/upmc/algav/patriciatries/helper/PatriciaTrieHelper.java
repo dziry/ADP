@@ -38,4 +38,16 @@ public class PatriciaTrieHelper {
 
         return commonPrefix.isEmpty() ? null : commonPrefix;
     }
+
+    public static boolean wordIsAlreadyStoredForNode(PatriciaTrieNode node, String wordToInsert) {
+        boolean res = false;
+
+        String edgeValue = node.getConcernedEdgeForValue(wordToInsert);
+
+        if (edgeValue != null && wordToInsert != null) {
+            res = edgeValue.equals(AlphabetHelper.makeResultWord(wordToInsert));
+        }
+
+        return res;
+    }
 }

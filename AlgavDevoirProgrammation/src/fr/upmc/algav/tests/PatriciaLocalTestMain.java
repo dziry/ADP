@@ -18,6 +18,12 @@ public class PatriciaLocalTestMain {
         trie.insert("RUBICON");
         trie.insert("RUBICUNDUS");
         trie.insert("RUB");
+        trie.insert("ROMULUSBBB");
+        trie.insert("ROMANE");
+        trie.insert("ROMANE");
+        trie.insert("RUBER");
+        trie.insert("ROMANE");
+
         trie.print("test1.dot");
     }
 }

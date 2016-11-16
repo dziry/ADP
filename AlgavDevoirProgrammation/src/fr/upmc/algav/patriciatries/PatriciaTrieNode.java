@@ -41,8 +41,13 @@ public class PatriciaTrieNode {
 
     public void addNewValuedResultEdge(int nodeId, String edgeValueToInsert) {
         testForNodeStateChange();
-        addEdge(nodeId, AlphabetHelper.getIndexForFirstCharOfWord(edgeValueToInsert),
-                AlphabetHelper.makeResultWord(edgeValueToInsert));
+
+        if (Alphabet.getEndOfWordCharacter().equals(edgeValueToInsert)) {
+            addNewResultOnlyEdge(nodeId);
+        } else {
+            addEdge(nodeId, AlphabetHelper.getIndexForFirstCharOfWord(edgeValueToInsert),
+                    AlphabetHelper.makeResultWord(edgeValueToInsert));
+        }
     }
 
     public void addNewResultOnlyEdge(int nodeId) {

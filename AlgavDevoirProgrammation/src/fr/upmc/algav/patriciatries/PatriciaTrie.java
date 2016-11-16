@@ -39,7 +39,7 @@ public class PatriciaTrie implements IPatriciaTrie {
 
 	private void insertCharacterSequenceInTree(PatriciaTrieNode currentNode, String word) {
 		if (currentNode.isLeaf()) {
-			// There are now edges yet to test. Just insert the whole word as new edge.
+			// There are no edges yet to test. Just insert the whole word as new edge.
 			currentNode.addNewValuedResultEdge(getNewNodeId(), word);
 		} else {
 			// There are already edge values for this node
@@ -48,7 +48,9 @@ public class PatriciaTrie implements IPatriciaTrie {
 			if (commonPrefix == null) {
 				// We have no shared prefix. Just insert the whole word as new edge
 				currentNode.addNewValuedResultEdge(getNewNodeId(), word);
-			} else {
+			} else if (PatriciaTrieHelper.wordIsAlreadyStoredForNode(currentNode, word)) {
+                // Word is already stored --> Do nothing!
+            } else {
 				String edgeValue = currentNode.getConcernedEdgeForValue(word);
 				String wordWithoutCommonPrefix = word.substring(commonPrefix.length());
 				String edgeValueWithoutCommonPrefix = edgeValue.substring(commonPrefix.length());
@@ -73,18 +75,36 @@ public class PatriciaTrie implements IPatriciaTrie {
 					// E.g. Inserted word = "talking", Edge Value = "talked"
 					// -> We have to split the path!
 
-					// Store the current's edge current child node because we need it later.
-					final PatriciaTrieNode oldCurrentEdgeChildNode = currentNode.getChildNodeForEdgeValue(edgeValue);
+                    // For example: We want to store "BLA1" and "BLA" ist already stored.
+                    boolean isExtensionOfExistingWord =
+                            Alphabet.getEndOfWordCharacter().equals(edgeValueWithoutCommonPrefix) &&
+                                    !wordWithoutCommonPrefix.isEmpty();
 
-					// Create the new child node for the current edge.
-					PatriciaTrieNode newCurrentEdgeChildNode = new PatriciaTrieNode(getNewNodeId(),
-													usedAlphabet.getNodeArity(), false);
-					// Add the old child node as child node of the newly created child node
-					newCurrentEdgeChildNode.setEdge(edgeValueWithoutCommonPrefix, oldCurrentEdgeChildNode);
-					// Add the new child node to the current node
-					currentNode.setEdge(commonPrefix, newCurrentEdgeChildNode);
-					// Do the same insertion for the remaining characters of the word
-					insertCharacterSequenceInTree(newCurrentEdgeChildNode, wordWithoutCommonPrefix);
+                    if (isExtensionOfExistingWord) {
+                        // Store the current's edge current child node because we need it later.
+                        final PatriciaTrieNode oldCurrentEdgeChildNode = currentNode.getChildNodeForEdgeValue(edgeValue);
+
+                        // Set the edge value to the common prefix
+                        currentNode.setEdge(commonPrefix, oldCurrentEdgeChildNode);
+                        // Add new result edge to child node
+                        insertCharacterSequenceInTree(oldCurrentEdgeChildNode, Alphabet.getEndOfWordCharacter());
+                        // Add the remaining word for the word to be inserted as new edge
+                        insertCharacterSequenceInTree(oldCurrentEdgeChildNode, wordWithoutCommonPrefix);
+
+                    } else {
+                        // Store the current's edge current child node because we need it later.
+                        final PatriciaTrieNode oldCurrentEdgeChildNode = currentNode.getChildNodeForEdgeValue(edgeValue);
+
+                        // Create the new child node for the current edge.
+                        PatriciaTrieNode newCurrentEdgeChildNode = new PatriciaTrieNode(getNewNodeId(),
+                                usedAlphabet.getNodeArity(), false);
+                        // Add the old child node as child node of the newly created child node
+                        newCurrentEdgeChildNode.setEdge(edgeValueWithoutCommonPrefix, oldCurrentEdgeChildNode);
+                        // Add the new child node to the current node
+                        currentNode.setEdge(commonPrefix, newCurrentEdgeChildNode);
+                        // Do the same insertion for the remaining characters of the word
+                        insertCharacterSequenceInTree(newCurrentEdgeChildNode, wordWithoutCommonPrefix);
+                    }
 				}
 			}
 		}
@@ -99,19 +119,86 @@ public class PatriciaTrie implements IPatriciaTrie {
 	
 	@Override
 	public boolean search(String word) {
-		return searchWord(word, rootNode);
+		return word != null && searchWord(word, rootNode);
 	}
 
 	private boolean searchWord(String word, PatriciaTrieNode currentNode) {
 		boolean res = false;
 
-		if (word != null) {
-			if (word.isEmpty()) {
-				res = PatriciaTrieHelper.nodeContainsResultOnlyEdge(currentNode);
-			} else {
-				// TODO
-			}
-		}
+        /*if (word.isEmpty()) {
+            res = PatriciaTrieHelper.nodeContainsResultOnlyEdge(currentNode);
+        } else {
+            if (currentNode.isLeaf()) {
+                // There are no edges yet to test. Just insert the whole word as new edge.
+                currentNode.addNewValuedResultEdge(getNewNodeId(), word);
+            } else {
+                // There are already edge values for this node
+                String commonPrefix = PatriciaTrieHelper.getCommonPrefix(currentNode, word);
+
+                if (commonPrefix == null) {
+                    // We have no shared prefix. Just insert the whole word as new edge
+                    currentNode.addNewValuedResultEdge(getNewNodeId(), word);
+                } else if (PatriciaTrieHelper.wordIsAlreadyStoredForNode(currentNode, word)) {
+                    // Word is already stored --> Do nothing!
+                } else {
+                    String edgeValue = currentNode.getConcernedEdgeForValue(word);
+                    String wordWithoutCommonPrefix = word.substring(commonPrefix.length());
+                    String edgeValueWithoutCommonPrefix = edgeValue.substring(commonPrefix.length());
+
+                    if (edgeValueWithoutCommonPrefix.length() <= 0) {
+                        // The inserted word contains the whole edge prefix.
+
+                        if (wordWithoutCommonPrefix.length() <= 0) {
+                            // The word itself is also finished.
+                            // E.g. Inserted word = "why" and edge prefix = "why"
+                            // -> We add a result edge for signaling that a word ends here.
+                            currentNode.getChildNodeForEdgeValue(edgeValue).addNewResultOnlyEdge(getNewNodeId());
+                        } else {
+                            // The word itself is not yet finished.
+                            // E.g. Inserted word = "however" and edge prefix = "how"
+                            // -> Insert the remaining characters of the word for the child node of the current edge.
+                            insertCharacterSequenceInTree(currentNode.getChildNodeForEdgeValue(edgeValue),
+                                    wordWithoutCommonPrefix);
+                        }
+                    } else {
+                        // The inserted word contains only a part of the edge prefix.
+                        // E.g. Inserted word = "talking", Edge Value = "talked"
+                        // -> We have to split the path!
+
+                        // For example: We want to store "BLA1" and "BLA" ist already stored.
+                        boolean isExtensionOfExistingWord =
+                                Alphabet.getEndOfWordCharacter().equals(edgeValueWithoutCommonPrefix) &&
+                                        !wordWithoutCommonPrefix.isEmpty();
+
+                        if (isExtensionOfExistingWord) {
+                            // Store the current's edge current child node because we need it later.
+                            final PatriciaTrieNode oldCurrentEdgeChildNode = currentNode.getChildNodeForEdgeValue(edgeValue);
+
+                            // Set the edge value to the common prefix
+                            currentNode.setEdge(commonPrefix, oldCurrentEdgeChildNode);
+                            // Add new result edge to child node
+                            insertCharacterSequenceInTree(oldCurrentEdgeChildNode, Alphabet.getEndOfWordCharacter());
+                            // Add the remaining word for the word to be inserted as new edge
+                            insertCharacterSequenceInTree(oldCurrentEdgeChildNode, wordWithoutCommonPrefix);
+
+                        } else {
+                            // Store the current's edge current child node because we need it later.
+                            final PatriciaTrieNode oldCurrentEdgeChildNode = currentNode.getChildNodeForEdgeValue(edgeValue);
+
+                            // Create the new child node for the current edge.
+                            PatriciaTrieNode newCurrentEdgeChildNode = new PatriciaTrieNode(getNewNodeId(),
+                                    usedAlphabet.getNodeArity(), false);
+                            // Add the old child node as child node of the newly created child node
+                            newCurrentEdgeChildNode.setEdge(edgeValueWithoutCommonPrefix, oldCurrentEdgeChildNode);
+                            // Add the new child node to the current node
+                            currentNode.setEdge(commonPrefix, newCurrentEdgeChildNode);
+                            // Do the same insertion for the remaining characters of the word
+                            insertCharacterSequenceInTree(newCurrentEdgeChildNode, wordWithoutCommonPrefix);
+                        }
+                    }
+                }
+            }
+        }*/
 
 		return res;
 	}

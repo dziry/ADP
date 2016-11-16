@@ -18,8 +18,15 @@ graph G {
  "3" [shape=ellipse style=filled fillcolor=black];
  "4" [shape=ellipse style=filled fillcolor=black];
  "5" [shape=ellipse style=filled fillcolor=black];
-     "4" -- "5" [label="ULUS~"];
+     "4" -- "5" [label="ULUS"];
  "5" [shape=ellipse style=filled fillcolor=black];
+ "16" [shape=ellipse style=filled fillcolor=black];
+     "5" -- "16" [label="BBB~"];
+ "16" [shape=ellipse style=filled fillcolor=black];
+ "5" [shape=ellipse style=filled fillcolor=black];
+ "15" [shape=ellipse style=filled fillcolor=black];
+     "5" -- "15" [label="~"];
+ "15" [shape=ellipse style=filled fillcolor=black];
  "6" [shape=ellipse style=filled fillcolor=black];
  "10" [shape=ellipse style=filled fillcolor=black];
      "6" -- "10" [label="UB"];
