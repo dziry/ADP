@@ -5,7 +5,9 @@ import java.util.PrimitiveIterator.OfInt;
 import java.util.concurrent.ThreadLocalRandom;
 
 import fr.upmc.algav.errors.HybridTrieError;
+import fr.upmc.algav.patriciatries.Alphabet;
 import fr.upmc.algav.patriciatries.IPatriciaTrie;
+import fr.upmc.algav.patriciatries.PatriciaTrie;
 import fr.upmc.algav.tools.Color;
 import fr.upmc.algav.tools.Printer;
 import fr.upmc.algav.tools.Style;
@@ -13,7 +15,7 @@ import fr.upmc.algav.tools.Style;
 public class HybridTrie implements IHybridTrie {
 
 	private HybridTrieNode root;
-	private final static int MAX_WORDS = 100;
+	private final static int MAX_WORDS = Integer.MAX_VALUE;
 
 	public HybridTrie() {
 		this.root = null;
@@ -425,7 +427,11 @@ public class HybridTrie implements IHybridTrie {
 				node.setMiddleChild(insertBalancedRecursively(node.getMiddleChild(), key, position + 1));
 			} else if (!node.isFinalNode()) {
 				node.setIsFinalNode(randomInteger(1, MAX_WORDS));
-				node.setPriority(max(node.getStringPriority(), node.getMiddleChild().getPriority())); // FIXME
+			}
+			if (node.getMiddleChild() == null) {
+				node.setPriority(node.getStringPriority());
+			} else {
+				node.setPriority(max(node.getStringPriority(), node.getMiddleChild().getPriority()));
 			}
 		}
 		return node;
@@ -470,7 +476,23 @@ public class HybridTrie implements IHybridTrie {
 	
 	@Override
 	public IPatriciaTrie toPatriciaTrie() {
-		// TODO Auto-generated method stub
-		return null;
+		if (isEmpty()) {
+			return null;
+		}
+		return toPatriciaTrieRecursively(root, new String(), new PatriciaTrie(new Alphabet()));
+	}
+
+	private static IPatriciaTrie toPatriciaTrieRecursively(HybridTrieNode node, String word, PatriciaTrie patriciaTrie) {
+		if (node != null) {
+			toPatriciaTrieRecursively(node.getLeftChild(), word, patriciaTrie);
+			word += node.getCharacter();
+			if (node.isFinalNode()) {
+				patriciaTrie.insert(word);
+			}
+			toPatriciaTrieRecursively(node.getMiddleChild(), word, patriciaTrie);
+			word = removeLastCaracter(word);
+			toPatriciaTrieRecursively(node.getRightChild(), word, patriciaTrie);
+		}
+		return patriciaTrie;
 	}
 }

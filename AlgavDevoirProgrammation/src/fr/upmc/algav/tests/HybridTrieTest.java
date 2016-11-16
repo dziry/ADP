@@ -16,7 +16,11 @@ import org.junit.Test;
 
 import fr.upmc.algav.errors.HybridTrieError;
 import fr.upmc.algav.hybridtries.HybridTrie;
+import fr.upmc.algav.hybridtries.IHybridTrie;
 import fr.upmc.algav.interfaces.ITrie;
+import fr.upmc.algav.patriciatries.Alphabet;
+import fr.upmc.algav.patriciatries.IPatriciaTrie;
+import fr.upmc.algav.patriciatries.PatriciaTrie;
 import fr.upmc.algav.tools.Reader;
 
 public class HybridTrieTest extends AbstractTrieTest {
@@ -267,14 +271,46 @@ public class HybridTrieTest extends AbstractTrieTest {
 	
 	@Test
 	public final void testInsertBalanced() {
-		// FIXME
-//		IHybridTrie balancedHybridTrie = new HybridTrie();
-//		balancedHybridTrie.insertBalanced(wordsList);
-//		balancedHybridTrie.print("balancedHybridTrie");
+		Reader reader = new Reader("files/Shakespeare/john.txt");
+		ArrayList<String> wordsList = new ArrayList<String>();
+		wordsList = reader.read();		
+		HybridTrie hybridTrie = new HybridTrie();
+		IHybridTrie balancedHybridTrie = new HybridTrie();
+		
+		hybridTrie.insert(wordsList);
+		balancedHybridTrie.insertBalanced(wordsList);
+		
+		assertTrue("insert balanced", balancedHybridTrie.averageDepth() < hybridTrie.averageDepth());
+	}
+	
+	@Test (expected = HybridTrieError.class)
+	public final void testInsertBalancedNullWord() {
+		final String word = null;
+		((HybridTrie) hybridTrie).insertBalanced(word);
+	}
+
+	@Test (expected = HybridTrieError.class)
+	public final void testInsertBalancedEmptyWord() {
+		((HybridTrie) hybridTrie).insertBalanced("");
+	}
+
+	@Test (expected = HybridTrieError.class)
+	public final void testInsertBalancedNullWords() {
+		final ArrayList<String> words = null;
+		((HybridTrie) hybridTrie).insertBalanced(words);
+	}
+	
+	@Test (expected = HybridTrieError.class)
+	public final void testInsertBalancedEmptyWords() {
+		final ArrayList<String> words = new ArrayList<String>();
+		((HybridTrie) hybridTrie).insertBalanced(words);
 	}
 	
 	@Test
 	public final void testToPatriciaTrie() {
-		// TODO
+		IPatriciaTrie patriciaTrie = new PatriciaTrie(new Alphabet());
+		patriciaTrie.insert(wordsList);
+		IPatriciaTrie patriciaTrieFromHT = ((HybridTrie) hybridTrie).toPatriciaTrie();
+		assertTrue("insert balanced", patriciaTrie.listWords() == patriciaTrieFromHT.listWords());
 	}
 }

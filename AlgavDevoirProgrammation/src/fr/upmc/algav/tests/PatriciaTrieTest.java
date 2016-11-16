@@ -43,6 +43,7 @@ public class PatriciaTrieTest extends AbstractTrieTest {
 	@Test
 	public void search_existingWord_overSeveralEdges() {
 		boolean wordInTrie = patriciaTrie.search("ROMANE");
+		patriciaTrie.print("patricia");
 		assertTrue(wordInTrie);
 	}
 
