@@ -1,12 +1,16 @@
 package fr.upmc.algav.tests;
 
+import fr.upmc.algav.patriciatries.Alphabet;
+import fr.upmc.algav.patriciatries.PatriciaTrie;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import static org.junit.Assert.*;
 
 public class PatriciaTrieTest extends AbstractTrieTest {
+	private PatriciaTrie patriciaTrie;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {}
@@ -15,10 +19,63 @@ public class PatriciaTrieTest extends AbstractTrieTest {
 	public static void tearDownAfterClass() throws Exception {}
 
 	@Before
-	public void setUp() throws Exception {}
+	public void setUp() throws Exception {
+		patriciaTrie = new PatriciaTrie(new Alphabet());
+
+		patriciaTrie.insert("ROMANE");
+		patriciaTrie.insert("ROMANUS");
+		patriciaTrie.insert("ROMULUS");
+		patriciaTrie.insert("RUBENS");
+		patriciaTrie.insert("RUBER");
+		patriciaTrie.insert("RUBICON");
+		patriciaTrie.insert("RUBICUNDUS");
+		patriciaTrie.insert("RUB");
+		patriciaTrie.insert("hello");
+		patriciaTrie.insert("ROMULUSBBB");
+		patriciaTrie.insert("ROMANE");
+		patriciaTrie.insert("ROMANE");
+		patriciaTrie.insert("RUBER");
+		patriciaTrie.insert("ROMANE");
+	}
 
 	@After
 	public void tearDown() throws Exception {}
+
+	@Test
+	public void search_existingWord_overSeveralEdges() {
+		boolean wordInTrie = patriciaTrie.search("ROMANE");
+		assertTrue(wordInTrie);
+	}
+
+	@Test
+	public void search_existingWord_atOnlyOneEdge() {
+		boolean wordInTrie = patriciaTrie.search("hello");
+		assertTrue(wordInTrie);
+	}
+
+	@Test
+	public void search_existingWord_withResultOnlyEdge() {
+		boolean wordInTrie = patriciaTrie.search("RUB");
+		assertTrue(wordInTrie);
+	}
+
+	@Test
+	public void search_nonExistingWord_completelyNotInTrie() {
+		boolean wordInTrie = patriciaTrie.search("NOTINTREE");
+		assertFalse(wordInTrie);
+	}
+
+	@Test
+	public void search_nonExistingWord_prefixPartlyInTreeOverEdges() {
+		boolean wordInTrie = patriciaTrie.search("ROM");
+		assertFalse(wordInTrie);
+	}
+
+	@Test
+	public void search_nonExistingWord_prefixPartlyInTreeAtOneEdge() {
+		boolean wordInTrie = patriciaTrie.search("ULUS");
+		assertFalse(wordInTrie);
+	}
 
 	@Test
 	public final void runNominalTestIsEmpty() {

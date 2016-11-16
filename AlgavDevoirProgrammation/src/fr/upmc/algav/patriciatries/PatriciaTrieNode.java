@@ -3,7 +3,6 @@ package fr.upmc.algav.patriciatries;
 import fr.upmc.algav.patriciatries.helper.AlphabetHelper;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 /**

@@ -12,7 +12,7 @@ public abstract class AbstractTrieTest {
 
 	protected final void testSearch(ITrie trie, String word, boolean expectedTrieSerchResult) {						
 		final boolean calculatedTrieSerch = trie.search(word);
-		if (expectedTrieSerchResult == true) {
+		if (expectedTrieSerchResult) {
 			assertTrue("Searching the word", calculatedTrieSerch);
 		} else {			
 			assertFalse("Searching the word", calculatedTrieSerch);
