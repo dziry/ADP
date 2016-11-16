@@ -8,4 +8,5 @@ public interface IPatriciaTrie extends ITrie {
 	// complex functions
 	IPatriciaTrie merge(IPatriciaTrie trie1, IPatriciaTrie trie2);
 	IHybridTrie toHybridTrie();
+	void clearTrie();
 }

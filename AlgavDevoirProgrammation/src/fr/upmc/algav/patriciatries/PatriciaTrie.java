@@ -241,4 +241,10 @@ public class PatriciaTrie implements IPatriciaTrie {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+    public void clearTrie() {
+        this.nodeCount = 0;
+        this.rootNode = new PatriciaTrieNode(getNewNodeId(), usedAlphabet.getNodeArity(), true);
+    }
 }

@@ -12,6 +12,12 @@ import static org.junit.Assert.*;
 public class PatriciaTrieTest extends AbstractTrieTest {
 	private PatriciaTrie patriciaTrie;
 
+	private static final String[] TEST_DATA = {
+			"ROMANE", "ROMANUS", "ROMULUS", "RUBENS", "RUBER",
+			"RUBICON", "RUBICUNDUS", "RUB", "hello", "ROMULUSBBB",
+			"ROMANE", "ROMANE", "RUBER", "ROMANE", "RUB"
+	};
+
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {}
 
@@ -21,25 +27,18 @@ public class PatriciaTrieTest extends AbstractTrieTest {
 	@Before
 	public void setUp() throws Exception {
 		patriciaTrie = new PatriciaTrie(new Alphabet());
+		insertTestData();
+	}
 
-		patriciaTrie.insert("ROMANE");
-		patriciaTrie.insert("ROMANUS");
-		patriciaTrie.insert("ROMULUS");
-		patriciaTrie.insert("RUBENS");
-		patriciaTrie.insert("RUBER");
-		patriciaTrie.insert("RUBICON");
-		patriciaTrie.insert("RUBICUNDUS");
-		patriciaTrie.insert("RUB");
-		patriciaTrie.insert("hello");
-		patriciaTrie.insert("ROMULUSBBB");
-		patriciaTrie.insert("ROMANE");
-		patriciaTrie.insert("ROMANE");
-		patriciaTrie.insert("RUBER");
-		patriciaTrie.insert("ROMANE");
+	private void insertTestData() {
+		for (int i = 0; i < TEST_DATA.length; i++) {
+			patriciaTrie.insert(TEST_DATA[i]);
+		}
 	}
 
 	@After
-	public void tearDown() throws Exception {}
+	public void tearDown() throws Exception {
+	}
 
 	@Test
 	public void search_existingWord_overSeveralEdges() {
@@ -75,6 +74,15 @@ public class PatriciaTrieTest extends AbstractTrieTest {
 	public void search_nonExistingWord_prefixPartlyInTreeAtOneEdge() {
 		boolean wordInTrie = patriciaTrie.search("ULUS");
 		assertFalse(wordInTrie);
+	}
+
+	@Test
+	public void insert_newWord() {
+		String newWord = "BLABLA";
+
+		assertFalse(patriciaTrie.search(newWord));
+		patriciaTrie.insert(newWord);
+		assertTrue(patriciaTrie.search(newWord));
 	}
 
 	@Test
