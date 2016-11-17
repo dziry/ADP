@@ -46,7 +46,7 @@ public class PatriciaTrie implements IPatriciaTrie {
 			String commonPrefix = PatriciaTrieHelper.getCommonPrefix(currentNode, word);
 
 			if (commonPrefix == null) {
-				// We have no shared prefix. Just insert the whole word as new edge
+				// We have no shared getPrefixCount. Just insert the whole word as new edge
 				currentNode.addNewValuedResultEdge(getNewNodeId(), word);
 			} else if (PatriciaTrieHelper.wordIsAlreadyStoredForNode(currentNode, word)) {
                 // Word is already stored --> Do nothing!
@@ -56,22 +56,22 @@ public class PatriciaTrie implements IPatriciaTrie {
 				String edgeValueWithoutCommonPrefix = edgeValue.substring(commonPrefix.length());
 
 				if (edgeValueWithoutCommonPrefix.length() <= 0) {
-					// The inserted word contains the whole edge prefix.
+					// The inserted word contains the whole edge getPrefixCount.
 
 					if (wordWithoutCommonPrefix.length() <= 0) {
 						// The word itself is also finished.
-						// E.g. Inserted word = "why" and edge prefix = "why"
+						// E.g. Inserted word = "why" and edge getPrefixCount = "why"
 						// -> We add a result edge for signaling that a word ends here.
 						currentNode.getChildNodeForEdgeValue(edgeValue).addNewResultOnlyEdge(getNewNodeId());
 					} else {
 						// The word itself is not yet finished.
-						// E.g. Inserted word = "however" and edge prefix = "how"
+						// E.g. Inserted word = "however" and edge getPrefixCount = "how"
 						// -> Insert the remaining characters of the word for the child node of the current edge.
 						insertCharacterSequenceInTree(currentNode.getChildNodeForEdgeValue(edgeValue),
 														wordWithoutCommonPrefix);
 					}
 				} else {
-					// The inserted word contains only a part of the edge prefix.
+					// The inserted word contains only a part of the edge getPrefixCount.
 					// E.g. Inserted word = "talking", Edge Value = "talked"
 					// -> We have to split the path!
 
@@ -84,7 +84,7 @@ public class PatriciaTrie implements IPatriciaTrie {
                         // Store the current's edge current child node because we need it later.
                         final PatriciaTrieNode oldCurrentEdgeChildNode = currentNode.getChildNodeForEdgeValue(edgeValue);
 
-                        // Set the edge value to the common prefix
+                        // Set the edge value to the common getPrefixCount
                         currentNode.setEdge(commonPrefix, oldCurrentEdgeChildNode);
                         // Add new result edge to child node
                         insertCharacterSequenceInTree(oldCurrentEdgeChildNode, Alphabet.getEndOfWordCharacter());
@@ -139,7 +139,7 @@ public class PatriciaTrie implements IPatriciaTrie {
                 String commonPrefix = PatriciaTrieHelper.getCommonPrefix(currentNode, word);
 
                 if (commonPrefix == null) {
-                    // We have no shared prefix. The word can't exist in the tree.
+                    // We have no shared getPrefixCount. The word can't exist in the tree.
                     res = false;
                 } else {
                     String edgeValue = currentNode.getConcernedEdgeForValue(word);
@@ -149,12 +149,12 @@ public class PatriciaTrie implements IPatriciaTrie {
 
                     if (wordWithoutCommonPrefix.length() <= 0) {
                         // The searched word itself is also finished.
-                        // E.g. Searched word = "why" and edge prefix = "why"
+                        // E.g. Searched word = "why" and edge getPrefixCount = "why"
                         // Look if the concerned child node contains a result only edge
                         res = searchWord("", childNode);
                     } else {
                         // The word itself is not yet finished.
-                        // E.g. Searched word = "however" and edge prefix = "how"
+                        // E.g. Searched word = "however" and edge getPrefixCount = "how"
                         // Search for the remaining characters of the word at the child node of the current edge.
                         res = searchWord(wordWithoutCommonPrefix, childNode);
                     }
@@ -166,37 +166,61 @@ public class PatriciaTrie implements IPatriciaTrie {
 	}
 
 	@Override
-	public int countWords() {
+	public int getWordCount() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 	
 	@Override
-	public ArrayList<String> listWords() {
+	public ArrayList<String> getStoredWords() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public int countNull() {
+	public int getNullPointerCount() {
+		return countNullPointersInTrie(rootNode);
+	}
+
+	private int countNullPointersInTrie(PatriciaTrieNode node) {
+		int count = 0;
+
+		if (!node.isLeaf()) {
+			// If we're not visiting a leaf, we have to visit also all possible children.
+			ArrayList<String> edgeValues = node.getAllEdgeValues();
+			ArrayList<PatriciaTrieNode> childNodes = node.getAllChildNodes();
+
+			for (int i = 0; i < node.getNodeArity(); i++) {
+				if (edgeValues.get(i) == null && childNodes.get(i) == null) {
+					// We have a null pointer
+					count++;
+				} else {
+					// We have not a null pointer. Search for null pointers in child.
+					count += countNullPointersInTrie(childNodes.get(i));
+				}
+			}
+		} else {
+			// We have a leaf. Therefore add all edges to the result count.
+			count += node.getNodeArity();
+		}
+
+		return count;
+	}
+
+	@Override
+	public int getHeight() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public int height() {
+	public double getAverageDepth() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public double averageDepth() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int prefix(String word) {
+	public int getPrefixCount(String word) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

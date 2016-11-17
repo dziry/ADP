@@ -7,9 +7,9 @@ import fr.upmc.algav.patriciatries.helper.AlphabetHelper;
  */
 public class Alphabet {
     // Use the "DEL" character to signal the end of a word in the tree
-    private static final int END_OF_WORD_CHAR_ID = 126;
+    private static final int END_OF_WORD_CHAR_ID = 127;
     private static final int ALPHABET_MIN_CHAR_ID = 0;
-    private static final int ALPHABET_MAX_CHAR_ID = 127;
+    private static final int ALPHABET_MAX_CHAR_ID = 126;
 
     public Alphabet() {
 

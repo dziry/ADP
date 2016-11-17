@@ -12,6 +12,8 @@ import static org.junit.Assert.*;
 public class PatriciaTrieTest extends AbstractTrieTest {
 	private PatriciaTrie patriciaTrie;
 
+	private static final long EXPECTED_NULL_POINTER_COUNT = 2287;
+
 	private static final String[] TEST_DATA = {
 			"ROMANE", "ROMANUS", "ROMULUS", "RUBENS", "RUBER",
 			"RUBICON", "RUBICUNDUS", "RUB", "hello", "ROMULUSBBB",
@@ -43,7 +45,6 @@ public class PatriciaTrieTest extends AbstractTrieTest {
 	@Test
 	public void search_existingWord_overSeveralEdges() {
 		boolean wordInTrie = patriciaTrie.search("ROMANE");
-		patriciaTrie.print("patricia");
 		assertTrue(wordInTrie);
 	}
 
@@ -113,7 +114,7 @@ public class PatriciaTrieTest extends AbstractTrieTest {
 
 	@Test
 	public final void runNominalTestCountNull() {
-		// TODO
+		assertEquals(EXPECTED_NULL_POINTER_COUNT, patriciaTrie.getNullPointerCount());
 	}
 
 	@Test

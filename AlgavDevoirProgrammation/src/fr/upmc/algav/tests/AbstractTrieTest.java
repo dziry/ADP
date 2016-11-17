@@ -20,42 +20,42 @@ public abstract class AbstractTrieTest {
 	}
 	
 	protected final void testCountWords(ITrie trie, int expectedTrieCountWords) {						
-		final int calculatedHybridTrieCountWords = trie.countWords();
+		final int calculatedHybridTrieCountWords = trie.getWordCount();
 		assertEquals("counting words", calculatedHybridTrieCountWords, expectedTrieCountWords);
 	}
 	
 	protected final void testListWords(ITrie trie, ArrayList<String> expectedTrieListWords) {						
-		final ArrayList<String> calculatedHybridTrieList = trie.listWords();
+		final ArrayList<String> calculatedHybridTrieList = trie.getStoredWords();
 		assertEquals("listing words by ascending order", calculatedHybridTrieList, expectedTrieListWords);
 	}
 
 	protected final void testCountNull(ITrie trie, int expectedTrieCountNull) {
-		final int calculatedTrieCountNull = trie.countNull();		
+		final int calculatedTrieCountNull = trie.getNullPointerCount();
 		assertEquals("counting nil pointer", calculatedTrieCountNull, expectedTrieCountNull);
 	}
 	
 	protected final void testHeight(ITrie trie, int expectedTrieHeight) {		
-		final int calculatedTrieHeight = trie.height();
-		assertEquals("calulating the height", calculatedTrieHeight, expectedTrieHeight);	
+		final int calculatedTrieHeight = trie.getHeight();
+		assertEquals("calulating the getHeight", calculatedTrieHeight, expectedTrieHeight);
 	}
 	
 	protected final void testAverageDepth(ITrie trie, double expectedTrieAverageDepth) {
 		final double precision = 0.00001;
-		final double calculatedTrieAverageDepth = trie.averageDepth();
+		final double calculatedTrieAverageDepth = trie.getAverageDepth();
 		assertEquals("calulating the average depth", calculatedTrieAverageDepth, expectedTrieAverageDepth, precision);
 	}
 	
 	protected final void testPrefix(ITrie trie, String word, int expectedPrefixCount) {
-		final int calculatedPrefixCount = trie.prefix(word);
+		final int calculatedPrefixCount = trie.getPrefixCount(word);
 		assertEquals("counting common prefixe", calculatedPrefixCount, expectedPrefixCount);
 	}
 	
 	protected final void testRemove(ITrie trie, String word, int expectedCountNullResult, int expectedHeightResult) {		
 		if (!trie.isEmpty()) {
 			final boolean previewsSearchResult = trie.search(word);
-			final int previewsCountWordsResult = trie.countWords();
-			final ArrayList<String> previewsListWordsResult = trie.listWords();
-			final int previewsPrefixResult = trie.prefix(word);		
+			final int previewsCountWordsResult = trie.getWordCount();
+			final ArrayList<String> previewsListWordsResult = trie.getStoredWords();
+			final int previewsPrefixResult = trie.getPrefixCount(word);
 			
 			trie.remove(word);			
 					
@@ -67,11 +67,11 @@ public abstract class AbstractTrieTest {
 			final int newPrefixResult;		
 														
 			newSearchResult = trie.search(word);
-			newCountWordsResult = trie.countWords();
-			newListWordsResult = trie.listWords();
-			newCountNullResult = trie.countNull(); 
-			newHeightResult = trie.height();
-			newPrefixResult = trie.prefix(word);
+			newCountWordsResult = trie.getWordCount();
+			newListWordsResult = trie.getStoredWords();
+			newCountNullResult = trie.getNullPointerCount();
+			newHeightResult = trie.getHeight();
+			newPrefixResult = trie.getPrefixCount(word);
 			
 			if (!trie.isEmpty()) {
 				trie.print(word); // display a tree for visual comparison
