@@ -1,10 +1,9 @@
 package fr.upmc.algav.patriciatries;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import fr.upmc.algav.hybridtries.IHybridTrie;
+import fr.upmc.algav.patriciatries.helper.AlphabetHelper;
 import fr.upmc.algav.patriciatries.helper.PatriciaTrieHelper;
 import fr.upmc.algav.tools.Printer;
 
@@ -167,14 +166,47 @@ public class PatriciaTrie implements IPatriciaTrie {
 
 	@Override
 	public int getWordCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		return getAllStoredWords(rootNode, "").size();
 	}
 	
 	@Override
 	public ArrayList<String> getStoredWords() {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<String> storedWords = new ArrayList<>(getAllStoredWords(rootNode, ""));
+		storedWords.sort((o1, o2) -> o1.compareTo(o2));
+
+		return storedWords;
+	}
+
+	private HashSet<String> getAllStoredWords(PatriciaTrieNode currentNode, String tempPathValue) {
+		HashSet<String> res = new HashSet<>();
+
+		// Only if we're not visiting a leaf, we have do actually do stuff.
+		if (!currentNode.isLeaf()) {
+			// If we're not visiting a leaf, we have to visit all possible children.
+			ArrayList<String> edgeValues = currentNode.getAllEdgeValues();
+			ArrayList<PatriciaTrieNode> childNodes = currentNode.getAllChildNodes();
+
+			for (int i = 0; i < currentNode.getNodeArity(); i++) {
+				String edgeValue = edgeValues.get(i);
+				PatriciaTrieNode childNode = childNodes.get(i);
+
+				// Only visit the non-null edges
+				if (edgeValue != null && childNode != null) {
+					if (AlphabetHelper.containsResultCharacter(edgeValue)) {
+						// We have found the end of a word.
+						// Store the current path concatenated with the current edge value.
+						// But also remove the result character from the edge before storing the word.
+						res.add(tempPathValue + AlphabetHelper.removeResultCharacterFromWord(edgeValue));
+					} else {
+						// No word found. We have to extend the path value and go further.
+						String newTempPathValue = tempPathValue + edgeValue;
+						res.addAll(getAllStoredWords(childNode, newTempPathValue));
+					}
+				}
+			}
+		}
+
+		return res;
 	}
 
 	@Override
@@ -182,15 +214,15 @@ public class PatriciaTrie implements IPatriciaTrie {
 		return countNullPointersInTrie(rootNode);
 	}
 
-	private int countNullPointersInTrie(PatriciaTrieNode node) {
+	private int countNullPointersInTrie(PatriciaTrieNode currentNode) {
 		int count = 0;
 
-		if (!node.isLeaf()) {
+		if (!currentNode.isLeaf()) {
 			// If we're not visiting a leaf, we have to visit also all possible children.
-			ArrayList<String> edgeValues = node.getAllEdgeValues();
-			ArrayList<PatriciaTrieNode> childNodes = node.getAllChildNodes();
+			ArrayList<String> edgeValues = currentNode.getAllEdgeValues();
+			ArrayList<PatriciaTrieNode> childNodes = currentNode.getAllChildNodes();
 
-			for (int i = 0; i < node.getNodeArity(); i++) {
+			for (int i = 0; i < currentNode.getNodeArity(); i++) {
 				if (edgeValues.get(i) == null && childNodes.get(i) == null) {
 					// We have a null pointer
 					count++;
@@ -201,7 +233,7 @@ public class PatriciaTrie implements IPatriciaTrie {
 			}
 		} else {
 			// We have a leaf. Therefore add all edges to the result count.
-			count += node.getNodeArity();
+			count += currentNode.getNodeArity();
 		}
 
 		return count;

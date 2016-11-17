@@ -24,6 +24,7 @@ public class PatriciaPrintTempMain {
         patriciaTrie.insert("ROMANE");
         patriciaTrie.insert("RUBER");
         patriciaTrie.insert("ROMANE");
+        patriciaTrie.insert("RUB");
 
         patriciaTrie.print("patricia_trie_test_graph_1.dot");
     }

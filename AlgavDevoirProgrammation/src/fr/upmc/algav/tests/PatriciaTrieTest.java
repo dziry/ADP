@@ -7,6 +7,10 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+
 import static org.junit.Assert.*;
 
 public class PatriciaTrieTest extends AbstractTrieTest {
@@ -104,12 +108,22 @@ public class PatriciaTrieTest extends AbstractTrieTest {
 
 	@Test
 	public final void runNominalTestCountWords() {
-		// TODO
+		HashSet<String> wordsSet = new HashSet<>();
+
+		for (String word : TEST_DATA) {
+			wordsSet.add(word);
+		}
+
+		assertEquals(wordsSet.size(), patriciaTrie.getWordCount());
 	}
 
 	@Test
-	public final void runNominalTestListWords() {				
-		// TODO
+	public final void runNominalTestListWords() {
+		ArrayList<String> storedWords = patriciaTrie.getStoredWords();
+
+		for (String word : TEST_DATA) {
+			assertTrue(storedWords.contains(word));
+		}
 	}
 
 	@Test
