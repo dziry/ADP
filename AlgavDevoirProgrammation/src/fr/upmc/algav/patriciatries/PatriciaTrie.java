@@ -33,10 +33,10 @@ public class PatriciaTrie implements IPatriciaTrie {
 
 	@Override
 	public void insert(String word) {
-		insertCharacterSequenceInTree(rootNode, word);
+		insertCharacterSequenceForNode(rootNode, word);
 	}
 
-	private void insertCharacterSequenceInTree(PatriciaTrieNode currentNode, String word) {
+	private void insertCharacterSequenceForNode(PatriciaTrieNode currentNode, String word) {
 		if (currentNode.isLeaf()) {
 			// There are no edges yet to test. Just insert the whole word as new edge.
 			currentNode.addNewValuedResultEdge(getNewNodeId(), word);
@@ -66,7 +66,7 @@ public class PatriciaTrie implements IPatriciaTrie {
 						// The word itself is not yet finished.
 						// E.g. Inserted word = "however" and edge getPrefixCount = "how"
 						// -> Insert the remaining characters of the word for the child node of the current edge.
-						insertCharacterSequenceInTree(currentNode.getChildNodeForEdgeValue(edgeValue),
+						insertCharacterSequenceForNode(currentNode.getChildNodeForEdgeValue(edgeValue),
 														wordWithoutCommonPrefix);
 					}
 				} else {
@@ -86,9 +86,9 @@ public class PatriciaTrie implements IPatriciaTrie {
                         // Set the edge value to the common getPrefixCount
                         currentNode.setEdge(commonPrefix, oldCurrentEdgeChildNode);
                         // Add new result edge to child node
-                        insertCharacterSequenceInTree(oldCurrentEdgeChildNode, Alphabet.getEndOfWordCharacter());
+                        insertCharacterSequenceForNode(oldCurrentEdgeChildNode, Alphabet.getEndOfWordCharacter());
                         // Add the remaining word for the word to be inserted as new edge
-                        insertCharacterSequenceInTree(oldCurrentEdgeChildNode, wordWithoutCommonPrefix);
+                        insertCharacterSequenceForNode(oldCurrentEdgeChildNode, wordWithoutCommonPrefix);
 
                     } else {
                         // Store the current's edge current child node because we need it later.
@@ -102,7 +102,7 @@ public class PatriciaTrie implements IPatriciaTrie {
                         // Add the new child node to the current node
                         currentNode.setEdge(commonPrefix, newCurrentEdgeChildNode);
                         // Do the same insertion for the remaining characters of the word
-                        insertCharacterSequenceInTree(newCurrentEdgeChildNode, wordWithoutCommonPrefix);
+                        insertCharacterSequenceForNode(newCurrentEdgeChildNode, wordWithoutCommonPrefix);
                     }
 				}
 			}
@@ -118,10 +118,10 @@ public class PatriciaTrie implements IPatriciaTrie {
 	
 	@Override
 	public boolean search(String word) {
-		return word != null && searchWord(word, rootNode);
+		return word != null && searchWordInNode(word, rootNode);
 	}
 
-	private boolean searchWord(String word, PatriciaTrieNode currentNode) {
+	private boolean searchWordInNode(String word, PatriciaTrieNode currentNode) {
 		boolean res = false;
 
         if (word.isEmpty()) {
@@ -150,12 +150,12 @@ public class PatriciaTrie implements IPatriciaTrie {
                         // The searched word itself is also finished.
                         // E.g. Searched word = "why" and edge getPrefixCount = "why"
                         // Look if the concerned child node contains a result only edge
-                        res = searchWord("", childNode);
+                        res = searchWordInNode("", childNode);
                     } else {
                         // The word itself is not yet finished.
                         // E.g. Searched word = "however" and edge getPrefixCount = "how"
                         // Search for the remaining characters of the word at the child node of the current edge.
-                        res = searchWord(wordWithoutCommonPrefix, childNode);
+                        res = searchWordInNode(wordWithoutCommonPrefix, childNode);
                     }
                 }
             }
@@ -166,18 +166,18 @@ public class PatriciaTrie implements IPatriciaTrie {
 
 	@Override
 	public int getWordCount() {
-		return getAllStoredWords(rootNode, "").size();
+		return getStoredWordsForNode(rootNode, "").size();
 	}
 	
 	@Override
 	public ArrayList<String> getStoredWords() {
-		ArrayList<String> storedWords = new ArrayList<>(getAllStoredWords(rootNode, ""));
+		ArrayList<String> storedWords = new ArrayList<>(getStoredWordsForNode(rootNode, ""));
 		storedWords.sort((o1, o2) -> o1.compareTo(o2));
 
 		return storedWords;
 	}
 
-	private HashSet<String> getAllStoredWords(PatriciaTrieNode currentNode, String tempPathValue) {
+	private HashSet<String> getStoredWordsForNode(PatriciaTrieNode currentNode, String tempPathValue) {
 		HashSet<String> res = new HashSet<>();
 
 		// Only if we're not visiting a leaf, we have do actually do stuff.
@@ -200,7 +200,7 @@ public class PatriciaTrie implements IPatriciaTrie {
 					} else {
 						// No word found. We have to extend the path value and go further.
 						String newTempPathValue = tempPathValue + edgeValue;
-						res.addAll(getAllStoredWords(childNode, newTempPathValue));
+						res.addAll(getStoredWordsForNode(childNode, newTempPathValue));
 					}
 				}
 			}
@@ -211,10 +211,10 @@ public class PatriciaTrie implements IPatriciaTrie {
 
 	@Override
 	public int getNullPointerCount() {
-		return countNullPointersInTrie(rootNode);
+		return countNullPointersForNode(rootNode);
 	}
 
-	private int countNullPointersInTrie(PatriciaTrieNode currentNode) {
+	private int countNullPointersForNode(PatriciaTrieNode currentNode) {
 		int count = 0;
 
 		if (!currentNode.isLeaf()) {
@@ -228,7 +228,7 @@ public class PatriciaTrie implements IPatriciaTrie {
 					count++;
 				} else {
 					// We have not a null pointer. Search for null pointers in child.
-					count += countNullPointersInTrie(childNodes.get(i));
+					count += countNullPointersForNode(childNodes.get(i));
 				}
 			}
 		} else {
@@ -268,12 +268,12 @@ public class PatriciaTrie implements IPatriciaTrie {
 		Printer printer = new Printer(fileName);
 		printer.beginUndirected();
 
-        printPatriciaTrie(rootNode, printer);
+        printPatriciaNode(rootNode, printer);
 
         printer.end();
     }
 
-	private static void printPatriciaTrie(PatriciaTrieNode currentNode, Printer printer) {
+	private static void printPatriciaNode(PatriciaTrieNode currentNode, Printer printer) {
 		if (currentNode.isLeaf()) {
             printer.printNode(currentNode);
         } else {
@@ -281,7 +281,7 @@ public class PatriciaTrie implements IPatriciaTrie {
 
             for (Map.Entry<String, PatriciaTrieNode> entry : existantEdgesToChildren.entrySet()) {
                 printer.printEdge(entry.getKey(), currentNode, entry.getValue());
-                printPatriciaTrie(entry.getValue(), printer);
+                printPatriciaNode(entry.getValue(), printer);
             }
         }
 	}
