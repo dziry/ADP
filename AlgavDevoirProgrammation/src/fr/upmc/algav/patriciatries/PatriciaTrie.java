@@ -241,9 +241,36 @@ public class PatriciaTrie implements IPatriciaTrie {
 
 	@Override
 	public int getHeight() {
-		// TODO Auto-generated method stub
-		return 0;
+		return getHeightForNode(rootNode, -1);
 	}
+
+	private static int getHeightForNode(PatriciaTrieNode currentNode, int currentHeight) {
+        int newCurrentHeight = currentHeight + 1;
+
+        // If we have a leaf, we can simply return the height incremented by 1
+        if (!currentNode.isLeaf()) {
+            // Otherwise, we have to visit also all possible children as the height must have a greater value.
+            ArrayList<String> edgeValues = currentNode.getAllEdgeValues();
+            ArrayList<PatriciaTrieNode> childNodes = currentNode.getAllChildNodes();
+            // Save the current height for this level to pass to possible children.
+            final int currentHeightAtThisLevel = newCurrentHeight;
+
+            for (int i = 0; i < currentNode.getNodeArity(); i++) {
+                // Visit each child path
+                if (edgeValues.get(i) != null && childNodes.get(i) != null) {
+                    int childHeight = getHeightForNode(childNodes.get(i), currentHeightAtThisLevel);
+
+                    // If we have a child path with a height that is greater as the current height, we have
+                    // to update the height value
+                    if (childHeight > newCurrentHeight) {
+                        newCurrentHeight = childHeight;
+                    }
+                }
+            }
+        }
+
+        return newCurrentHeight;
+    }
 
 	@Override
 	public double getAverageDepth() {

@@ -17,6 +17,7 @@ public class PatriciaTrieTest extends AbstractTrieTest {
 	private PatriciaTrie patriciaTrie;
 
 	private static final long EXPECTED_NULL_POINTER_COUNT = 2287;
+
 	private static final String WORD_OVER_SEVERAL_EDGES = "ROMANE";
 	private static final String WORD_AT_ONLY_ON_EDGE = "hello";
 	private static final String WORD_WITH_RESULT_ONLY_EDGE = "RUB";
@@ -24,6 +25,8 @@ public class PatriciaTrieTest extends AbstractTrieTest {
 	private static final String NEW_INSERTED_WORD = "IAmNew";
 	private static final String PREFIX_PARTLY_IN_TREE_OVER_EDGES = "ROM";
 	private static final String PREFIX_PARTLY_IN_TREE_ONE_EDGE = "ULUS";
+
+	private static final int TRIE_HEIGHT = 4;
 
 	private static final String[] TEST_DATA = {
 			WORD_OVER_SEVERAL_EDGES, "ROMANUS", "ROMULUS", "RUBENS", "RUBER",
@@ -139,7 +142,7 @@ public class PatriciaTrieTest extends AbstractTrieTest {
 
 	@Test
 	public final void runNominalTestHeight() {
-		// TODO
+		assertEquals(TRIE_HEIGHT, patriciaTrie.getHeight());
 	}
 
 	@Test
