@@ -40,4 +40,12 @@ public class AlphabetHelper {
     public static String makeResultWord(String word) {
         return word + Alphabet.getEndOfWordCharacter();
     }
+
+    public static String removeResultCharacterFromWord(String word) {
+        return word.replace(Alphabet.getEndOfWordCharacter(), "");
+    }
+
+    public static boolean containsResultCharacter(String word) {
+        return word.contains(Alphabet.getEndOfWordCharacter());
+    }
 }

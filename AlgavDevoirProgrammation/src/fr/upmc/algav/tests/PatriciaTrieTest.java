@@ -7,15 +7,35 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+
 import static org.junit.Assert.*;
 
 public class PatriciaTrieTest extends AbstractTrieTest {
 	private PatriciaTrie patriciaTrie;
 
+	private static final long EXPECTED_NULL_POINTER_COUNT = 2287;
+
+	private static final String WORD_OVER_SEVERAL_EDGES = "ROMANE";
+	private static final String WORD_AT_ONLY_ON_EDGE = "hello";
+	private static final String WORD_WITH_RESULT_ONLY_EDGE = "RUB";
+	private static final String NOT_EXISTING_WORD = "NOTINTRIE";
+	private static final String NEW_INSERTED_WORD = "IAmNew";
+	private static final String PREFIX_PARTLY_IN_TREE_OVER_EDGES = "ROM";
+	private static final String PREFIX_PARTLY_IN_TREE_ONE_EDGE = "ULUS";
+
+	private static final int TRIE_HEIGHT = 4;
+
+    // Total depth of leaves = 36. Total count of leaves = 10
+    private static final double AVERAGE_DEPTH_LEAVES = 3.6;
+
 	private static final String[] TEST_DATA = {
-			"ROMANE", "ROMANUS", "ROMULUS", "RUBENS", "RUBER",
-			"RUBICON", "RUBICUNDUS", "RUB", "hello", "ROMULUSBBB",
-			"ROMANE", "ROMANE", "RUBER", "ROMANE", "RUB"
+			WORD_OVER_SEVERAL_EDGES, "ROMANUS", "ROMULUS", "RUBENS", "RUBER",
+			"RUBICON", "RUBICUNDUS", WORD_WITH_RESULT_ONLY_EDGE, WORD_AT_ONLY_ON_EDGE,
+			"ROMULUSBBB", WORD_OVER_SEVERAL_EDGES, WORD_OVER_SEVERAL_EDGES, "RUBER",
+			WORD_OVER_SEVERAL_EDGES, WORD_WITH_RESULT_ONLY_EDGE
 	};
 
 	@BeforeClass
@@ -42,53 +62,51 @@ public class PatriciaTrieTest extends AbstractTrieTest {
 
 	@Test
 	public void search_existingWord_overSeveralEdges() {
-		boolean wordInTrie = patriciaTrie.search("ROMANE");
-		patriciaTrie.print("patricia");
+		boolean wordInTrie = patriciaTrie.search(WORD_OVER_SEVERAL_EDGES);
 		assertTrue(wordInTrie);
 	}
 
 	@Test
 	public void search_existingWord_atOnlyOneEdge() {
-		boolean wordInTrie = patriciaTrie.search("hello");
+		boolean wordInTrie = patriciaTrie.search(WORD_AT_ONLY_ON_EDGE);
 		assertTrue(wordInTrie);
 	}
 
 	@Test
 	public void search_existingWord_withResultOnlyEdge() {
-		boolean wordInTrie = patriciaTrie.search("RUB");
+		boolean wordInTrie = patriciaTrie.search(WORD_WITH_RESULT_ONLY_EDGE);
 		assertTrue(wordInTrie);
 	}
 
 	@Test
 	public void search_nonExistingWord_completelyNotInTrie() {
-		boolean wordInTrie = patriciaTrie.search("NOTINTREE");
+		boolean wordInTrie = patriciaTrie.search(NOT_EXISTING_WORD);
 		assertFalse(wordInTrie);
 	}
 
 	@Test
-	public void search_nonExistingWord_prefixPartlyInTreeOverEdges() {
-		boolean wordInTrie = patriciaTrie.search("ROM");
+	public void search_nonExistingWord_prefixPartlyInTrieOverEdges() {
+		boolean wordInTrie = patriciaTrie.search(PREFIX_PARTLY_IN_TREE_OVER_EDGES);
 		assertFalse(wordInTrie);
 	}
 
 	@Test
-	public void search_nonExistingWord_prefixPartlyInTreeAtOneEdge() {
-		boolean wordInTrie = patriciaTrie.search("ULUS");
+	public void search_nonExistingWord_prefixPartlyInTrieAtOneEdge() {
+		boolean wordInTrie = patriciaTrie.search(PREFIX_PARTLY_IN_TREE_ONE_EDGE);
 		assertFalse(wordInTrie);
 	}
 
 	@Test
 	public void insert_newWord() {
-		String newWord = "BLABLA";
-
-		assertFalse(patriciaTrie.search(newWord));
-		patriciaTrie.insert(newWord);
-		assertTrue(patriciaTrie.search(newWord));
+		assertFalse(patriciaTrie.search(NEW_INSERTED_WORD));
+		patriciaTrie.insert(NEW_INSERTED_WORD);
+		assertTrue(patriciaTrie.search(NEW_INSERTED_WORD));
 	}
 
 	@Test
 	public final void runNominalTestIsEmpty() {
-		// TODO
+		PatriciaTrie tempTrie = new PatriciaTrie(new Alphabet());
+        assertTrue(tempTrie.isEmpty());
 	}
 
 	@Test
@@ -103,27 +121,37 @@ public class PatriciaTrieTest extends AbstractTrieTest {
 
 	@Test
 	public final void runNominalTestCountWords() {
-		// TODO
+		HashSet<String> wordsSet = new HashSet<>();
+
+		for (String word : TEST_DATA) {
+			wordsSet.add(word);
+		}
+
+		assertEquals(wordsSet.size(), patriciaTrie.getWordCount());
 	}
 
 	@Test
-	public final void runNominalTestListWords() {				
-		// TODO
+	public final void runNominalTestListWords() {
+		ArrayList<String> storedWords = patriciaTrie.getStoredWords();
+
+		for (String word : TEST_DATA) {
+			assertTrue(storedWords.contains(word));
+		}
 	}
 
 	@Test
 	public final void runNominalTestCountNull() {
-		// TODO
+		assertEquals(EXPECTED_NULL_POINTER_COUNT, patriciaTrie.getNullPointerCount());
 	}
 
 	@Test
 	public final void runNominalTestHeight() {
-		// TODO
+		assertEquals(TRIE_HEIGHT, patriciaTrie.getHeight());
 	}
 
 	@Test
 	public final void runNominalTestAverageDepth() {
-		// TODO
+        assertEquals(AVERAGE_DEPTH_LEAVES, patriciaTrie.getAverageDepthOfLeaves(), 0);
 	}
 
 	@Test

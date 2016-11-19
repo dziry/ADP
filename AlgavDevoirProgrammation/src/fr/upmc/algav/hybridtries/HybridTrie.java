@@ -93,7 +93,7 @@ public class HybridTrie implements IHybridTrie {
 	}
 	
 	@Override
-	public int countWords() {
+	public int getWordCount() {
 		if (isEmpty()) {
 			return 0;
 		}
@@ -113,7 +113,7 @@ public class HybridTrie implements IHybridTrie {
 	}
 
 	@Override
-	public ArrayList<String> listWords() {
+	public ArrayList<String> getStoredWords() {
 		if (isEmpty()) {
 			return null;
 		}
@@ -134,13 +134,13 @@ public class HybridTrie implements IHybridTrie {
 		return listWords;
 	}
 
-	// used for listWords
+	// used for getStoredWords
 	private static String removeLastCaracter(String word) {
 		return word.substring(0, word.length() - 1);
 	}
 
 	@Override
-	public int countNull() {
+	public int getNullPointerCount() {
 		if (isEmpty()) {
 			return 0;
 		}
@@ -159,7 +159,7 @@ public class HybridTrie implements IHybridTrie {
 	}
 
 	@Override
-	public int height() {
+	public int getHeight() {
 		if (isEmpty()) {
 			return 0;
 		}
@@ -180,14 +180,14 @@ public class HybridTrie implements IHybridTrie {
 	}
 
 	@Override
-	public double averageDepth() {
+	public double getAverageDepthOfLeaves() {
 		if (isEmpty()) {
 			return 0.0;
 		}
 		return (double) countTotalDepthRecursively(root, -1, 0) / (double) countnodesRecursively(root, 0);
 	}
 
-	// used for averageDepth
+	// used for getAverageDepthOfLeaves
 	private static int countnodesRecursively(HybridTrieNode node, int nodesCounter) {
 		if (node != null) {
 			nodesCounter++;
@@ -198,7 +198,7 @@ public class HybridTrie implements IHybridTrie {
 		return nodesCounter;
 	}
 
-	// used for averageDepth
+	// used for getAverageDepthOfLeaves
 	private static int countTotalDepthRecursively(HybridTrieNode node, int depthCounter, int totalDepth) {
 		if (node != null) {
 			depthCounter++;
@@ -213,7 +213,7 @@ public class HybridTrie implements IHybridTrie {
 	}
 
 	@Override
-	public int prefix(String word) {
+	public int getPrefixCount(String word) {
 		if (word == null || word.isEmpty()) {
 			throw new HybridTrieError("search(word): word should not be null or empty!");
 		}
@@ -241,7 +241,7 @@ public class HybridTrie implements IHybridTrie {
 		}
 	}
 
-	// used for prefix
+	// used for getPrefixCount
 	private int countWords(HybridTrieNode node) {
 		if (isEmpty()) {
 			return 0;

@@ -11,12 +11,12 @@ public interface ITrie {
 	
 	// Advanced functions
 	boolean search(String word);
-	int countWords();
-	ArrayList<String> listWords();
-	int countNull();
-	int height();
-	double averageDepth();
-	int prefix(String word);
+	int getWordCount();
+	ArrayList<String> getStoredWords();
+	int getNullPointerCount();
+	int getHeight();
+	double getAverageDepthOfLeaves();
+	int getPrefixCount(String word);
 	boolean remove(String word);
 	
 	// Show visual preview

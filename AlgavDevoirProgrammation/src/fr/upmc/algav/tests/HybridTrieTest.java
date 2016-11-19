@@ -73,7 +73,7 @@ public class HybridTrieTest extends AbstractTrieTest {
 		hybridTrie.insert("le");
 		hybridTrie.insert("lourds");
 		final int expectedHybridTrieSize = 7;
-		final int calculatedHybridTrieSize = hybridTrie.countWords();
+		final int calculatedHybridTrieSize = hybridTrie.getWordCount();
 		assertEquals(expectedHybridTrieSize + " words added successfully", calculatedHybridTrieSize, expectedHybridTrieSize);
 	}
 	
@@ -82,15 +82,15 @@ public class HybridTrieTest extends AbstractTrieTest {
 		ITrie hybridTrie = new HybridTrie();
 		hybridTrie.insert(wordsList);
 		final int expectedHybridTrieSize = 12;
-		final int calculatedHybridTrieSize = hybridTrie.countWords();
+		final int calculatedHybridTrieSize = hybridTrie.getWordCount();
 		assertEquals("a list of words added successfully", calculatedHybridTrieSize, expectedHybridTrieSize);
 	}
 	
 	@Test
 	public final void testInsertWordExist() {
-		final int oldHybridTrieSize = hybridTrie.countWords();
+		final int oldHybridTrieSize = hybridTrie.getWordCount();
 		hybridTrie.insert("dans");
-		final int newHybridTrieSize = hybridTrie.countWords();
+		final int newHybridTrieSize = hybridTrie.getWordCount();
 		assertEquals("insert existing word? -> ignore", oldHybridTrieSize, newHybridTrieSize);
 	}
 	
@@ -237,19 +237,19 @@ public class HybridTrieTest extends AbstractTrieTest {
 		// after adding words
 		assertFalse("remove a word that does not exist in the trie", hybridTrie.remove("lourd"));
 		assertFalse("remove a word that does not exist in the trie", hybridTrie.remove("lourdss"));
-		testRemove(hybridTrie, "luxe", hybridTrie.countNull() - 6, hybridTrie.height() - 0);
-		testRemove(hybridTrie, "leve", hybridTrie.countNull() - 4, hybridTrie.height() - 0);
-		testRemove(hybridTrie, "les", hybridTrie.countNull() - 2, hybridTrie.height() - 0);
-		testRemove(hybridTrie, "lou", hybridTrie.countNull() - 0, hybridTrie.height() - 0);
-		testRemove(hybridTrie, "lourds", hybridTrie.countNull() - 6, hybridTrie.height() - 0);
-		testRemove(hybridTrie, "loups", hybridTrie.countNull() - 8, hybridTrie.height() - 0);
-		testRemove(hybridTrie, "le", hybridTrie.countNull() - 2, hybridTrie.height() - 0);
-		testRemove(hybridTrie, "l", hybridTrie.countNull() - 2, hybridTrie.height() - 1);
-		testRemove(hybridTrie, "olive", hybridTrie.countNull() - 10, hybridTrie.height() - 1);
-		testRemove(hybridTrie, "tapis", hybridTrie.countNull() - 10, hybridTrie.height() - 0);
-		testRemove(hybridTrie, "vert", hybridTrie.countNull() - 8, hybridTrie.height() - 1);
-		testRemove(hybridTrie, "dans", hybridTrie.countNull() - 6, hybridTrie.height() - 2);
-		testRemove(hybridTrie, "de", hybridTrie.countNull() - 5, hybridTrie.height() - 1);		
+		testRemove(hybridTrie, "luxe", hybridTrie.getNullPointerCount() - 6, hybridTrie.getHeight() - 0);
+		testRemove(hybridTrie, "leve", hybridTrie.getNullPointerCount() - 4, hybridTrie.getHeight() - 0);
+		testRemove(hybridTrie, "les", hybridTrie.getNullPointerCount() - 2, hybridTrie.getHeight() - 0);
+		testRemove(hybridTrie, "lou", hybridTrie.getNullPointerCount() - 0, hybridTrie.getHeight() - 0);
+		testRemove(hybridTrie, "lourds", hybridTrie.getNullPointerCount() - 6, hybridTrie.getHeight() - 0);
+		testRemove(hybridTrie, "loups", hybridTrie.getNullPointerCount() - 8, hybridTrie.getHeight() - 0);
+		testRemove(hybridTrie, "le", hybridTrie.getNullPointerCount() - 2, hybridTrie.getHeight() - 0);
+		testRemove(hybridTrie, "l", hybridTrie.getNullPointerCount() - 2, hybridTrie.getHeight() - 1);
+		testRemove(hybridTrie, "olive", hybridTrie.getNullPointerCount() - 10, hybridTrie.getHeight() - 1);
+		testRemove(hybridTrie, "tapis", hybridTrie.getNullPointerCount() - 10, hybridTrie.getHeight() - 0);
+		testRemove(hybridTrie, "vert", hybridTrie.getNullPointerCount() - 8, hybridTrie.getHeight() - 1);
+		testRemove(hybridTrie, "dans", hybridTrie.getNullPointerCount() - 6, hybridTrie.getHeight() - 2);
+		testRemove(hybridTrie, "de", hybridTrie.getNullPointerCount() - 5, hybridTrie.getHeight() - 1);
 	}
 
 	@Test (expected = HybridTrieError.class)
@@ -275,7 +275,7 @@ public class HybridTrieTest extends AbstractTrieTest {
 		hybridTrie.insert(wordsList);
 		balancedHybridTrie.insertBalanced(wordsList);
 		
-		assertTrue("insert balanced", balancedHybridTrie.averageDepth() < hybridTrie.averageDepth());
+		assertTrue("insert balanced", balancedHybridTrie.getAverageDepthOfLeaves() < hybridTrie.getAverageDepthOfLeaves());
 	}
 	
 	@Test (expected = HybridTrieError.class)
@@ -306,6 +306,6 @@ public class HybridTrieTest extends AbstractTrieTest {
 		IPatriciaTrie patriciaTrie = new PatriciaTrie(new Alphabet());
 		patriciaTrie.insert(wordsList);
 		IPatriciaTrie patriciaTrieFromHT = ((HybridTrie) hybridTrie).toPatriciaTrie();
-		assertTrue("insert balanced", patriciaTrie.listWords() == patriciaTrieFromHT.listWords());
+		assertTrue("insert balanced", patriciaTrie.getStoredWords() == patriciaTrieFromHT.getStoredWords());
 	}
 }

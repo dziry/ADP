@@ -73,10 +73,10 @@ public class ComparativeStudy {
 		}
 			
 		String fileName = filePath.subpath(2, 3).toString();
-		int words = trie.countWords();
-		int nil = trie.countNull();
-		int height = trie.height();
-		double aDepth = trie.averageDepth();
+		int words = trie.getWordCount();
+		int nil = trie.getNullPointerCount();
+		int height = trie.getHeight();
+		double aDepth = trie.getAverageDepthOfLeaves();
 		String structMsg;
 
 		if (struct == Struct.Hybrid) structMsg = "Original-HT";			

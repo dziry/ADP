@@ -100,7 +100,19 @@ public class PatriciaTrieNode {
         return res;
     }
 
+    public ArrayList<String> getAllEdgeValues() {
+        return edgeValues;
+    }
+
+    public ArrayList<PatriciaTrieNode> getAllChildNodes() {
+        return childNodes;
+    }
+
     public int getNodeId() {
         return nodeId;
+    }
+
+    public int getNodeArity() {
+        return arity;
     }
 }

@@ -32,7 +32,7 @@ public class PatriciaTrieHelper {
                     index++;
                 }
             } catch (IndexOutOfBoundsException e) {
-                // No longer the same prefix
+                // No longer the same getPrefixCount
             }
         }
 
