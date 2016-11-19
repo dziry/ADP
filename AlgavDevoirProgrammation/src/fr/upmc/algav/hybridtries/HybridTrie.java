@@ -180,14 +180,14 @@ public class HybridTrie implements IHybridTrie {
 	}
 
 	@Override
-	public double getAverageDepth() {
+	public double getAverageDepthOfLeaves() {
 		if (isEmpty()) {
 			return 0.0;
 		}
 		return (double) countTotalDepthRecursively(root, -1, 0) / (double) countnodesRecursively(root, 0);
 	}
 
-	// used for getAverageDepth
+	// used for getAverageDepthOfLeaves
 	private static int countnodesRecursively(HybridTrieNode node, int nodesCounter) {
 		if (node != null) {
 			nodesCounter++;
@@ -198,7 +198,7 @@ public class HybridTrie implements IHybridTrie {
 		return nodesCounter;
 	}
 
-	// used for getAverageDepth
+	// used for getAverageDepthOfLeaves
 	private static int countTotalDepthRecursively(HybridTrieNode node, int depthCounter, int totalDepth) {
 		if (node != null) {
 			depthCounter++;

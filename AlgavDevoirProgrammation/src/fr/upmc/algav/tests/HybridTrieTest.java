@@ -280,7 +280,7 @@ public class HybridTrieTest extends AbstractTrieTest {
 		hybridTrie.insert(wordsList);
 		balancedHybridTrie.insertBalanced(wordsList);
 		
-		assertTrue("insert balanced", balancedHybridTrie.getAverageDepth() < hybridTrie.getAverageDepth());
+		assertTrue("insert balanced", balancedHybridTrie.getAverageDepthOfLeaves() < hybridTrie.getAverageDepthOfLeaves());
 	}
 	
 	@Test (expected = HybridTrieError.class)

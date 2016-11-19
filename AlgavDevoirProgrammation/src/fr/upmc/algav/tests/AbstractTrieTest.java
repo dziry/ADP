@@ -41,7 +41,7 @@ public abstract class AbstractTrieTest {
 	
 	protected final void testAverageDepth(ITrie trie, double expectedTrieAverageDepth) {
 		final double precision = 0.00001;
-		final double calculatedTrieAverageDepth = trie.getAverageDepth();
+		final double calculatedTrieAverageDepth = trie.getAverageDepthOfLeaves();
 		assertEquals("calulating the average depth", calculatedTrieAverageDepth, expectedTrieAverageDepth, precision);
 	}
 	

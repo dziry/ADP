@@ -15,7 +15,7 @@ public interface ITrie {
 	ArrayList<String> getStoredWords();
 	int getNullPointerCount();
 	int getHeight();
-	double getAverageDepth();
+	double getAverageDepthOfLeaves();
 	int getPrefixCount(String word);
 	boolean remove(String word);
 	

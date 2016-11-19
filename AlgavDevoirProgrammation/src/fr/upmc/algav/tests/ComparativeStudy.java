@@ -76,7 +76,7 @@ public class ComparativeStudy {
 		int words = trie.getWordCount();
 		int nil = trie.getNullPointerCount();
 		int height = trie.getHeight();
-		double aDepth = trie.getAverageDepth();
+		double aDepth = trie.getAverageDepthOfLeaves();
 		String structMsg;
 
 		if (struct == Struct.Hybrid) structMsg = "Original-HT";			

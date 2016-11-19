@@ -28,6 +28,9 @@ public class PatriciaTrieTest extends AbstractTrieTest {
 
 	private static final int TRIE_HEIGHT = 4;
 
+    // Total depth of leaves = 36. Total count of leaves = 10
+    private static final double AVERAGE_DEPTH_LEAVES = 3.6;
+
 	private static final String[] TEST_DATA = {
 			WORD_OVER_SEVERAL_EDGES, "ROMANUS", "ROMULUS", "RUBENS", "RUBER",
 			"RUBICON", "RUBICUNDUS", WORD_WITH_RESULT_ONLY_EDGE, WORD_AT_ONLY_ON_EDGE,
@@ -102,7 +105,8 @@ public class PatriciaTrieTest extends AbstractTrieTest {
 
 	@Test
 	public final void runNominalTestIsEmpty() {
-		// TODO
+		PatriciaTrie tempTrie = new PatriciaTrie(new Alphabet());
+        assertTrue(tempTrie.isEmpty());
 	}
 
 	@Test
@@ -147,7 +151,7 @@ public class PatriciaTrieTest extends AbstractTrieTest {
 
 	@Test
 	public final void runNominalTestAverageDepth() {
-		// TODO
+        assertEquals(AVERAGE_DEPTH_LEAVES, patriciaTrie.getAverageDepthOfLeaves(), 0);
 	}
 
 	@Test

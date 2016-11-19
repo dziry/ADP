@@ -273,12 +273,61 @@ public class PatriciaTrie implements IPatriciaTrie {
     }
 
 	@Override
-	public double getAverageDepth() {
-		// TODO Auto-generated method stub
-		return 0;
+	public double getAverageDepthOfLeaves() {
+		double totalDepthForLeaves = (double) getTotalDepthOfLeavesForNode(rootNode, -1);
+        double leavesCount = (double) getTotalLeavesCountForNode(rootNode);
+        return totalDepthForLeaves / leavesCount;
 	}
 
-	@Override
+    private int getTotalDepthOfLeavesForNode(PatriciaTrieNode currentNode, int currentDepth) {
+        // We have a new level, so increase the current depth value.
+        int newDepth = currentDepth + 1;
+        int totalDepthForLeaves = 0;
+
+        if (!currentNode.isLeaf()) {
+            // No leaf --> we have to visit also all possible children for further leaves.
+            ArrayList<String> edgeValues = currentNode.getAllEdgeValues();
+            ArrayList<PatriciaTrieNode> childNodes = currentNode.getAllChildNodes();
+
+            for (int i = 0; i < currentNode.getNodeArity(); i++) {
+                // Visit each child
+                if (edgeValues.get(i) != null && childNodes.get(i) != null) {
+                    // We have no null pointer --> Search for leaves in descendants.
+                    totalDepthForLeaves += getTotalDepthOfLeavesForNode(childNodes.get(i), newDepth);
+                }
+            }
+        } else {
+            // We have found a leaf. Increase count
+            totalDepthForLeaves += newDepth;
+        }
+
+        return totalDepthForLeaves;
+    }
+
+    private int getTotalLeavesCountForNode(PatriciaTrieNode currentNode) {
+        int newLeafCount = 0;
+
+        if (!currentNode.isLeaf()) {
+            // No leaf --> we have to visit also all possible children for further leaves.
+            ArrayList<String> edgeValues = currentNode.getAllEdgeValues();
+            ArrayList<PatriciaTrieNode> childNodes = currentNode.getAllChildNodes();
+
+            for (int i = 0; i < currentNode.getNodeArity(); i++) {
+                // Visit each child
+                if (edgeValues.get(i) != null && childNodes.get(i) != null) {
+                    // We have no null pointer --> Search for leaves in descendants.
+                    newLeafCount += getTotalLeavesCountForNode(childNodes.get(i));
+                }
+            }
+        } else {
+            // We have found a leaf. Increase count
+            newLeafCount++;
+        }
+
+        return newLeafCount;
+    }
+
+    @Override
 	public int getPrefixCount(String word) {
 		// TODO Auto-generated method stub
 		return 0;
