@@ -1,7 +1,5 @@
 package fr.upmc.algav.tests;
 
-import fr.upmc.algav.hybridtries.HybridTrie;
-import fr.upmc.algav.interfaces.ITrie;
 import fr.upmc.algav.patriciatries.Alphabet;
 import fr.upmc.algav.patriciatries.PatriciaTrie;
 import fr.upmc.algav.tools.Reader;
