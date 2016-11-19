@@ -16,7 +16,7 @@ public class PatriciaTrieHelper {
     }
 
     public static String getCommonPrefix(PatriciaTrieNode node, String word) {
-        return getCommonPrefixForNodeAndValue(node, word);
+        return word.isEmpty() ? null : getCommonPrefixForNodeAndValue(node, word);
     }
 
     private static String getCommonPrefixForNodeAndValue(PatriciaTrieNode node, String word) {

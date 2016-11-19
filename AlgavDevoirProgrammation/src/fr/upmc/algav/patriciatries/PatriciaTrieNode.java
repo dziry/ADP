@@ -35,13 +35,22 @@ public class PatriciaTrieNode {
     }
 
     public String getConcernedEdgeForValue(String value) {
-        return edgeValues.get(AlphabetHelper.getIndexForFirstCharOfWord(value));
+        String edgeValue;
+
+        try {
+            int a = AlphabetHelper.getIndexForFirstCharOfWord(value);
+            edgeValue = edgeValues.get(a);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            edgeValue = null;
+        }
+
+        return edgeValue;
     }
 
     public void addNewValuedResultEdge(int nodeId, String edgeValueToInsert) {
         testForNodeStateChange();
 
-        if (Alphabet.getEndOfWordCharacter().equals(edgeValueToInsert)) {
+        if (Alphabet.getEndOfWordCharacter().equals(edgeValueToInsert) || edgeValueToInsert.isEmpty()) {
             addNewResultOnlyEdge(nodeId);
         } else {
             addEdge(nodeId, AlphabetHelper.getIndexForFirstCharOfWord(edgeValueToInsert),

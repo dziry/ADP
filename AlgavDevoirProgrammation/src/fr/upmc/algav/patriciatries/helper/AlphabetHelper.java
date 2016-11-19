@@ -26,15 +26,15 @@ public class AlphabetHelper {
     }
 
     public static int getIndexForFirstCharOfWord(String word) {
-        return getcharIdForChar(word.charAt(0));
+        return getCharIdForChar(word.charAt(0));
     }
 
     public static char getCharForId(int chardId) {
         return (char) chardId;
     }
 
-    public static int getcharIdForChar(char c) {
-        return Character.getNumericValue(c);
+    public static int getCharIdForChar(char c) {
+        return (int) c;
     }
 
     public static String makeResultWord(String word) {
