@@ -265,11 +265,6 @@ public class HybridTrieTest extends AbstractTrieTest {
 	}
 	
 	@Test
-	public final void testPrint() {
-		// TODO		
-	}
-	
-	@Test
 	public final void testInsertBalanced() {
 		Reader reader = new Reader("files/Shakespeare/john.txt");
 		ArrayList<String> wordsList = new ArrayList<String>();

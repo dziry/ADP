@@ -14,7 +14,7 @@ import fr.upmc.algav.patriciatries.Alphabet;
 import fr.upmc.algav.patriciatries.PatriciaTrie;
 import fr.upmc.algav.tools.Reader;
 
-public class ComparativeStudy {
+public class ComparativeStudy { 
 
 	private final static String config = "%-25s%-15s%-15s%-15s%-20s%s\n";
 	private static enum Struct { Hybrid, BalancedHybrid, SortedHybrid, SortedBalancedHybrid, Patricia };

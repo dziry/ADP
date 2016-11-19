@@ -463,7 +463,7 @@ public class HybridTrie implements IHybridTrie {
 	private static int max(int n1, int n2) {		
 		return (n1 > n2) ? n1 : n2;
 	}
-	
+ 	
 	@Override
 	public void insertBalanced(ArrayList<String> words) {
 		if (words == null || words.size() < 1) {
