@@ -64,7 +64,7 @@ public class HybridTrie implements IHybridTrie {
 		}
 		for (String word : words) {
 			insert(word);
-		}
+		}	
 	}
 
 	@Override
@@ -215,7 +215,7 @@ public class HybridTrie implements IHybridTrie {
 	@Override
 	public int getPrefixCount(String word) {
 		if (word == null || word.isEmpty()) {
-			throw new HybridTrieError("search(word): word should not be null or empty!");
+			throw new HybridTrieError("getPrefixCount(word): word should not be null or empty!");
 		}
 		return prefixRecursively(root, word.toCharArray(), 0);
 	}

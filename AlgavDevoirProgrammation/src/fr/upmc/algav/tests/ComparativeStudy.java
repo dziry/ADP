@@ -43,7 +43,7 @@ public class ComparativeStudy {
 		        if (Files.isRegularFile(filePath)) {
 		        	run(originalHT, filePath, Struct.Hybrid); 
 		        	run(balancedHT, filePath, Struct.BalancedHybrid);
-//		        	run(patricia, filePath, Struct.Patricia);
+		        	run(patricia, filePath, Struct.Patricia);
 		        	run(originalSortedHT, filePath, Struct.SortedHybrid); 
 		        	run(balancedSortedHT, filePath, Struct.SortedBalancedHybrid);
 		        	System.out.println("------------------------------------------------------------------------------------------------------\n");
