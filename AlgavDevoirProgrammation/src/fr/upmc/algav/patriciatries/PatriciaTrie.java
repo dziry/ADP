@@ -328,9 +328,40 @@ public class PatriciaTrie implements IPatriciaTrie {
     }
 
     @Override
-	public int getPrefixCount(String word) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int getPrefixCount(String prefix) {
+		return (prefix == null || prefix.isEmpty()) ? 0 : getPrefixCountForNode(prefix, prefix, rootNode);
+	}
+
+	private int getPrefixCountForNode(String searchedPrefix, String tempPrefix, PatriciaTrieNode currentNode) {
+		int res = 0;
+
+		// Only if we're not at a leaf
+		if (!currentNode.isLeaf()) {
+			// There are already edge values for this node
+			String commonPrefix = PatriciaTrieHelper.getCommonPrefix(currentNode, tempPrefix);
+
+			if (commonPrefix != null) {
+				String edgeValue = currentNode.getConcernedEdgeForValue(tempPrefix);
+				String prefixWithoutCommonPrefix = tempPrefix.substring(commonPrefix.length());
+
+				PatriciaTrieNode childNode = currentNode.getChildNodeForEdgeValue(edgeValue);
+
+				if (prefixWithoutCommonPrefix.length() <= 0) {
+					// The searched word itself is also finished.
+					// E.g. Searched prefix = "why" and edge value = "why"
+					// Look how many stored words there are now for the child node
+					HashSet<String> storedWordsForChildNode = getStoredWordsForNode(childNode, searchedPrefix);
+					res += storedWordsForChildNode.size();
+				} else {
+					// The search prefix itself is not yet finished.
+					// E.g. Searched prefix = "however" and edge value = "how"
+					// Search for the remaining characters of the prefix at the child node of the current edge.
+					res += getPrefixCountForNode(searchedPrefix, prefixWithoutCommonPrefix, childNode);
+				}
+			}
+		}
+
+		return res;
 	}
 
 	@Override

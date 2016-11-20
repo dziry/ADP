@@ -1,9 +1,5 @@
 graph G {
  "0" [shape=ellipse style=filled fillcolor=black];
- "15" [shape=ellipse style=filled fillcolor=black];
-     "0" -- "15" [label="hello"];
- "15" [shape=ellipse style=filled fillcolor=black];
- "0" [shape=ellipse style=filled fillcolor=black];
  "6" [shape=ellipse style=filled fillcolor=black];
      "0" -- "6" [label="R"];
  "6" [shape=ellipse style=filled fillcolor=black];
@@ -60,4 +56,8 @@ graph G {
  "18" [shape=ellipse style=filled fillcolor=black];
      "10" -- "18" [label=""];
  "18" [shape=ellipse style=filled fillcolor=black];
+ "0" [shape=ellipse style=filled fillcolor=black];
+ "15" [shape=ellipse style=filled fillcolor=black];
+     "0" -- "15" [label="hello"];
+ "15" [shape=ellipse style=filled fillcolor=black];
 }

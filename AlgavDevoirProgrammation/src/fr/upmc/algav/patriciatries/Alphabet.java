@@ -16,7 +16,7 @@ public class Alphabet {
     }
 
     public boolean isInAlphabet(char c) {
-        return isInAlphabet(AlphabetHelper.getcharIdForChar(c));
+        return isInAlphabet(AlphabetHelper.getCharIdForChar(c));
     }
 
     public static boolean isInAlphabet(int chardId) {

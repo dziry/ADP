@@ -23,8 +23,19 @@ public class PatriciaTrieTest extends AbstractTrieTest {
 	private static final String WORD_WITH_RESULT_ONLY_EDGE = "RUB";
 	private static final String NOT_EXISTING_WORD = "NOTINTRIE";
 	private static final String NEW_INSERTED_WORD = "IAmNew";
+
 	private static final String PREFIX_PARTLY_IN_TREE_OVER_EDGES = "ROM";
 	private static final String PREFIX_PARTLY_IN_TREE_ONE_EDGE = "ULUS";
+
+    private static final String PREFIX_COUNT_FOR_SEVERAL = PREFIX_PARTLY_IN_TREE_OVER_EDGES;
+    private static final int PREFIX_COUNT_FOR_SEVERAL_COUNT = 4;
+    private static final String PREFIX_COUNT_WITH_RESULT_ONLY = WORD_WITH_RESULT_ONLY_EDGE;
+    private static final int PREFIX_COUNT_WITH_RESULT_ONLY_COUNT = 5;
+    private static final String PREFIX_COUNT_ONE_LETTER_PREFIX = "R";
+    private static final int PREFIX_COUNT_ONE_LETTER_PREFIX_COUNT = 9;
+    private static final String PREFIX_COUNT_FOR_NO_WORD = "RAN";
+    private static final String PREFIX_COUNT_NO_WORDS_AS_WORD_ITSELF = WORD_AT_ONLY_ON_EDGE;
+    private static final int PREFIX_COUNT_NO_WORDS_COUNT = 0;
 
 	private static final int TRIE_HEIGHT = 4;
 
@@ -102,6 +113,36 @@ public class PatriciaTrieTest extends AbstractTrieTest {
 		patriciaTrie.insert(NEW_INSERTED_WORD);
 		assertTrue(patriciaTrie.search(NEW_INSERTED_WORD));
 	}
+
+	@Test
+	public void getPrefixCount_normalPrefixForSeveralWords() {
+        int prefixCount = patriciaTrie.getPrefixCount(PREFIX_COUNT_FOR_SEVERAL);
+		assertEquals(PREFIX_COUNT_FOR_SEVERAL_COUNT, prefixCount);
+	}
+
+    @Test
+    public void getPrefixCount_noPrefixAsStoredWord() {
+        int prefixCount = patriciaTrie.getPrefixCount(PREFIX_COUNT_NO_WORDS_AS_WORD_ITSELF);
+        assertEquals(PREFIX_COUNT_NO_WORDS_COUNT, prefixCount);
+    }
+
+    @Test
+    public void getPrefixCount_prefixForWordEndingInResultOnlyEdge() {
+        int prefixCount = patriciaTrie.getPrefixCount(PREFIX_COUNT_WITH_RESULT_ONLY);
+        assertEquals(PREFIX_COUNT_WITH_RESULT_ONLY_COUNT, prefixCount);
+    }
+
+    @Test
+    public void getPrefixCount_oneLetterPrefix() {
+        int prefixCount = patriciaTrie.getPrefixCount(PREFIX_COUNT_ONE_LETTER_PREFIX);
+        assertEquals(PREFIX_COUNT_ONE_LETTER_PREFIX_COUNT, prefixCount);
+    }
+
+    @Test
+    public void getPrefixCount_prefixForNoWord() {
+        int prefixCount = patriciaTrie.getPrefixCount(PREFIX_COUNT_FOR_NO_WORD);
+        assertEquals(PREFIX_COUNT_NO_WORDS_COUNT, prefixCount);
+    }
 
 	@Test
 	public final void runNominalTestIsEmpty() {
