@@ -66,6 +66,11 @@ public class HybridTrie implements IHybridTrie {
 			insert(word);
 		}	
 	}
+	
+	@Override
+	public void removeAll() {
+		this.root = null;
+	}
 
 	@Override
 	public boolean search(String word) {

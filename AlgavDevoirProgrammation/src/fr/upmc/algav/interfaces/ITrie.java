@@ -8,6 +8,7 @@ public interface ITrie {
 	boolean isEmpty();
 	void insert(String word);
 	void insert(ArrayList<String> words);
+	void removeAll();
 	
 	// Advanced functions
 	boolean search(String word);

@@ -117,6 +117,11 @@ public class PatriciaTrie implements IPatriciaTrie {
 	}
 	
 	@Override
+	public void removeAll() {
+		this.rootNode = null;
+	}
+	
+	@Override
 	public boolean search(String word) {
 		return word != null && searchWordInNode(word, rootNode);
 	}
