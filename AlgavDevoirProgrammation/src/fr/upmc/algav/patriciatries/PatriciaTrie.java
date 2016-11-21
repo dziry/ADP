@@ -118,7 +118,7 @@ public class PatriciaTrie implements IPatriciaTrie {
 	
 	@Override
 	public void removeAll() {
-		this.rootNode = null;
+		// TODO
 	}
 	
 	@Override

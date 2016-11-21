@@ -1,4 +1,4 @@
-package fr.upmc.algav.tests;
+package fr.upmc.algav.experiments;
 
 import java.io.IOException;
 import java.nio.file.Files;
