@@ -37,9 +37,9 @@ public abstract class TimeComparison {
 	private static double prefixCountTimeInHybridTrie = 0;
 	private static double prefixCountTimeInBalancedHybridTrie = 0;
 //	private static double prefixCountTimeInPatriciaTrie = 0;
-	private static double removeTimeInHybridTrie = 0;
-	private static double removeTimeInBalancedHybridTrie = 0;
-//	private static double removeTimeInPatriciaTrie = 0;
+	private static double removeWordsTimeInHybridTrie = 0;
+	private static double removeWordsTimeInBalancedHybridTrie = 0;
+//	private static double removeWordsTimeInPatriciaTrie = 0;
 
 	public static void main(String[] args) {
 		System.out.println("Les résultats obtenu sont la moyenne de " + numberOfAttempts + " essais");
@@ -62,8 +62,7 @@ public abstract class TimeComparison {
 	}
 	
 	private static void runTests(int attempt) {
-		insertExperiments();
-		
+		insertExperiments();		
 		// getting ready for the next three experiments
 		final int indexOfFile = 6;		
 		if (attempt == 0) {
@@ -71,29 +70,13 @@ public abstract class TimeComparison {
 			balancedHybridTrie.removeAll();
 //			patriciaTrie.removeAll();
 			insertPartiallyOrientedListsInTrie(indexOfFile);
-			System.out.println("\nLes statistiques des données utilisés pour les expérimentations (Recherche, Préfixe, Suppression): ");
-			System.out.println("--------------------------------------------------------------------------------------------------");
-			System.out.println("- Oeuvre: hamlet.txt");
-			System.out.println("- Taille : 164.04 KB");
-			System.out.println("- Nombre de mots: 32861");
-			System.out.println("- Au moins 66 mots sont ordonnées");
-			System.out.println("- Longeur mini de mots: 1");
-			System.out.println("- Longeur maxi de mots: 14");
-			System.out.println("- Profendeur moyen des arbres:");
-			System.out.println("    Trie Hybride: " + hybridTrie.getAverageDepthOfLeaves());
-			System.out.println("    Trie Hybride équilibré: " + balancedHybridTrie.getAverageDepthOfLeaves());
-//			System.out.println("    Patricia Trie: " + patriciaTrie.getAverageDepthOfLeaves());
-			System.out.println("- Hauteur de l'arbres:");
-			System.out.println("    Trie Hybride: " + hybridTrie.getHeight());
-			System.out.println("    Trie Hybride équilibré: " + balancedHybridTrie.getHeight());
-//			System.out.println("    Patricia Trie: " + patriciaTrie.getHeight());
-		}
-			
+			printDataStatistics();			
+		}			
 		searchExperiments(indexOfFile);
-		prefixExperiments();
-		removeExperiments();
+		prefixExperiments(indexOfFile);
+		removeExperiments(indexOfFile);
 	}
-	
+
 	private static void insertExperiments() {		
 		for (int index = 0; index < numberOfFiles; index++) {			
 			insertionTimeInHybridTrie += getInsertionTime(hybridTrie, index);
@@ -109,12 +92,18 @@ public abstract class TimeComparison {
 //		searchWordsTimeInPatriciaTrie += getSearchWordsTime(patriciaTrie, indexOfFile, numberOfWordsToSearch);
 	}
 
-	private static void prefixExperiments() {
-		// TODO
+	private static void prefixExperiments(int indexOfFile) {		
+		int numberOfWordsToCountPrefix = 500;
+		prefixCountTimeInHybridTrie += getCountPrefixTime(hybridTrie, indexOfFile, numberOfWordsToCountPrefix);
+		prefixCountTimeInBalancedHybridTrie += getCountPrefixTime(balancedHybridTrie, indexOfFile, numberOfWordsToCountPrefix);
+//		prefixCountTimeInPatriciaTrie += getCountPrefixTime(patriciaTrie, indexOfFile, numberOfWordsToRemove);
 	}
 
-	private static void removeExperiments() {
-		// TODO
+	private static void removeExperiments(int indexOfFile) {
+		int numberOfWordsToRemove = 500;
+		removeWordsTimeInHybridTrie += getRemoveWordsTime(hybridTrie, indexOfFile, numberOfWordsToRemove);
+		removeWordsTimeInBalancedHybridTrie += getRemoveWordsTime(balancedHybridTrie, indexOfFile, numberOfWordsToRemove);
+//		removeWordsTimeInPatriciaTrie += getRemoveWordsTime(patriciaTrie, indexOfFile, numberOfWordsToRemove);
 	}
 
 	private static double getInsertionTime(ITrie trie, int FileIndex) {
@@ -147,9 +136,9 @@ public abstract class TimeComparison {
 		double averagePrefixCountTimeInHybridTrie = prefixCountTimeInHybridTrie / numberOfAttempts;
 		double averagePrefixCountTimeInBalancedHybridTrie = prefixCountTimeInBalancedHybridTrie / numberOfAttempts;
 //		double averagePrefixCountTimeInPatriciaTrie = prefixCountTimeInPatriciaTrie / numberOfAttempts;
-		double averageRemoveTimeInHybridTrie = removeTimeInHybridTrie / numberOfAttempts;
-		double averageRemoveTimeInBalancedHybridTrie = removeTimeInBalancedHybridTrie / numberOfAttempts;
-//		double averageRemoveTimeInPatriciaTrie = removeTimeInPatriciaTrie / numberOfAttempts;
+		double averageRemoveTimeInHybridTrie = removeWordsTimeInHybridTrie / numberOfAttempts;
+		double averageRemoveTimeInBalancedHybridTrie = removeWordsTimeInBalancedHybridTrie / numberOfAttempts;
+//		double averageRemoveTimeInPatriciaTrie = removeWordsTimeInPatriciaTrie / numberOfAttempts;
 
 		System.out.println("\nLes résultats obtenues:");
 		System.out.println("-------------------------");
@@ -179,9 +168,49 @@ public abstract class TimeComparison {
 		Instant end = null;
 		double duration = 0;
 		for (int wordsCount = 0; wordsCount < numberOfWords; wordsCount++) {
-			int randomWord = getRandomWordIndex(numberOfWords);
+			int randomWordIndex = getRandomWordIndex(numberOfWords);
 			start = Instant.now();
-			trie.search(shakespeareWordsList.get(FileIndex).get(randomWord));
+			trie.search(shakespeareWordsList.get(FileIndex).get(randomWordIndex));
+			end = Instant.now();
+			duration += (double)Duration.between(start, end).toNanos();
+		}
+    	return duration / (double)numberOfWords;
+	}
+	
+	private static double getCountPrefixTime(ITrie trie, int FileIndex, int numberOfWords) {
+		Instant start = null;
+		Instant end = null;
+		double duration = 0;
+		for (int wordsCount = 0; wordsCount < numberOfWords; wordsCount++) {
+			int randomWordPrefix = getRandomWordIndex(numberOfWords);
+			String randomWord = shakespeareWordsList.get(FileIndex).get(randomWordPrefix);
+			String randomPrefix = getRandomPrefix(randomWord);
+			start = Instant.now();
+			trie.getPrefixCount(randomPrefix);
+			end = Instant.now();
+			duration += (double)Duration.between(start, end).toNanos();
+		}
+    	return duration / (double)numberOfWords;
+	}
+	
+	private static String getRandomPrefix(String randomWord) {
+		int beginIndex = ThreadLocalRandom.current().nextInt(0, randomWord.length());
+		int endIndex = ThreadLocalRandom.current().nextInt(beginIndex, randomWord.length());
+		if (beginIndex == endIndex) {
+			return randomWord;
+		} else {
+			return randomWord.substring(beginIndex, endIndex);
+		}
+	}
+
+	private static double getRemoveWordsTime(ITrie trie, int FileIndex, int numberOfWords) {
+		Instant start = null;
+		Instant end = null;
+		double duration = 0;
+		for (int wordsCount = 0; wordsCount < numberOfWords; wordsCount++) {
+			int randomWordIndex = getRandomWordIndex(numberOfWords);
+			start = Instant.now();
+			trie.remove(shakespeareWordsList.get(FileIndex).get(randomWordIndex));
 			end = Instant.now();
 			duration += (double)Duration.between(start, end).toNanos();
 		}
@@ -193,7 +222,7 @@ public abstract class TimeComparison {
 		return iterator.next();
 	}
 	
-	public static void insertPartiallyOrientedListsInTrie(int fileIndex) {
+	private static void insertPartiallyOrientedListsInTrie(int fileIndex) {
 		ArrayList<String> wordsListFromFile = new ArrayList<String>(shakespeareWordsList.get(fileIndex));
 		ArrayList<String> listToSort = new ArrayList<String>();
 		ArrayList<String> ordinaryList = new ArrayList<String>();
@@ -213,6 +242,25 @@ public abstract class TimeComparison {
 		hybridTrie.insert(ordinaryList);
 		((HybridTrie) balancedHybridTrie).insertBalanced(ordinaryList);
 //		patriciaTrie.insert(ordinaryList);
+	}
+	
+	private static void printDataStatistics() {
+		System.out.println("\nLes statistiques des données utilisés pour les expérimentations (Recherche, Préfixe, Suppression): ");
+		System.out.println("--------------------------------------------------------------------------------------------------");
+		System.out.println("- Oeuvre: hamlet.txt");
+		System.out.println("- Taille : 164.04 KB");
+		System.out.println("- Nombre de mots: 32861");
+		System.out.println("- Au moins 66 mots sont ordonnées");
+		System.out.println("- Longeur mini de mots: 1");
+		System.out.println("- Longeur maxi de mots: 14");
+		System.out.println("- Profendeur moyen des arbres:");
+		System.out.println("    Trie Hybride: " + hybridTrie.getAverageDepthOfLeaves());
+		System.out.println("    Trie Hybride équilibré: " + balancedHybridTrie.getAverageDepthOfLeaves());
+//		System.out.println("    Patricia Trie: " + patriciaTrie.getAverageDepthOfLeaves());
+		System.out.println("- Hauteur de l'arbres:");
+		System.out.println("    Trie Hybride: " + hybridTrie.getHeight());
+		System.out.println("    Trie Hybride équilibré: " + balancedHybridTrie.getHeight());
+//		System.out.println("    Patricia Trie: " + patriciaTrie.getHeight());		
 	}
 }
 
