@@ -366,8 +366,96 @@ public class PatriciaTrie implements IPatriciaTrie {
 
 	@Override
 	public boolean remove(String word) {
-		// TODO Auto-generated method stub
-		return false;
+		return word != null && removeWordFromNode(rootNode, word, null, null);
+	}
+
+	private boolean removeWordFromNode(PatriciaTrieNode currentNode, String word,
+                                       String previouslyVisitedEdgeValue,
+                                       PatriciaTrieNode previouslyVisitedNode) {
+		boolean res = false;
+
+		if (!word.isEmpty()) {
+			if (currentNode.isLeaf()) {
+				// We're at a leaf. No more edges, a dead end.
+				res = false;
+			} else if (PatriciaTrieHelper.wordIsAlreadyStoredForNode(currentNode, word)) {
+				// We have found the stored word !
+				res = true;
+
+                // Find the concerning edge and remove the word
+                String currentNodeEdgeValue = currentNode.getConcernedEdgeForValue(word);
+                currentNode.removeEdge(currentNodeEdgeValue);
+
+                // Test if the node has now only one child as we could then also remove that child node
+                // and merge its edge value with the current node's edge value
+                Integer onlyChildIndex = PatriciaTrieHelper.getOnlyChildIndexOfNodeIfPresent(currentNode);
+
+                // Update the previous edge with the merged value
+                if (onlyChildIndex != null && previouslyVisitedNode != null &&
+                        previouslyVisitedEdgeValue != null) {
+
+                    // We have an only child, so get the only child's edge value
+                    String onlyChildEdgeValue = currentNode.getEdgeValueForIndex(onlyChildIndex);
+                    // Define the new merged edge value for the previous edge
+                    String newEdgeValue = previouslyVisitedEdgeValue + onlyChildEdgeValue;
+                    previouslyVisitedNode.updateEdgeValue(previouslyVisitedEdgeValue, newEdgeValue);
+
+                    // Remove also the only child and its edge as a consequence and mark the current
+                    // node as leaf as it has now only null edges.
+                    currentNode.removeEdge(onlyChildEdgeValue);
+                    currentNode.setAsLeaf();
+                }
+			} else {
+				// We have to test for a common prefix
+				String commonPrefix = PatriciaTrieHelper.getCommonPrefix(currentNode, word);
+
+				if (commonPrefix == null) {
+					// We have no shared getPrefixCount. The word can't exist in the tree.
+					res = false;
+				} else {
+					String edgeValue = currentNode.getConcernedEdgeForValue(word);
+					String wordWithoutCommonPrefix = word.substring(commonPrefix.length());
+
+					PatriciaTrieNode childNode = currentNode.getChildNodeForEdgeValue(edgeValue);
+
+					if (wordWithoutCommonPrefix.length() <= 0 &&
+                            PatriciaTrieHelper.nodeContainsResultOnlyEdge(childNode)) {
+						// The to be removed word itself is also finished.
+						// E.g. To be removed word = "why" and edge value = "why"
+						// The concerned child node needs to have a result only edge
+                        res = true;
+
+                        // Remove the result only edge
+                        childNode.removeEdge(Alphabet.getEndOfWordCharacter());
+
+                        // Test if the child node has now only one child as we could then also remove it
+                        // and merge its edge value with the current edge value
+                        Integer onlyChildIndex = PatriciaTrieHelper.getOnlyChildIndexOfNodeIfPresent(childNode);
+
+                        // Update the current edge with the merged value
+                        if (onlyChildIndex != null) {
+                            // We have an only child, so get the only child's edge value
+                            String onlyChildEdgeValue = childNode.getEdgeValueForIndex(onlyChildIndex);
+                            // Define the new merged edge value for the current edge
+                            String newEdgeValue = edgeValue + onlyChildEdgeValue;
+                            currentNode.updateEdgeValue(edgeValue, newEdgeValue);
+
+                            // Remove also the only child and its edge as a consequence and mark the child
+                            // node as leaf as it has now only null edges.
+                            childNode.removeEdge(onlyChildEdgeValue);
+                            childNode.setAsLeaf();
+                        }
+					} else {
+						// The word itself is not yet finished.
+						// E.g. To be removed word = "however" and edge value = "how"
+						// Search for the remaining characters of the word at the child node of the current edge.
+						res = removeWordFromNode(childNode, wordWithoutCommonPrefix, edgeValue, currentNode);
+					}
+				}
+			}
+		}
+
+		return res;
 	}
 
 	@Override

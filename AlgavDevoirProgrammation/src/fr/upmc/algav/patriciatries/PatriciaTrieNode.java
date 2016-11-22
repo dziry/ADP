@@ -34,6 +34,16 @@ public class PatriciaTrieNode {
         }
     }
 
+    public String getEdgeValueForIndex(int index) {
+        String res = null;
+
+        if (index >= 0 && index < arity) {
+            res = edgeValues.get(index);
+        }
+
+        return res;
+    }
+
     public String getConcernedEdgeForValue(String value) {
         String edgeValue;
 
@@ -79,6 +89,10 @@ public class PatriciaTrieNode {
         return isLeaf;
     }
 
+    public void setAsLeaf() {
+        this.isLeaf = true;
+    }
+
     public boolean hasEdgeValue(String edgeValue) {
         return edgeValues.contains(edgeValue);
     }
@@ -91,8 +105,29 @@ public class PatriciaTrieNode {
         testForNodeStateChange();
 
         int edgeIndex = AlphabetHelper.getIndexForFirstCharOfWord(edgeValue);
-        edgeValues.set(edgeIndex, edgeValue);
-        childNodes.set(edgeIndex, childNode);
+
+        if (edgeIndex >= 0 && edgeIndex < arity) {
+            edgeValues.set(edgeIndex, edgeValue);
+            childNodes.set(edgeIndex, childNode);
+        }
+    }
+
+    public void updateEdgeValue(String oldEdgeValue, String newEdgeValue) {
+        testForNodeStateChange();
+
+        int edgeIndex = AlphabetHelper.getIndexForFirstCharOfWord(oldEdgeValue);
+
+        if (edgeIndex >= 0 && edgeIndex < arity) {
+            edgeValues.set(edgeIndex, newEdgeValue);
+        }
+    }
+
+    public void removeEdge(String edgeValue) {
+        testForNodeStateChange();
+
+        int edgeIndex = AlphabetHelper.getIndexForFirstCharOfWord(edgeValue);
+        edgeValues.set(edgeIndex, null);
+        childNodes.set(edgeIndex, null);
     }
 
     public LinkedHashMap<String, PatriciaTrieNode> getAllNonNullEdgesToChildNodes() {
@@ -123,5 +158,17 @@ public class PatriciaTrieNode {
 
     public int getNodeArity() {
         return arity;
+    }
+
+    public boolean isNullEdge(int index) {
+        boolean isNullEdge;
+
+        try {
+            isNullEdge = edgeValues.get(index) == null && childNodes.get(index) == null;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            isNullEdge = true;
+        }
+
+        return isNullEdge;
     }
 }

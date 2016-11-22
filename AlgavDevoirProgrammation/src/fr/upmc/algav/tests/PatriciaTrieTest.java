@@ -27,15 +27,24 @@ public class PatriciaTrieTest extends AbstractTrieTest {
 	private static final String PREFIX_PARTLY_IN_TREE_OVER_EDGES = "ROM";
 	private static final String PREFIX_PARTLY_IN_TREE_ONE_EDGE = "ULUS";
 
-    private static final String PREFIX_COUNT_FOR_SEVERAL = PREFIX_PARTLY_IN_TREE_OVER_EDGES;
+    private static final String PREFIX_COUNT_FOR_SEVERAL = "ROM";
     private static final int PREFIX_COUNT_FOR_SEVERAL_COUNT = 4;
-    private static final String PREFIX_COUNT_WITH_RESULT_ONLY = WORD_WITH_RESULT_ONLY_EDGE;
+    private static final String PREFIX_COUNT_WITH_RESULT_ONLY = "RUB";
     private static final int PREFIX_COUNT_WITH_RESULT_ONLY_COUNT = 5;
     private static final String PREFIX_COUNT_ONE_LETTER_PREFIX = "R";
     private static final int PREFIX_COUNT_ONE_LETTER_PREFIX_COUNT = 9;
     private static final String PREFIX_COUNT_FOR_NO_WORD = "RAN";
-    private static final String PREFIX_COUNT_NO_WORDS_AS_WORD_ITSELF = WORD_AT_ONLY_ON_EDGE;
+    private static final String PREFIX_COUNT_NO_WORDS_AS_WORD_ITSELF = "hello";
     private static final int PREFIX_COUNT_NO_WORDS_COUNT = 0;
+
+    private static final int WORD_COUNT_BEFORE_REMOVAL = 10;
+    private static final int WORD_COUNT_AFTER_REMOVAL = 9;
+    private static final String REMOVED_WORD_WITH_MERGE = "ROMANE";
+    private static final String REMOVED_WORD_WITH_MERGE_AND_RESULT_ONLY_EDGE = "ROMULUS";
+    private static final String REMOVED_WORD_FULL_AT_ROOT = "hello";
+    private static final String REMOVED_WORD_WITHOUT_MERGE = "RUB";
+    private static final String REMOVED_WORD_NOT_EXISTING = "LAMBDA";
+    private static final String REMOVED_WORD_NOT_EXISTING_POSSIBLE_RESULT_ONLY_EDGE = "ROM";
 
 	private static final int TRIE_HEIGHT = 4;
 
@@ -142,6 +151,60 @@ public class PatriciaTrieTest extends AbstractTrieTest {
     public void getPrefixCount_prefixForNoWord() {
         int prefixCount = patriciaTrie.getPrefixCount(PREFIX_COUNT_FOR_NO_WORD);
         assertEquals(PREFIX_COUNT_NO_WORDS_COUNT, prefixCount);
+    }
+
+	@Test
+	public void remove_wordWithMerge() {
+        boolean wasSuccess = patriciaTrie.remove(REMOVED_WORD_WITH_MERGE);
+
+        assertTrue(wasSuccess);
+        assertFalse(patriciaTrie.search(REMOVED_WORD_WITH_MERGE));
+        assertEquals(WORD_COUNT_AFTER_REMOVAL, patriciaTrie.getWordCount());
+	}
+
+	@Test
+	public void remove_wordWithMergeAndResultOnlyEdge() {
+        boolean wasSuccess = patriciaTrie.remove(REMOVED_WORD_WITH_MERGE_AND_RESULT_ONLY_EDGE);
+
+        assertTrue(wasSuccess);
+        assertFalse(patriciaTrie.search(REMOVED_WORD_WITH_MERGE_AND_RESULT_ONLY_EDGE));
+        assertEquals(WORD_COUNT_AFTER_REMOVAL, patriciaTrie.getWordCount());
+	}
+
+    @Test
+    public void remove_fullWordAtRoot() {
+        boolean wasSuccess = patriciaTrie.remove(REMOVED_WORD_FULL_AT_ROOT);
+
+        assertTrue(wasSuccess);
+        assertFalse(patriciaTrie.search(REMOVED_WORD_FULL_AT_ROOT));
+        assertEquals(WORD_COUNT_AFTER_REMOVAL, patriciaTrie.getWordCount());
+    }
+
+    @Test
+    public void remove_wordWithoutMerge() {
+        boolean wasSuccess = patriciaTrie.remove(REMOVED_WORD_WITHOUT_MERGE);
+
+        assertTrue(wasSuccess);
+        assertFalse(patriciaTrie.search(REMOVED_WORD_WITHOUT_MERGE));
+        assertEquals(WORD_COUNT_AFTER_REMOVAL, patriciaTrie.getWordCount());
+    }
+
+    @Test
+    public void remove_wordNotExisting() {
+        boolean wasSuccess = patriciaTrie.remove(REMOVED_WORD_NOT_EXISTING);
+
+        assertFalse(wasSuccess);
+        assertFalse(patriciaTrie.search(REMOVED_WORD_NOT_EXISTING));
+        assertEquals(WORD_COUNT_BEFORE_REMOVAL, patriciaTrie.getWordCount());
+    }
+
+    @Test
+    public void remove_wordNotExistingWithPossibleResultOnlyEdge() {
+        boolean wasSuccess = patriciaTrie.remove(REMOVED_WORD_NOT_EXISTING_POSSIBLE_RESULT_ONLY_EDGE);
+
+        assertFalse(wasSuccess);
+        assertFalse(patriciaTrie.search(REMOVED_WORD_NOT_EXISTING_POSSIBLE_RESULT_ONLY_EDGE));
+        assertEquals(WORD_COUNT_BEFORE_REMOVAL, patriciaTrie.getWordCount());
     }
 
 	@Test

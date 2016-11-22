@@ -50,4 +50,25 @@ public class PatriciaTrieHelper {
 
         return res;
     }
+
+    public static Integer getOnlyChildIndexOfNodeIfPresent(PatriciaTrieNode node) {
+        Integer onlyChildIndex = null;
+
+        boolean alreadyFoundChild = false;
+
+        for (int i = 0; i < node.getNodeArity(); i++) {
+            if (!node.isNullEdge(i)) {
+                if (alreadyFoundChild) {
+                    // We have found more than one child, so we have no only-child node!
+                    onlyChildIndex = null;
+                    break;
+                } else {
+                    onlyChildIndex = i;
+                    alreadyFoundChild = true;
+                }
+            }
+        }
+
+        return onlyChildIndex;
+    }
 }
