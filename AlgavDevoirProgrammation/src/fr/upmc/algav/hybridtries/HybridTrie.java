@@ -64,7 +64,12 @@ public class HybridTrie implements IHybridTrie {
 		}
 		for (String word : words) {
 			insert(word);
-		}
+		}	
+	}
+	
+	@Override
+	public void removeAll() {
+		this.root = null;
 	}
 
 	@Override
@@ -215,7 +220,7 @@ public class HybridTrie implements IHybridTrie {
 	@Override
 	public int getPrefixCount(String word) {
 		if (word == null || word.isEmpty()) {
-			throw new HybridTrieError("search(word): word should not be null or empty!");
+			throw new HybridTrieError("getPrefixCount(word): word should not be null or empty!");
 		}
 		return prefixRecursively(root, word.toCharArray(), 0);
 	}
@@ -463,7 +468,7 @@ public class HybridTrie implements IHybridTrie {
 	private static int max(int n1, int n2) {		
 		return (n1 > n2) ? n1 : n2;
 	}
-	
+ 	
 	@Override
 	public void insertBalanced(ArrayList<String> words) {
 		if (words == null || words.size() < 1) {

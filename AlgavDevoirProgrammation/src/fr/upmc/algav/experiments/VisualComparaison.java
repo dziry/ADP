@@ -1,4 +1,4 @@
-package fr.upmc.algav.tests;
+package fr.upmc.algav.experiments;
 
 import java.util.ArrayList;
 
@@ -6,7 +6,11 @@ import fr.upmc.algav.hybridtries.HybridTrie;
 import fr.upmc.algav.interfaces.ITrie;
 import fr.upmc.algav.tools.Reader;
 
-public class Main {
+/*
+ * TODO
+ */
+
+public class VisualComparaison {
 
 	public static void main(String[] args) {
 		

@@ -1,4 +1,4 @@
-package fr.upmc.algav.tests;
+package fr.upmc.algav.experiments;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -14,7 +14,11 @@ import fr.upmc.algav.patriciatries.Alphabet;
 import fr.upmc.algav.patriciatries.PatriciaTrie;
 import fr.upmc.algav.tools.Reader;
 
-public class ComparativeStudy {
+/*
+ * TODO
+ */
+
+public abstract class StructureComparison {
 
 	private final static String config = "%-25s%-15s%-15s%-15s%-20s%s\n";
 	private static enum Struct { Hybrid, BalancedHybrid, SortedHybrid, SortedBalancedHybrid, Patricia };
@@ -43,7 +47,7 @@ public class ComparativeStudy {
 		        if (Files.isRegularFile(filePath)) {
 		        	run(originalHT, filePath, Struct.Hybrid); 
 		        	run(balancedHT, filePath, Struct.BalancedHybrid);
-//		        	run(patricia, filePath, Struct.Patricia);
+		        	run(patricia, filePath, Struct.Patricia);
 		        	run(originalSortedHT, filePath, Struct.SortedHybrid); 
 		        	run(balancedSortedHT, filePath, Struct.SortedBalancedHybrid);
 		        	System.out.println("------------------------------------------------------------------------------------------------------\n");
@@ -72,7 +76,7 @@ public class ComparativeStudy {
 			((HybridTrie) trie).insertBalanced(wordsList);
 		}
 			
-		String fileName = filePath.subpath(2, 3).toString();
+		String fileName = filePath.getFileName().toString();
 		int words = trie.getWordCount();
 		int nil = trie.getNullPointerCount();
 		int height = trie.getHeight();

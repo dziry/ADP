@@ -1,5 +1,7 @@
 package fr.upmc.algav.tests;
 
+import fr.upmc.algav.hybridtries.HybridTrie;
+import fr.upmc.algav.interfaces.ITrie;
 import fr.upmc.algav.patriciatries.Alphabet;
 import fr.upmc.algav.patriciatries.PatriciaTrie;
 import org.junit.After;
@@ -211,6 +213,11 @@ public class PatriciaTrieTest extends AbstractTrieTest {
 	public final void runNominalTestIsEmpty() {
 		PatriciaTrie tempTrie = new PatriciaTrie(new Alphabet());
         assertTrue(tempTrie.isEmpty());
+	}
+	
+	@Test
+	public final void runNominalTestRemoveAll() {
+		// TODO
 	}
 
 	@Test
