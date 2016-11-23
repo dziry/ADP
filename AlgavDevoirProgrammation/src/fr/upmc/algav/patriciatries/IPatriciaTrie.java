@@ -6,7 +6,10 @@ import fr.upmc.algav.interfaces.ITrie;
 public interface IPatriciaTrie extends ITrie {
 
 	// complex functions
-	IPatriciaTrie merge(IPatriciaTrie trie1, IPatriciaTrie trie2);
+	IPatriciaTrie merge(IPatriciaTrie otherTrie);
 	IHybridTrie toHybridTrie();
 	void clearTrie();
+	PatriciaTrieNode getRootNode();
+    int getNodeCount();
+    void setNodeCount(int nodeCount);
 }

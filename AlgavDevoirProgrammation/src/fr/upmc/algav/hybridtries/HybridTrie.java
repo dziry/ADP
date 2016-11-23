@@ -1,6 +1,7 @@
 package fr.upmc.algav.hybridtries;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.PrimitiveIterator.OfInt;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -58,7 +59,7 @@ public class HybridTrie implements IHybridTrie {
 	}
 
 	@Override
-	public void insert(ArrayList<String> words) {
+	public void insert(Collection<String> words) {
 		if (words == null || words.size() < 1) {
 			throw new HybridTrieError("insert(words): words should not be null or empty!");
 		}

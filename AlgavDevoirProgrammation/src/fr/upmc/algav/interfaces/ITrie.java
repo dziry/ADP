@@ -1,13 +1,14 @@
 package fr.upmc.algav.interfaces;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 public interface ITrie {
 	
 	// Basic primitives
 	boolean isEmpty();
 	void insert(String word);
-	void insert(ArrayList<String> words);
+	void insert(Collection<String> words);
 	void removeAll();
 	
 	// Advanced functions

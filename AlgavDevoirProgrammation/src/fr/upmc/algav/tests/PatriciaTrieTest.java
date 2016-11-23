@@ -3,6 +3,7 @@ package fr.upmc.algav.tests;
 import fr.upmc.algav.hybridtries.HybridTrie;
 import fr.upmc.algav.interfaces.ITrie;
 import fr.upmc.algav.patriciatries.Alphabet;
+import fr.upmc.algav.patriciatries.IPatriciaTrie;
 import fr.upmc.algav.patriciatries.PatriciaTrie;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -54,11 +55,17 @@ public class PatriciaTrieTest extends AbstractTrieTest {
     private static final double AVERAGE_DEPTH_LEAVES = 3.6;
 
 	private static final String[] TEST_DATA = {
-			WORD_OVER_SEVERAL_EDGES, "ROMANUS", "ROMULUS", "RUBENS", "RUBER",
-			"RUBICON", "RUBICUNDUS", WORD_WITH_RESULT_ONLY_EDGE, WORD_AT_ONLY_ON_EDGE,
-			"ROMULUSBBB", WORD_OVER_SEVERAL_EDGES, WORD_OVER_SEVERAL_EDGES, "RUBER",
-			WORD_OVER_SEVERAL_EDGES, WORD_WITH_RESULT_ONLY_EDGE
+			"ROMANE", "ROMANUS", "ROMULUS", "RUBENS", "RUBER",
+			"RUBICON", "RUBICUNDUS", "RUB", "hello",
+			"ROMULUSBBB", "ROMANE", "ROMANE", "RUBER",
+			"ROMANE", "RUB"
 	};
+
+	private static final int MERGE_WORD_COUNT_AFTER_MERGE = 14;
+
+    private static final String[] MERGE_TRIE_WORDS = {
+            "ROMANE", "BALL", "BRING" , "helium", "total"
+    };
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {}
@@ -282,8 +289,28 @@ public class PatriciaTrieTest extends AbstractTrieTest {
 
 	@Test
 	public final void runNominalTestMerge() {
-		// TODO
-	}
+		PatriciaTrie otherTrie = new PatriciaTrie(new Alphabet());
+
+        for (String otherTrieWord : MERGE_TRIE_WORDS) {
+            otherTrie.insert(otherTrieWord);
+        }
+
+        IPatriciaTrie mergedTrieThisOther = patriciaTrie.merge(otherTrie);
+        IPatriciaTrie mergedTrieOtherThis = otherTrie.merge(patriciaTrie);
+
+        assertEquals(MERGE_WORD_COUNT_AFTER_MERGE, mergedTrieThisOther.getWordCount());
+        assertEquals(MERGE_WORD_COUNT_AFTER_MERGE, mergedTrieOtherThis.getWordCount());
+
+        for (String trieWord : TEST_DATA) {
+            assertTrue(mergedTrieThisOther.search(trieWord));
+            assertTrue(mergedTrieOtherThis.search(trieWord));
+        }
+
+        for (String otherTrieWord : MERGE_TRIE_WORDS) {
+            assertTrue(mergedTrieThisOther.search(otherTrieWord));
+            assertTrue(mergedTrieOtherThis.search(otherTrieWord));
+        }
+    }
 
 	@Test
 	public final void runNominalTestToHybridTrie() {

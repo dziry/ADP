@@ -19,12 +19,20 @@ public class PatriciaTrie implements IPatriciaTrie {
 		this.rootNode = new PatriciaTrieNode(getNewNodeId(), usedAlphabet.getNodeArity(), true);
 	}
 
+    public PatriciaTrie(PatriciaTrieNode rootNode, Alphabet usedAlphabet) {
+        this.usedAlphabet = usedAlphabet;
+        this.nodeCount = 0;
+        this.rootNode = rootNode;
+    }
+
 	private int getNewNodeId() {
 		final int newNodeId = nodeCount;
 		nodeCount++;
 
 		return newNodeId;
 	}
+
+
 
 	@Override
 	public boolean isEmpty() {
@@ -110,7 +118,7 @@ public class PatriciaTrie implements IPatriciaTrie {
 	}
 
 	@Override
-	public void insert(ArrayList<String> words) {
+	public void insert(Collection<String> words) {
 		for (String word : words) {
 			insert(word);
 		}
@@ -487,10 +495,128 @@ public class PatriciaTrie implements IPatriciaTrie {
 	}
 
 	@Override
-	public IPatriciaTrie merge(IPatriciaTrie trie1, IPatriciaTrie trie2) {
-		// TODO Auto-generated method stub
-		return null;
+	public IPatriciaTrie merge(IPatriciaTrie otherTrie) {
+		IPatriciaTrie res;
+
+        if (this.isEmpty()) {
+            res = (otherTrie == null) ? this : otherTrie;
+        } else if (otherTrie == null || otherTrie.isEmpty()) {
+                res = this;
+        } else {
+            res = createMergedTrie(rootNode, otherTrie.getRootNode());
+
+            // Better complexity method. Not yet working because of bugs.
+            /*PatriciaTrie mergedTree =
+                    new PatriciaTrie(mergeCurrentNodeLevel(
+                            PatriciaTrieHelper.copyNode(rootNode),
+                            PatriciaTrieHelper.copyNode(otherTrie.getRootNode())), new Alphabet());
+
+            // All nodes should have an unique ID after the merge!
+            res = PatriciaTrieHelper.makeAllNodeIdsUnique(mergedTree);*/
+        }
+
+        return res;
 	}
+
+    private PatriciaTrie createMergedTrie(PatriciaTrieNode thisRootNode, PatriciaTrieNode otherTrieRootNode) {
+        PatriciaTrie mergedTrie = new PatriciaTrie(new Alphabet());
+
+        HashSet<String> mergedWords = new HashSet<>();
+        mergedWords.addAll(getStoredWordsForNode(thisRootNode, ""));
+        mergedWords.addAll(getStoredWordsForNode(otherTrieRootNode, ""));
+
+        mergedTrie.insert(mergedWords);
+
+        return mergedTrie;
+    }
+
+    // THIS IS THE MERGE METHOD WITH BETTER TIME COMPLEXITY. BUT THERE'S STILL A BUG, SO IT'S NOT FULLY WORKING
+
+	/*private PatriciaTrieNode mergeCurrentNodeLevel(PatriciaTrieNode thisCurrentNode,
+                                                   PatriciaTrieNode otherCurrentNode) {
+
+        if (thisCurrentNode != null && otherCurrentNode != null) {
+            // All edges for the current node of this trie if not a leaf
+            LinkedHashMap<String, PatriciaTrieNode> thisEdges = thisCurrentNode.getAllNonNullEdgesToChildNodes();
+            Set<String> thisEdgeValues = thisEdges.keySet();
+
+            // All edges for the current node of the other trie if not a leaf
+            LinkedHashMap<String, PatriciaTrieNode> otherEdges = otherCurrentNode.getAllNonNullEdgesToChildNodes();
+
+            // Try to add all the other edges to the edges of this current node
+            for (Map.Entry<String, PatriciaTrieNode> otherEdge : otherEdges.entrySet()) {
+                String otherEdgeValue = otherEdge.getKey();
+
+                if (thisEdgeValues.contains(otherEdgeValue)) {
+                    // Both tries contain the same prefix, so we can keep this prefix edge value.
+                    // Go the next node level and look what we have to add/change there.
+                    PatriciaTrieNode thisChildNode = thisCurrentNode.getChildNodeForEdgeValue(otherEdgeValue);
+                    PatriciaTrieNode otherChildNode = otherCurrentNode.getChildNodeForEdgeValue(otherEdgeValue);
+
+                    if (thisChildNode != null && otherChildNode != null) {
+                        thisCurrentNode.setEdge(otherEdgeValue, mergeCurrentNodeLevel(thisChildNode, otherChildNode));
+                    }
+                } else {
+                    // Test if there's a common prefix between the edge of the other trie with all edges of this trie
+                    String commonPrefixThisAndOtherEdge =
+                            PatriciaTrieHelper.getCommonPrefixForListOfEdges(otherEdgeValue, thisEdgeValues);
+
+                    if (commonPrefixThisAndOtherEdge != null) {
+                        String thisEdgeValue = thisCurrentNode.getConcernedEdgeForValue(commonPrefixThisAndOtherEdge);
+
+                        // Edge value of the other node reduced by the common prefix
+                        String otherEdgeValueWithoutCommonPrefix =
+                                otherEdgeValue.substring(commonPrefixThisAndOtherEdge.length());
+                        // The child node of the current other node
+                        PatriciaTrieNode otherNodeChildNode = otherCurrentNode.getChildNodeForEdgeValue(otherEdgeValue);
+
+                        // If the prefix for the edge value of this current node changed
+                        if (commonPrefixThisAndOtherEdge.length() < thisEdgeValue.length()) {
+                            // New edge value for the edge of this current node
+                            String thisEdgeValueWithoutCommonPrefix =
+                                    thisEdgeValue.substring(commonPrefixThisAndOtherEdge.length());
+
+                            // Store the old child node of this current node for this edge value
+                            final PatriciaTrieNode oldThisNodeChildNode = thisCurrentNode.getChildNodeForEdgeValue(thisEdgeValue);
+
+                            // Create the new child node for this current node.
+                            PatriciaTrieNode newThisNodeChildNode = new PatriciaTrieNode(0,
+                                    usedAlphabet.getNodeArity(), false);
+                            // Add the old child node as child node of the newly created child node
+                            newThisNodeChildNode.setEdge(thisEdgeValueWithoutCommonPrefix, oldThisNodeChildNode);
+                            // Add the new child node to the current node
+                            thisCurrentNode.setEdge(commonPrefixThisAndOtherEdge, newThisNodeChildNode);
+
+                            // If the prefix for the edge value of the other node is the same as the common prefix
+                            if (commonPrefixThisAndOtherEdge.length() == otherEdgeValue.length()) {
+                                // Add all the edges of the child of the other current node to this current node
+                                newThisNodeChildNode = mergeCurrentNodeLevel(newThisNodeChildNode, otherNodeChildNode);
+                                // The prefix for the edge value of the other node did also change
+                            } else if (commonPrefixThisAndOtherEdge.length() < otherEdgeValue.length()) {
+                                // Add a new edge with the other edge value reduced by the common prefix as edge value
+                                // and the other current node's child node to the newly created child node of
+                                // this current node.
+                                newThisNodeChildNode.setEdge(otherEdgeValueWithoutCommonPrefix, otherNodeChildNode);
+                            }
+                            // The prefix for the edge value of this current node did not change
+                        } else if (commonPrefixThisAndOtherEdge.length() == thisEdgeValue.length()) {
+                            PatriciaTrieNode thisCurrentNodeChildNode =
+                                    thisCurrentNode.getChildNodeForEdgeValue(thisEdgeValue);
+
+                            otherCurrentNode.updateEdgeValue(otherEdgeValue, otherEdgeValueWithoutCommonPrefix);
+                            thisCurrentNode.setEdge(thisEdgeValue,
+                                    mergeCurrentNodeLevel(thisCurrentNodeChildNode, otherCurrentNode));
+                        }
+                    } else {
+                        // There's no shared prefix. Simply add the other edge to the set of "this edges"
+                        thisCurrentNode.setEdge(otherEdgeValue, otherEdge.getValue());
+                    }
+                }
+            }
+        }
+
+        return thisCurrentNode;
+    }*/
 
 	@Override
 	public IHybridTrie toHybridTrie() {
@@ -502,5 +628,20 @@ public class PatriciaTrie implements IPatriciaTrie {
     public void clearTrie() {
         this.nodeCount = 0;
         this.rootNode = new PatriciaTrieNode(getNewNodeId(), usedAlphabet.getNodeArity(), true);
+    }
+
+    @Override
+    public PatriciaTrieNode getRootNode() {
+        return rootNode;
+    }
+
+    @Override
+    public int getNodeCount() {
+        return nodeCount;
+    }
+
+    @Override
+    public void setNodeCount(int nodeCount) {
+        this.nodeCount = nodeCount;
     }
 }

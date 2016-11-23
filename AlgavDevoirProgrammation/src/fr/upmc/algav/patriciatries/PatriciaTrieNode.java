@@ -27,6 +27,15 @@ public class PatriciaTrieNode {
         }
     }
 
+    public PatriciaTrieNode(int nodeId, int arity, ArrayList<String> edgeValues,
+                            ArrayList<PatriciaTrieNode> childNodes, boolean isLeaf) {
+        this.nodeId = nodeId;
+        this.arity = arity;
+        this.edgeValues = edgeValues;
+        this.childNodes = childNodes;
+        this.isLeaf = isLeaf;
+    }
+
     private void initNullEdges() {
         for (int i = 0; i < arity; i++) {
             edgeValues.add(null);
@@ -156,6 +165,10 @@ public class PatriciaTrieNode {
         return nodeId;
     }
 
+    public void updateNodeId(int newNodeId) {
+        this.nodeId = newNodeId;
+    }
+
     public int getNodeArity() {
         return arity;
     }
@@ -171,4 +184,5 @@ public class PatriciaTrieNode {
 
         return isNullEdge;
     }
+
 }
