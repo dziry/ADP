@@ -1,7 +1,6 @@
 package fr.upmc.algav.tests;
 
-import fr.upmc.algav.hybridtries.HybridTrie;
-import fr.upmc.algav.interfaces.ITrie;
+import fr.upmc.algav.hybridtries.IHybridTrie;
 import fr.upmc.algav.patriciatries.Alphabet;
 import fr.upmc.algav.patriciatries.IPatriciaTrie;
 import fr.upmc.algav.patriciatries.PatriciaTrie;
@@ -224,17 +223,38 @@ public class PatriciaTrieTest extends AbstractTrieTest {
 	
 	@Test
 	public final void runNominalTestRemoveAll() {
-		// TODO
+		assertEquals(WORD_COUNT_BEFORE_REMOVAL, patriciaTrie.getWordCount());
+
+		for (String word : TEST_DATA) {
+			boolean wordExistedBeforeRemoval = patriciaTrie.search(word);
+			boolean wordWasRemoved = patriciaTrie.remove(word);
+
+			if (wordExistedBeforeRemoval) {
+				assertTrue(wordWasRemoved);
+			} else {
+				assertFalse(wordWasRemoved);
+			}
+		}
+
+		assertEquals(0, patriciaTrie.getWordCount());
+		assertTrue(patriciaTrie.isEmpty());
 	}
 
 	@Test
 	public final void runNominalTestInsert() {
-		// TODO
+		final int wordCount = patriciaTrie.getWordCount();
+
+		assertFalse(patriciaTrie.search(NEW_INSERTED_WORD));
+
+		patriciaTrie.insert(NEW_INSERTED_WORD);
+		assertTrue(patriciaTrie.search(NEW_INSERTED_WORD));
+		assertEquals(wordCount + 1, patriciaTrie.getWordCount());
 	}
 
 	@Test
 	public final void runNominalTestSearch() {
-		// TODO
+		assertTrue(patriciaTrie.search(WORD_OVER_SEVERAL_EDGES));
+		assertFalse(patriciaTrie.search(NOT_EXISTING_WORD));
 	}
 
 	@Test
@@ -274,17 +294,28 @@ public class PatriciaTrieTest extends AbstractTrieTest {
 
 	@Test
 	public final void runNominalTestPrefix() {
-		// TODO
+		int prefixCount1 = patriciaTrie.getPrefixCount(PREFIX_COUNT_FOR_SEVERAL);
+		assertEquals(PREFIX_COUNT_FOR_SEVERAL_COUNT, prefixCount1);
+
+		int prefixCount2 = patriciaTrie.getPrefixCount(PREFIX_COUNT_FOR_NO_WORD);
+		assertEquals(PREFIX_COUNT_NO_WORDS_COUNT, prefixCount2);
 	}
 
 	@Test
 	public final void runNominalTestRemove() {
-		// TODO
+		assertEquals(WORD_COUNT_BEFORE_REMOVAL, patriciaTrie.getWordCount());
+		assertTrue(patriciaTrie.search("ROMULUSBBB"));
+
+		patriciaTrie.remove("ROMULUS");
+
+		assertEquals(WORD_COUNT_AFTER_REMOVAL, patriciaTrie.getWordCount());
+		assertFalse(patriciaTrie.search("ROMULUS"));
+		assertTrue(patriciaTrie.search("ROMULUSBBB"));
 	}
 	
 	@Test
 	public final void runNominalTestPrint() {
-		// TODO
+		patriciaTrie.print("patricia_test_print.dot");
 	}
 
 	@Test
@@ -314,6 +345,22 @@ public class PatriciaTrieTest extends AbstractTrieTest {
 
 	@Test
 	public final void runNominalTestToHybridTrie() {
-		// TODO
+		IHybridTrie convertedHybridTrie = patriciaTrie.toHybridTrie();
+
+		assertEquals(WORD_COUNT_BEFORE_REMOVAL, convertedHybridTrie.getWordCount());
+
+		for (String wordToFind : TEST_DATA) {
+			assertTrue(convertedHybridTrie.search(wordToFind));
+		}
+
+		IPatriciaTrie reconvertedPatriciaTrie = convertedHybridTrie.toPatriciaTrie();
+		assertEquals(patriciaTrie.getWordCount(), reconvertedPatriciaTrie.getWordCount());
+		assertEquals(patriciaTrie.getAverageDepthOfLeaves(), reconvertedPatriciaTrie.getAverageDepthOfLeaves(), 0);
+		assertEquals(patriciaTrie.getHeight(), reconvertedPatriciaTrie.getHeight());
+		assertEquals(patriciaTrie.getNullPointerCount(), reconvertedPatriciaTrie.getNullPointerCount());
+
+		for (String wordToFind : TEST_DATA) {
+			assertTrue(reconvertedPatriciaTrie.search(wordToFind));
+		}
 	}
 }

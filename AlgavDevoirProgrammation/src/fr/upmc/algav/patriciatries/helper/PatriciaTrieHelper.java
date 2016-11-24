@@ -16,7 +16,7 @@ public class PatriciaTrieHelper {
     }
 
     public static boolean nodeContainsResultOnlyEdge(PatriciaTrieNode node) {
-        return node.hasEdgeValue(Alphabet.getEndOfWordCharacter());
+        return node.hasEdgeValue(Alphabet.getEndOfWordCharacterAsString());
     }
 
     public static String getCommonPrefix(PatriciaTrieNode node, String word) {
@@ -153,6 +153,27 @@ public class PatriciaTrieHelper {
 
             res = new PatriciaTrieNode(nodeIdCounter, currentNode.getNodeArity(),
                     newEdgeValues, newChildNodes, currentNode.isLeaf());
+        }
+
+        return res;
+    }
+
+    public static boolean nodeHasOnlyNullEdges(PatriciaTrieNode node) {
+        boolean res = true;
+
+        if (node != null) {
+            ArrayList<String> nodeEdgeValues = node.getAllEdgeValues();
+            ArrayList<PatriciaTrieNode> nodeChildNodes = node.getAllChildNodes();
+
+            if (nodeEdgeValues != null && nodeChildNodes != null) {
+                for (int i = 0; i < node.getNodeArity(); i++) {
+                    res = nodeEdgeValues.get(i) == null && nodeChildNodes.get(i) == null;
+
+                    if (!res) {
+                        break;
+                    }
+                }
+            }
         }
 
         return res;

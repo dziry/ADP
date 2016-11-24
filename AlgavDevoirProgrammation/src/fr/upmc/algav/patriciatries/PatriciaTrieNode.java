@@ -67,9 +67,9 @@ public class PatriciaTrieNode {
     }
 
     public void addNewValuedResultEdge(int nodeId, String edgeValueToInsert) {
-        testForNodeStateChange();
+        testForStateChangeToInnerNode();
 
-        if (Alphabet.getEndOfWordCharacter().equals(edgeValueToInsert) || edgeValueToInsert.isEmpty()) {
+        if (Alphabet.getEndOfWordCharacterAsString().equals(edgeValueToInsert) || edgeValueToInsert.isEmpty()) {
             addNewResultOnlyEdge(nodeId);
         } else {
             addEdge(nodeId, AlphabetHelper.getIndexForFirstCharOfWord(edgeValueToInsert),
@@ -78,8 +78,8 @@ public class PatriciaTrieNode {
     }
 
     public void addNewResultOnlyEdge(int nodeId) {
-        testForNodeStateChange();
-        addEdge(nodeId, Alphabet.getEdgeIndexForEndOfWordCharacter(), Alphabet.getEndOfWordCharacter());
+        testForStateChangeToInnerNode();
+        addEdge(nodeId, Alphabet.getEdgeIndexForEndOfWordCharacter(), Alphabet.getEndOfWordCharacterAsString());
     }
 
     private void addEdge(int nodeId, int edgeIndex, String edgeValue) {
@@ -87,7 +87,7 @@ public class PatriciaTrieNode {
         childNodes.set(edgeIndex, new PatriciaTrieNode(nodeId, arity, true));
     }
 
-    private void testForNodeStateChange() {
+    private void testForStateChangeToInnerNode() {
         if (isLeaf) {
             isLeaf = false;
             initNullEdges();
@@ -100,6 +100,7 @@ public class PatriciaTrieNode {
 
     public void setAsLeaf() {
         this.isLeaf = true;
+        initNullEdges();
     }
 
     public boolean hasEdgeValue(String edgeValue) {
@@ -111,7 +112,7 @@ public class PatriciaTrieNode {
     }
 
     public void setEdge(String edgeValue, PatriciaTrieNode childNode) {
-        testForNodeStateChange();
+        testForStateChangeToInnerNode();
 
         int edgeIndex = AlphabetHelper.getIndexForFirstCharOfWord(edgeValue);
 
@@ -122,7 +123,7 @@ public class PatriciaTrieNode {
     }
 
     public void updateEdgeValue(String oldEdgeValue, String newEdgeValue) {
-        testForNodeStateChange();
+        testForStateChangeToInnerNode();
 
         int edgeIndex = AlphabetHelper.getIndexForFirstCharOfWord(oldEdgeValue);
 
@@ -132,11 +133,23 @@ public class PatriciaTrieNode {
     }
 
     public void removeEdge(String edgeValue) {
-        testForNodeStateChange();
-
         int edgeIndex = AlphabetHelper.getIndexForFirstCharOfWord(edgeValue);
         edgeValues.set(edgeIndex, null);
         childNodes.set(edgeIndex, null);
+    }
+
+    private void testForStateChangeToLeaf() {
+        boolean isChangeToLeaf = true;
+
+        for (int i = 0; i < arity; i++) {
+            isChangeToLeaf = edgeValues.get(i) == null && childNodes.get(i) == null;
+
+            if (!isChangeToLeaf) {
+               break;
+            }
+        }
+
+        this.isLeaf = isChangeToLeaf;
     }
 
     public LinkedHashMap<String, PatriciaTrieNode> getAllNonNullEdgesToChildNodes() {

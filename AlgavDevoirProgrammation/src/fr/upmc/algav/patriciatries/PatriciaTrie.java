@@ -2,6 +2,8 @@ package fr.upmc.algav.patriciatries;
 
 import java.util.*;
 
+import fr.upmc.algav.hybridtries.HybridTrie;
+import fr.upmc.algav.hybridtries.HybridTrieNode;
 import fr.upmc.algav.hybridtries.IHybridTrie;
 import fr.upmc.algav.patriciatries.helper.AlphabetHelper;
 import fr.upmc.algav.patriciatries.helper.PatriciaTrieHelper;
@@ -84,7 +86,7 @@ public class PatriciaTrie implements IPatriciaTrie {
 
                     // For example: We want to store "BLA1" and "BLA" ist already stored.
                     boolean isExtensionOfExistingWord =
-                            Alphabet.getEndOfWordCharacter().equals(edgeValueWithoutCommonPrefix) &&
+                            Alphabet.getEndOfWordCharacterAsString().equals(edgeValueWithoutCommonPrefix) &&
                                     !wordWithoutCommonPrefix.isEmpty();
 
                     if (isExtensionOfExistingWord) {
@@ -94,7 +96,7 @@ public class PatriciaTrie implements IPatriciaTrie {
                         // Set the edge value to the common getPrefixCount
                         currentNode.setEdge(commonPrefix, oldCurrentEdgeChildNode);
                         // Add new result edge to child node
-                        insertCharacterSequenceForNode(oldCurrentEdgeChildNode, Alphabet.getEndOfWordCharacter());
+                        insertCharacterSequenceForNode(oldCurrentEdgeChildNode, Alphabet.getEndOfWordCharacterAsString());
                         // Add the remaining word for the word to be inserted as new edge
                         insertCharacterSequenceForNode(oldCurrentEdgeChildNode, wordWithoutCommonPrefix);
 
@@ -379,7 +381,13 @@ public class PatriciaTrie implements IPatriciaTrie {
 
 	@Override
 	public boolean remove(String word) {
-		return word != null && removeWordFromNode(rootNode, word, null, null);
+		boolean res = word != null && removeWordFromNode(rootNode, word, null, null);
+
+        if (PatriciaTrieHelper.nodeHasOnlyNullEdges(rootNode)) {
+            rootNode.setAsLeaf();
+        }
+
+        return res;
 	}
 
 	private boolean removeWordFromNode(PatriciaTrieNode currentNode, String word,
@@ -413,10 +421,20 @@ public class PatriciaTrie implements IPatriciaTrie {
                     String newEdgeValue = previouslyVisitedEdgeValue + onlyChildEdgeValue;
                     previouslyVisitedNode.updateEdgeValue(previouslyVisitedEdgeValue, newEdgeValue);
 
+                    // TODO
+                   for (Map.Entry<String, PatriciaTrieNode> childNodeEdges :
+                           currentNode.getChildNodeForEdgeValue(onlyChildEdgeValue).getAllNonNullEdgesToChildNodes().entrySet()) {
+
+                        currentNode.setEdge(childNodeEdges.getKey(), childNodeEdges.getValue());
+                    }
+
                     // Remove also the only child and its edge as a consequence and mark the current
                     // node as leaf as it has now only null edges.
                     currentNode.removeEdge(onlyChildEdgeValue);
-                    currentNode.setAsLeaf();
+
+                    if (PatriciaTrieHelper.nodeHasOnlyNullEdges(currentNode)) {
+                        currentNode.setAsLeaf();
+                    }
                 }
 			} else {
 				// We have to test for a common prefix
@@ -439,7 +457,7 @@ public class PatriciaTrie implements IPatriciaTrie {
                         res = true;
 
                         // Remove the result only edge
-                        childNode.removeEdge(Alphabet.getEndOfWordCharacter());
+                        childNode.removeEdge(Alphabet.getEndOfWordCharacterAsString());
 
                         // Test if the child node has now only one child as we could then also remove it
                         // and merge its edge value with the current edge value
@@ -453,10 +471,20 @@ public class PatriciaTrie implements IPatriciaTrie {
                             String newEdgeValue = edgeValue + onlyChildEdgeValue;
                             currentNode.updateEdgeValue(edgeValue, newEdgeValue);
 
+                            // TODO
+                            for (Map.Entry<String, PatriciaTrieNode> childNodeEdges :
+                                    childNode.getChildNodeForEdgeValue(onlyChildEdgeValue).getAllNonNullEdgesToChildNodes().entrySet()) {
+
+                                childNode.setEdge(childNodeEdges.getKey(), childNodeEdges.getValue());
+                            }
+
                             // Remove also the only child and its edge as a consequence and mark the child
                             // node as leaf as it has now only null edges.
                             childNode.removeEdge(onlyChildEdgeValue);
-                            childNode.setAsLeaf();
+
+                            if (PatriciaTrieHelper.nodeHasOnlyNullEdges(childNode)) {
+                                childNode.setAsLeaf();
+                            }
                         }
 					} else {
 						// The word itself is not yet finished.
@@ -620,8 +648,145 @@ public class PatriciaTrie implements IPatriciaTrie {
 
 	@Override
 	public IHybridTrie toHybridTrie() {
-		// TODO Auto-generated method stub
-		return null;
+        HybridTrie hybridTrie;
+
+        if (rootNode == null) {
+            hybridTrie = new HybridTrie();
+        } else {
+            hybridTrie = new HybridTrie(
+                convertToHybridTrie(rootNode.getAllNonNullEdgesToChildNodes(), 0, new LinkedHashMap<>(), null)
+            );
+        }
+
+		return hybridTrie;
+	}
+
+	private HybridTrieNode convertToHybridTrie(LinkedHashMap<String, PatriciaTrieNode> currentEdges, int wordCount,
+							   LinkedHashMap<String, PatriciaTrieNode> restEdgesFromHigherLevel, HybridTrieNode formerRoot) {
+
+		HybridTrieNode resultRootNode = null;
+
+		if (currentEdges != null) {
+			LinkedHashMap<String, PatriciaTrieNode> edgesToChildren = new LinkedHashMap<>(restEdgesFromHigherLevel);
+            edgesToChildren.putAll(currentEdges);
+            LinkedHashMap<String, PatriciaTrieNode> remainingEdges = new LinkedHashMap<>(edgesToChildren);
+			boolean hasNoRootNodeYet = true;
+
+            for (Map.Entry<String, PatriciaTrieNode> currentEdge : currentEdges.entrySet()) {
+                if (Alphabet.getEndOfWordCharacterAsString().equals(currentEdge.getKey()) && formerRoot != null) {
+                    wordCount++;
+                    formerRoot.setIsFinalNode(wordCount);
+                    edgesToChildren.remove(currentEdge.getKey());
+                    remainingEdges.remove(currentEdge.getKey());
+                    break;
+                }
+            }
+
+			for (Map.Entry<String, PatriciaTrieNode> edgeToChild : edgesToChildren.entrySet()) {
+				String edgeValue = edgeToChild.getKey();
+				char[] edgeValueChars = edgeValue.toCharArray();
+
+				PatriciaTrieNode childNode = edgeToChild.getValue();
+
+				if (hasNoRootNodeYet) {
+                    // We define the root node
+					hasNoRootNodeYet = false;
+
+					if (edgeValueChars.length > 0) {
+						resultRootNode = new HybridTrieNode(edgeValueChars[0]);
+
+						HybridTrieNode tempHybridTrieNode = null;
+						for (int charIndex = 1; charIndex < edgeValueChars.length; charIndex++) {
+							if (charIndex == 1) {
+                                // First created hybrid trie node is special as we have to add it to the new root.
+								if (AlphabetHelper.isResultCharacter(edgeValueChars[charIndex])) {
+									wordCount++;
+									resultRootNode.setIsFinalNode(wordCount);
+								} else {
+                                    tempHybridTrieNode = new HybridTrieNode(edgeValueChars[charIndex]);
+                                    resultRootNode.setMiddleChild(tempHybridTrieNode);
+                                }
+							} else {
+								if (AlphabetHelper.isResultCharacter(edgeValueChars[charIndex])) {
+									wordCount++;
+									tempHybridTrieNode.setIsFinalNode(wordCount);
+								} else {
+									HybridTrieNode newMiddleChild = new HybridTrieNode(edgeValueChars[charIndex]);
+									tempHybridTrieNode.setMiddleChild(newMiddleChild);
+
+									tempHybridTrieNode = newMiddleChild;
+								}
+							}
+						}
+
+                        remainingEdges.remove(edgeValue);
+
+						if (tempHybridTrieNode != null) {
+                            tempHybridTrieNode.setMiddleChild(convertToHybridTrie(
+                                    childNode.getAllNonNullEdgesToChildNodes(), wordCount,
+                                    new LinkedHashMap<>(), tempHybridTrieNode
+                            ));
+						} else {
+                            LinkedHashMap<String, PatriciaTrieNode> childNodeEdges = childNode.getAllNonNullEdgesToChildNodes();
+
+                            if (!childNodeEdges.isEmpty()) {
+                                resultRootNode.setMiddleChild(convertToHybridTrie(
+                                        childNode.getAllNonNullEdgesToChildNodes(), wordCount,
+                                        new LinkedHashMap<>(), resultRootNode
+                                ));
+                            }
+                        }
+					}
+				} else {
+                    // There's still empty space to append a new edge as right child to the result root node.
+                    if (resultRootNode.getRightChild() == null && edgeValueChars.length > 0) {
+
+                        HybridTrieNode tempHybridTrieNode = null;
+
+                        for (int charIndex = 0; charIndex < edgeValueChars.length; charIndex++) {
+                            if (charIndex == 0) {
+                                // First created hybrid trie node is special as we have to add it to the new root.
+                                if (AlphabetHelper.isResultCharacter(edgeValueChars[charIndex])) {
+                                    wordCount++;
+                                    resultRootNode.setIsFinalNode(wordCount);
+                                } else {
+                                    tempHybridTrieNode = new HybridTrieNode(edgeValueChars[charIndex]);
+                                    resultRootNode.setRightChild(tempHybridTrieNode);
+                                }
+                            } else {
+                                if (AlphabetHelper.isResultCharacter(edgeValueChars[charIndex])) {
+                                    wordCount++;
+                                    tempHybridTrieNode.setIsFinalNode(wordCount);
+                                } else {
+                                    HybridTrieNode newMiddleChild = new HybridTrieNode(edgeValueChars[charIndex]);
+                                    tempHybridTrieNode.setMiddleChild(newMiddleChild);
+
+                                    tempHybridTrieNode = newMiddleChild;
+                                }
+                            }
+                        }
+
+                        if (tempHybridTrieNode != null) {
+                            tempHybridTrieNode.setMiddleChild(convertToHybridTrie(
+                                    childNode.getAllNonNullEdgesToChildNodes(), wordCount,
+                                    new LinkedHashMap<>(), tempHybridTrieNode
+                            ));
+                        }
+
+                        remainingEdges.remove(edgeValue);
+
+                    } else {
+                        // There's no more space left to append a new edge as right child to the result root node.
+                        HybridTrieNode rightChild = resultRootNode.getRightChild();
+                        rightChild.setRightChild(convertToHybridTrie(
+                                new LinkedHashMap<>(), wordCount, remainingEdges, rightChild
+                        ));
+                    }
+                }
+		    }
+		}
+
+		return resultRootNode;
 	}
 
 	@Override

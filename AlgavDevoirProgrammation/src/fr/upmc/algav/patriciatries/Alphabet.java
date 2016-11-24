@@ -31,7 +31,11 @@ public class Alphabet {
         return END_OF_WORD_CHAR_ID;
     }
 
-    public static String getEndOfWordCharacter() {
+    public static String getEndOfWordCharacterAsString() {
         return Character.toString(AlphabetHelper.getCharForId(END_OF_WORD_CHAR_ID));
+    }
+
+    public static char getEndOfWordCharacterAsChar() {
+        return AlphabetHelper.getCharForId(END_OF_WORD_CHAR_ID);
     }
 }

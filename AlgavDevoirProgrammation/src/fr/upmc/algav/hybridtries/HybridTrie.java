@@ -22,6 +22,10 @@ public class HybridTrie implements IHybridTrie {
 		this.root = null;
 	}
 
+	public HybridTrie(HybridTrieNode root) {
+		this.root = root;
+	}
+
 	@Override
 	public boolean isEmpty() {
 		return root == null;

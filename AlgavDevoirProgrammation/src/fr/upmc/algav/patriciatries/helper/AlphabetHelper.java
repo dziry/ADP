@@ -38,14 +38,18 @@ public class AlphabetHelper {
     }
 
     public static String makeResultWord(String word) {
-        return word + Alphabet.getEndOfWordCharacter();
+        return word + Alphabet.getEndOfWordCharacterAsString();
     }
 
     public static String removeResultCharacterFromWord(String word) {
-        return word.replace(Alphabet.getEndOfWordCharacter(), "");
+        return word.replace(Alphabet.getEndOfWordCharacterAsString(), "");
     }
 
     public static boolean containsResultCharacter(String word) {
-        return word.contains(Alphabet.getEndOfWordCharacter());
+        return word.contains(Alphabet.getEndOfWordCharacterAsString());
+    }
+
+    public static boolean isResultCharacter(char c) {
+        return c == Alphabet.getEndOfWordCharacterAsChar();
     }
 }
