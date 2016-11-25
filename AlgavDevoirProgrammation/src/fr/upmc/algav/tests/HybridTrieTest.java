@@ -18,23 +18,20 @@ import fr.upmc.algav.errors.HybridTrieError;
 import fr.upmc.algav.hybridtries.HybridTrie;
 import fr.upmc.algav.hybridtries.IHybridTrie;
 import fr.upmc.algav.interfaces.ITrie;
-import fr.upmc.algav.patriciatries.Alphabet;
-import fr.upmc.algav.patriciatries.IPatriciaTrie;
-import fr.upmc.algav.patriciatries.PatriciaTrie;
-import fr.upmc.algav.tools.Reader;
+import fr.upmc.algav.tools.GraphReader;
 
 public class HybridTrieTest extends AbstractTrieTest {
 
 	private static final String EXAMPLE_PATH = "files/exerciseExample.txt";
 	private static ArrayList<String> wordsList = null;
-	private static Reader reader = null;
+	private static GraphReader graphReader = null;
 	private static ITrie hybridTrie = null;
 		
 	@BeforeClass
     public static void setUpBeforeClass() throws Exception {		
-		reader = new Reader(EXAMPLE_PATH);
+		graphReader = new GraphReader(EXAMPLE_PATH);
 		wordsList = new ArrayList<String>();
-		wordsList = reader.read();		
+		wordsList = graphReader.read();
 		hybridTrie = new HybridTrie();
 		hybridTrie.insert(wordsList);
     }
@@ -276,9 +273,9 @@ public class HybridTrieTest extends AbstractTrieTest {
 	
 	@Test
 	public final void testInsertBalanced() {
-		Reader reader = new Reader("files/Shakespeare/john.txt");
+		GraphReader graphReader = new GraphReader("files/Shakespeare/john.txt");
 		ArrayList<String> wordsList = new ArrayList<String>();
-		wordsList = reader.read();		
+		wordsList = graphReader.read();
 		HybridTrie hybridTrie = new HybridTrie();
 		IHybridTrie balancedHybridTrie = new HybridTrie();
 		

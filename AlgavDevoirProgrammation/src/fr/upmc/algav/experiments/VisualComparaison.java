@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import fr.upmc.algav.hybridtries.HybridTrie;
 import fr.upmc.algav.interfaces.ITrie;
-import fr.upmc.algav.tools.Reader;
+import fr.upmc.algav.tools.GraphReader;
 
 /*
  * TODO
@@ -17,8 +17,8 @@ public class VisualComparaison {
 		ArrayList<String> list = new ArrayList<String>();
 
 		System.out.println("L'exemple du cours | One word by line :\n");		
-		Reader readerOne = new Reader("files/exerciseExample.txt");
-		list = readerOne.read();
+		GraphReader graphReaderOne = new GraphReader("files/exerciseExample.txt");
+		list = graphReaderOne.read();
 		for (String word : list) {
 			System.out.println(word);
 		}
@@ -28,8 +28,8 @@ public class VisualComparaison {
 		hybridTrieExerciseExample.print("hybridTrieExerciseExample");		
 			
 		System.out.println("\nL'exemple de base | Full Text :\n");
-		Reader readerFull = new Reader("files/basicExample.txt");
-		list = readerFull.read();
+		GraphReader graphReaderFull = new GraphReader("files/basicExample.txt");
+		list = graphReaderFull.read();
 		for (String word : list) {
 			System.out.println(word);
 		}

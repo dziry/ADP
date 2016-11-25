@@ -5,31 +5,31 @@ import java.util.HashMap;
 import fr.upmc.algav.hybridtries.HybridTrieNode;
 import fr.upmc.algav.patriciatries.PatriciaTrieNode;
 
-public class Printer {
+public class GraphPrinter {
 
-	private static Writer fileObject;
-	private static HashMap<Color, String> color;
-	private static HashMap<Style, String> style;
+	private GraphWriter fileObject;
+	private HashMap<Color, String> colorToGraphValue;
+	private HashMap<Style, String> styleToGraphValue;
 	
-	public Printer(String fileName) {
-		Printer.fileObject = new Writer(fileName);
-		color = new HashMap<>();
-		style = new HashMap<>();
+	public GraphPrinter(String fileName) {
+		fileObject = new GraphWriter(fileName);
+		colorToGraphValue = new HashMap<>();
+		styleToGraphValue = new HashMap<>();
 		
-		Printer.color.put(Color.BLUE, "blue");
-		Printer.color.put(Color.RED, "red");
-		Printer.color.put(Color.GREEN, "green");
-		Printer.color.put(Color.BLACK, "black");
-		Printer.color.put(Color.DEFAULT, "default");
+		colorToGraphValue.put(Color.BLUE, "blue");
+		colorToGraphValue.put(Color.RED, "red");
+		colorToGraphValue.put(Color.GREEN, "green");
+		colorToGraphValue.put(Color.BLACK, "black");
+		colorToGraphValue.put(Color.DEFAULT, "default");
 		
-		Printer.style.put(Style.SOLID, "solid");
-		Printer.style.put(Style.DASHED, "dashed");
-		Printer.style.put(Style.DOTTED, "dotted");
-		Printer.style.put(Style.BOLD, "bold");
-		Printer.style.put(Style.ROUNDED, "rounded");
-		Printer.style.put(Style.DIAGONALS, "diagonals");
-		Printer.style.put(Style.FILLED, "filled");
-		Printer.style.put(Style.DEFAULT, "default");
+		styleToGraphValue.put(Style.SOLID, "solid");
+		styleToGraphValue.put(Style.DASHED, "dashed");
+		styleToGraphValue.put(Style.DOTTED, "dotted");
+		styleToGraphValue.put(Style.BOLD, "bold");
+		styleToGraphValue.put(Style.ROUNDED, "rounded");
+		styleToGraphValue.put(Style.DIAGONALS, "diagonals");
+		styleToGraphValue.put(Style.FILLED, "filled");
+		styleToGraphValue.put(Style.DEFAULT, "default");
 	}
 
 	public void beginDirected() {
@@ -51,9 +51,9 @@ public class Printer {
 	
 	public void printNode(HybridTrieNode node, Color color, Color fontColor, Style style) {
 		fileObject.write("	\"" + node.getId() + 
-				         "\" [color=" + Printer.color.get(color) + ", " + 
-			             "fontcolor=" + Printer.color.get(fontColor) + ", " + 
-				             "style=" + Printer.style.get(style) + "];\n");
+				         "\" [color=" + colorToGraphValue.get(color) + ", " +
+			             "fontcolor=" + colorToGraphValue.get(fontColor) + ", " +
+				             "style=" + styleToGraphValue.get(style) + "];\n");
 	}
 	
 	public void printNodeLabel(HybridTrieNode node) {
@@ -63,7 +63,7 @@ public class Printer {
 	public void printEdge(HybridTrieNode startNode, HybridTrieNode arriveNode, Color color) {
 		fileObject.write("	\"" + startNode.getId() + 
 				     "\" -> \"" + arriveNode.getId() + 
-				   "\" [color=" + Printer.color.get(color) + "];\n");
+				   "\" [color=" + colorToGraphValue.get(color) + "];\n");
 	}
 
 	public void printNode(PatriciaTrieNode node) {

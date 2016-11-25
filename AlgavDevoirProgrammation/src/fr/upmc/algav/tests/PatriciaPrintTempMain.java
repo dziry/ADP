@@ -1,11 +1,8 @@
 package fr.upmc.algav.tests;
 
-import fr.upmc.algav.hybridtries.HybridTrie;
-import fr.upmc.algav.hybridtries.IHybridTrie;
 import fr.upmc.algav.patriciatries.Alphabet;
-import fr.upmc.algav.patriciatries.IPatriciaTrie;
 import fr.upmc.algav.patriciatries.PatriciaTrie;
-import fr.upmc.algav.tools.Reader;
+import fr.upmc.algav.tools.GraphReader;
 
 import java.io.File;
 
@@ -79,8 +76,8 @@ public class PatriciaPrintTempMain {
         PatriciaTrie patriciaTrie = new PatriciaTrie(new Alphabet());
 
         System.out.println(new File(".").getAbsolutePath());
-        Reader reader = new Reader("AlgavDevoirProgrammation/files/basicExample.txt");
-        patriciaTrie.insert(reader.read());
+        GraphReader graphReader = new GraphReader("AlgavDevoirProgrammation/files/basicExample.txt");
+        patriciaTrie.insert(graphReader.read());
         patriciaTrie.print("patricia_trie_basic_example.dot");
     }
 

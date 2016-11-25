@@ -7,7 +7,7 @@ import fr.upmc.algav.hybridtries.HybridTrieNode;
 import fr.upmc.algav.hybridtries.IHybridTrie;
 import fr.upmc.algav.patriciatries.helper.AlphabetHelper;
 import fr.upmc.algav.patriciatries.helper.PatriciaTrieHelper;
-import fr.upmc.algav.tools.Printer;
+import fr.upmc.algav.tools.GraphPrinter;
 
 public class PatriciaTrie implements IPatriciaTrie {
 
@@ -501,23 +501,23 @@ public class PatriciaTrie implements IPatriciaTrie {
 
 	@Override
 	public void print(String fileName) {
-		Printer printer = new Printer(fileName);
-		printer.beginUndirected();
+		GraphPrinter graphPrinter = new GraphPrinter(fileName);
+		graphPrinter.beginUndirected();
 
-        printPatriciaNode(rootNode, printer);
+        printPatriciaNode(rootNode, graphPrinter);
 
-        printer.end();
+        graphPrinter.end();
     }
 
-	private static void printPatriciaNode(PatriciaTrieNode currentNode, Printer printer) {
+	private static void printPatriciaNode(PatriciaTrieNode currentNode, GraphPrinter graphPrinter) {
 		if (currentNode.isLeaf()) {
-            printer.printNode(currentNode);
+            graphPrinter.printNode(currentNode);
         } else {
             HashMap<String, PatriciaTrieNode> existantEdgesToChildren = currentNode.getAllNonNullEdgesToChildNodes();
 
             for (Map.Entry<String, PatriciaTrieNode> entry : existantEdgesToChildren.entrySet()) {
-                printer.printEdge(entry.getKey(), currentNode, entry.getValue());
-                printPatriciaNode(entry.getValue(), printer);
+                graphPrinter.printEdge(entry.getKey(), currentNode, entry.getValue());
+                printPatriciaNode(entry.getValue(), graphPrinter);
             }
         }
 	}

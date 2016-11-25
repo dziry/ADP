@@ -12,7 +12,7 @@ import fr.upmc.algav.hybridtries.HybridTrie;
 import fr.upmc.algav.interfaces.ITrie;
 import fr.upmc.algav.patriciatries.Alphabet;
 import fr.upmc.algav.patriciatries.PatriciaTrie;
-import fr.upmc.algav.tools.Reader;
+import fr.upmc.algav.tools.GraphReader;
 
 /*
  * TODO
@@ -59,10 +59,10 @@ public abstract class StructureComparison {
 	}
 	
 	private static void run(ITrie trie, Path filePath, Struct struct) {
-		Reader reader = new Reader(filePath.toString());
+		GraphReader graphReader = new GraphReader(filePath.toString());
 		ArrayList<String> wordsList = new ArrayList<String>();		
 		
-		wordsList = reader.read();
+		wordsList = graphReader.read();
 		
 		if (struct == Struct.Hybrid || struct == Struct.Patricia) {
 			trie.insert(wordsList);			

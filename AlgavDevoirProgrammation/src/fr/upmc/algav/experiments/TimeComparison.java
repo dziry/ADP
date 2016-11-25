@@ -11,7 +11,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import fr.upmc.algav.hybridtries.HybridTrie;
 import fr.upmc.algav.interfaces.ITrie;
-import fr.upmc.algav.tools.Reader;
+import fr.upmc.algav.tools.GraphReader;
 
 /*
  * TODO
@@ -56,8 +56,8 @@ public abstract class TimeComparison {
 		int index = 0;
 		for (final File fileEntry : folder.listFiles()) {
 			final String filePath = folder + "/" + fileEntry.getName();			
-			Reader reader = new Reader(filePath);
-			shakespeareWordsList.put(index++, reader.read());
+			GraphReader graphReader = new GraphReader(filePath);
+			shakespeareWordsList.put(index++, graphReader.read());
 		}
 	}
 	

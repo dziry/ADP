@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import fr.upmc.algav.tools.Reader;
+import fr.upmc.algav.tools.GraphReader;
 
 /*
  * Statistics of the data set used in the experiments.
@@ -48,8 +48,8 @@ public abstract class DataStatistics {
 		int index = 0;
 		for (final File fileEntry : folder.listFiles()) {
 			final String filePath = folder + "/" + fileEntry.getName();			
-			Reader reader = new Reader(filePath);
-			shakespeareWordsList.put(index++, reader.read());
+			GraphReader graphReader = new GraphReader(filePath);
+			shakespeareWordsList.put(index++, graphReader.read());
 		}
 	}
 
@@ -62,9 +62,9 @@ public abstract class DataStatistics {
 	}
 	
 	private static void numberOfWordsInFile(String filePath) {
-		Reader reader = new Reader(filePath.toString());
+		GraphReader graphReader = new GraphReader(filePath.toString());
 		ArrayList<String> wordsList = new ArrayList<String>();		
-		wordsList = reader.read();
+		wordsList = graphReader.read();
 		System.out.format("%-20d", wordsList.size());
 	}
 

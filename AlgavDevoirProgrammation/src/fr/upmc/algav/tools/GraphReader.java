@@ -5,20 +5,20 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Reader {
+public class GraphReader {
 
 	private final static String SPACE = " ";
-	private static Scanner scanner; 
+	private Scanner scanner;
 	private ArrayList<String> wordsList;
 
-	public Reader(String file) {
+	public GraphReader(String file) {
 		try {
 			FileReader fileReader = new FileReader(file);
-			Reader.scanner = new Scanner(fileReader);
-			this.wordsList = new ArrayList<String>();
+			this.scanner = new Scanner(fileReader);
+			this.wordsList = new ArrayList<>();
 		}
 		catch (FileNotFoundException e) {
-			System.out.print("Reader() error : ");
+			System.out.print("Couldn't read file \"" + file + "\" because of:");
 			e.printStackTrace();
 		}
 	}
@@ -37,15 +37,17 @@ public class Reader {
 				addWordToList();
 			}
 		} else if (fileContent() == Content.UNKNOWN) {			
-			throw new Error("Unkown file content");
+			throw new Error("Unknown file content.");
 		}
+
 		return wordsList;
 	}
 	
 	private Content fileContent() {		
 		String[] tokens = scanner.nextLine().split(SPACE);
 		int wordsCounter = tokens.length;
-		if (wordsCounter > 1) {
+
+        if (wordsCounter > 1) {
 			addWordsToList(tokens);
 			return Content.FULL_TEXT;
 		} else if (wordsCounter == 1) {
@@ -59,7 +61,8 @@ public class Reader {
 	private void addWordToList() {
 		String word = null;
 		word = scanner.next();
-		wordsList.add(word);
+
+        wordsList.add(word);
 	}
 	
 	private void addWordToList(String word) {
@@ -69,7 +72,8 @@ public class Reader {
 	private void addWordsToList() {
 		String[] tokens = null;
 		tokens = scanner.nextLine().split(SPACE);
-		for (String word : tokens) {
+
+        for (String word : tokens) {
 			wordsList.add(word);
 		}
 	}	

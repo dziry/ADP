@@ -10,7 +10,7 @@ import fr.upmc.algav.patriciatries.Alphabet;
 import fr.upmc.algav.patriciatries.IPatriciaTrie;
 import fr.upmc.algav.patriciatries.PatriciaTrie;
 import fr.upmc.algav.tools.Color;
-import fr.upmc.algav.tools.Printer;
+import fr.upmc.algav.tools.GraphPrinter;
 import fr.upmc.algav.tools.Style;
 
 public class HybridTrie implements IHybridTrie {
@@ -369,42 +369,42 @@ public class HybridTrie implements IHybridTrie {
 
 	@Override
 	public void print(String fileName) {
-		Printer printer = new Printer(fileName);
-		printer.beginDirected();
+		GraphPrinter graphPrinter = new GraphPrinter(fileName);
+		graphPrinter.beginDirected();
 		if (!root.isFinalNode()) {
-			printer.printNode(root);
+			graphPrinter.printNode(root);
 		} else {
-			printer.printNode(root, Color.BLACK, Color.BLACK, Style.DASHED);
+			graphPrinter.printNode(root, Color.BLACK, Color.BLACK, Style.DASHED);
 		}
-		printer.printNodeLabel(root);
-		printRecursively(null, root, Color.BLUE, printer);
-		printer.end();
+		graphPrinter.printNodeLabel(root);
+		printRecursively(null, root, Color.BLUE, graphPrinter);
+		graphPrinter.end();
 	}
 
-	private static void printRecursively(HybridTrieNode previousNode, HybridTrieNode nextNode, Color color, Printer printer) {
+	private static void printRecursively(HybridTrieNode previousNode, HybridTrieNode nextNode, Color color, GraphPrinter graphPrinter) {
 		if (nextNode != null) {
 			if (previousNode != null) {
 				if (color.equals(Color.BLUE)) {
-					printer.printEdge(previousNode, nextNode, Color.BLUE);
+					graphPrinter.printEdge(previousNode, nextNode, Color.BLUE);
 				} else if (color.equals(Color.RED)) {
-					printer.printEdge(previousNode, nextNode, Color.RED);
+					graphPrinter.printEdge(previousNode, nextNode, Color.RED);
 				} else if (color.equals(Color.GREEN)) {
-					printer.printEdge(previousNode, nextNode, Color.GREEN);
+					graphPrinter.printEdge(previousNode, nextNode, Color.GREEN);
 				}
 				if (nextNode.isFinalNode()) {
 					if (color.equals(Color.BLUE)) {
-						printer.printNode(nextNode, Color.BLUE, Color.BLUE, Style.DASHED);
+						graphPrinter.printNode(nextNode, Color.BLUE, Color.BLUE, Style.DASHED);
 					} else if (color.equals(Color.RED)) {
-						printer.printNode(nextNode, Color.RED, Color.RED, Style.DASHED);
+						graphPrinter.printNode(nextNode, Color.RED, Color.RED, Style.DASHED);
 					} else if (color.equals(Color.GREEN)) {
-						printer.printNode(nextNode, Color.GREEN, Color.GREEN, Style.DASHED);
+						graphPrinter.printNode(nextNode, Color.GREEN, Color.GREEN, Style.DASHED);
 					}
 				}
-				printer.printNodeLabel(nextNode);
+				graphPrinter.printNodeLabel(nextNode);
 			}
-			printRecursively(nextNode, nextNode.getLeftChild(), Color.BLUE, printer);
-			printRecursively(nextNode, nextNode.getMiddleChild(), Color.RED, printer);
-			printRecursively(nextNode, nextNode.getRightChild(), Color.GREEN, printer);
+			printRecursively(nextNode, nextNode.getLeftChild(), Color.BLUE, graphPrinter);
+			printRecursively(nextNode, nextNode.getMiddleChild(), Color.RED, graphPrinter);
+			printRecursively(nextNode, nextNode.getRightChild(), Color.GREEN, graphPrinter);
 		}
 	}
 
