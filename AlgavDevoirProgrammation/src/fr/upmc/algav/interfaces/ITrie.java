@@ -21,6 +21,6 @@ public interface ITrie {
 	int getPrefixCount(String word);
 	boolean remove(String word);
 	
-	// Show visual preview
+	// Create file representing the trie
 	void print(String fileName);
 }

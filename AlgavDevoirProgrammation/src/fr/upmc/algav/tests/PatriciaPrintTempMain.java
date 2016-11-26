@@ -9,6 +9,7 @@ import java.io.File;
 
 /**
  * Created by amadeus on 15.11.16.
+ * TODO: Remove this class for final code version
  */
 public class PatriciaPrintTempMain {
 

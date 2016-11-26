@@ -489,7 +489,7 @@ public class HybridTrie implements IHybridTrie {
 		if (isEmpty()) {
 			return null;
 		}
-		return toPatriciaTrieRecursively(root, new String(), new PatriciaTrie(new Alphabet()));
+		return toPatriciaTrieRecursively(root, "", new PatriciaTrie(new Alphabet()));
 	}
 
 	private static IPatriciaTrie toPatriciaTrieRecursively(HybridTrieNode node, String word, PatriciaTrie patriciaTrie) {
