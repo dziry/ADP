@@ -34,10 +34,11 @@ public class HybridTrie implements IHybridTrie {
 	@Override
 	public void insert(String word) {
 		if (word == null || word.isEmpty()) {
-			throw new HybridTrieError("insert(word): word should not be null or empty!");
-		} else if (search(word) == true) {
-			/* word exist? -> ignore.. */ 
+			throw new HybridTrieError("Inserting word: Word should not be null or empty!");
+		} else if (search(word)) {
+			// Word exists, do nothing
 		}
+
 		root = insertRecursively(root, word.toCharArray(), 0);
 	}
 
@@ -45,28 +46,31 @@ public class HybridTrie implements IHybridTrie {
 		if (node == null) {
 			node = new HybridTrieNode(key[position]);
 		}
+
 		if (key[position] < node.getCharacter()) {
-			// go left, if less
+			// Go left, if current character smaller than character of current node
 			node.setLeftChild(insertRecursively(node.getLeftChild(), key, position));
 		} else if (key[position] > node.getCharacter()) {
-			// go right, if greater
+            // Go right, if current character greater than character of current node
 			node.setRightChild(insertRecursively(node.getRightChild(), key, position));
 		} else {
 			if (position < key.length - 1) {
-				// go middle, if equal (if we don't exceed the key)
+				// Go middle, if current character equal to node character (If we don't exceed the key)
 				node.setMiddleChild(insertRecursively(node.getMiddleChild(), key, position + 1));
 			} else if (!node.isFinalNode()) {
 				node.setIsFinalNode(1);
 			}
 		}
+
 		return node;
 	}
 
 	@Override
 	public void insert(Collection<String> words) {
 		if (words == null || words.size() < 1) {
-			throw new HybridTrieError("insert(words): words should not be null or empty!");
+			throw new HybridTrieError("Inserting words: Words should not be null or empty!");
 		}
+
 		for (String word : words) {
 			insert(word);
 		}	
@@ -80,8 +84,9 @@ public class HybridTrie implements IHybridTrie {
 	@Override
 	public boolean search(String word) {
 		if (word == null || word.isEmpty()) {
-			throw new HybridTrieError("search(word): word should not be null or empty!");
+			throw new HybridTrieError("Searching word: word should not be null or empty!");
 		}
+
 		return searchRecursively(root, word.toCharArray(), 0);
 	}
 
@@ -89,6 +94,7 @@ public class HybridTrie implements IHybridTrie {
 		if (node == null) {
 			return false;
 		}
+
 		if (key[position] < node.getCharacter()) {
 			return searchRecursively(node.getLeftChild(), key, position);
 		} else if (key[position] > node.getCharacter()) {
@@ -97,7 +103,7 @@ public class HybridTrie implements IHybridTrie {
 			if (position < key.length - 1) {
 				return searchRecursively(node.getMiddleChild(), key, position + 1);
 			} else {
-				return node.isFinalNode() ? true : false;
+				return node.isFinalNode();
 			}
 		}
 	}
@@ -107,6 +113,7 @@ public class HybridTrie implements IHybridTrie {
 		if (isEmpty()) {
 			return 0;
 		}
+
 		return countWordsRecursively(root, 0);
 	}
 
@@ -115,10 +122,12 @@ public class HybridTrie implements IHybridTrie {
 			if (node.isFinalNode()) {
 				wordsCounter++;
 			}
+
 			wordsCounter = countWordsRecursively(node.getLeftChild(), wordsCounter);
 			wordsCounter = countWordsRecursively(node.getRightChild(), wordsCounter);
 			wordsCounter = countWordsRecursively(node.getMiddleChild(), wordsCounter);
 		}
+
 		return wordsCounter;
 	}
 
@@ -127,24 +136,34 @@ public class HybridTrie implements IHybridTrie {
 		if (isEmpty()) {
 			return null;
 		}
-		return listWordsRecursively(root, new String(), new ArrayList<String>());
+
+		return listWordsRecursively(root, "", new ArrayList<>());
 	}
 
 	private static ArrayList<String> listWordsRecursively(HybridTrieNode node, String word, ArrayList<String> listWords) {
 		if (node != null) {
 			listWordsRecursively(node.getLeftChild(), word, listWords);
-			word += node.getCharacter();
+
+            word += node.getCharacter();
 			if (node.isFinalNode()) {
 				listWords.add(word);
 			}
 			listWordsRecursively(node.getMiddleChild(), word, listWords);
-			word = removeLastCaracter(word);
+
+            word = removeLastCaracter(word);
 			listWordsRecursively(node.getRightChild(), word, listWords);
 		}
+
 		return listWords;
 	}
 
-	// used for getStoredWords
+    /**
+     * Helper method for {@link #getStoredWords()}.
+     * Returning the word without its last character.
+     *
+     * @param word The manipulated word
+     * @return The word reduced by its last character
+     */
 	private static String removeLastCaracter(String word) {
 		return word.substring(0, word.length() - 1);
 	}
@@ -154,6 +173,7 @@ public class HybridTrie implements IHybridTrie {
 		if (isEmpty()) {
 			return 0;
 		}
+
 		return countNullRecursively(root, 0);
 	}
 
@@ -165,6 +185,7 @@ public class HybridTrie implements IHybridTrie {
 		} else {
 			nullCounter++;
 		}
+
 		return nullCounter;
 	}
 
@@ -173,6 +194,7 @@ public class HybridTrie implements IHybridTrie {
 		if (isEmpty()) {
 			return 0;
 		}
+
 		return heightRecursively(root, -1, 0);
 	}
 
@@ -186,6 +208,7 @@ public class HybridTrie implements IHybridTrie {
 			heightResult = heightRecursively(node.getRightChild(), heightCounter, heightResult);
 			heightResult = heightRecursively(node.getMiddleChild(), heightCounter, heightResult);
 		}
+
 		return heightResult;
 	}
 
@@ -194,21 +217,41 @@ public class HybridTrie implements IHybridTrie {
 		if (isEmpty()) {
 			return 0.0;
 		}
-		return (double) countTotalDepthRecursively(root, -1, 0) / (double) countnodesRecursively(root, 0);
+
+		// TODO: This should be totalLeafDepth / totalLeafCount
+		return (double) countTotalDepthRecursively(root, -1, 0) / (double) countNodesRecursively(root, 0);
 	}
 
-	// used for getAverageDepthOfLeaves
-	private static int countnodesRecursively(HybridTrieNode node, int nodesCounter) {
+    /**
+     * Helper method for {@link #getAverageDepthOfLeaves()}.
+     * Returns the node count for a given node by regarding the node itself and all of
+     * its successors.
+     *
+     * @param node The current node
+     * @param nodesCounter The current node count
+     * @return The count of all nodes for this node including itself
+     */
+	private static int countNodesRecursively(HybridTrieNode node, int nodesCounter) {
 		if (node != null) {
 			nodesCounter++;
-			nodesCounter = countnodesRecursively(node.getLeftChild(), nodesCounter);
-			nodesCounter = countnodesRecursively(node.getRightChild(), nodesCounter);
-			nodesCounter = countnodesRecursively(node.getMiddleChild(), nodesCounter);
+			nodesCounter = countNodesRecursively(node.getLeftChild(), nodesCounter);
+			nodesCounter = countNodesRecursively(node.getRightChild(), nodesCounter);
+			nodesCounter = countNodesRecursively(node.getMiddleChild(), nodesCounter);
 		}
+
 		return nodesCounter;
 	}
 
-	// used for getAverageDepthOfLeaves
+    /**
+     * Helper method for {@link #getAverageDepthOfLeaves()}.
+     * TODO: Are we're really calculating the total depth of all leaves here? Don't we rather need to to add
+     * TODO: the depth of each found leaf to a total value?
+     *
+     * @param node
+     * @param depthCounter
+     * @param totalDepth
+     * @return
+     */
 	private static int countTotalDepthRecursively(HybridTrieNode node, int depthCounter, int totalDepth) {
 		if (node != null) {
 			depthCounter++;
@@ -219,14 +262,16 @@ public class HybridTrie implements IHybridTrie {
 			totalDepth = countTotalDepthRecursively(node.getRightChild(), depthCounter, totalDepth);
 			totalDepth = countTotalDepthRecursively(node.getMiddleChild(), depthCounter, totalDepth);
 		}
+
 		return totalDepth;
 	}
 
 	@Override
 	public int getPrefixCount(String word) {
 		if (word == null || word.isEmpty()) {
-			throw new HybridTrieError("getPrefixCount(word): word should not be null or empty!");
+			throw new HybridTrieError("Getting prefix count for word: Word should not be null or empty!");
 		}
+
 		return prefixRecursively(root, word.toCharArray(), 0);
 	}
 
@@ -234,6 +279,7 @@ public class HybridTrie implements IHybridTrie {
 		if (node == null) {
 			return 0;
 		}
+
 		if (key[position] < node.getCharacter()) {
 			return prefixRecursively(node.getLeftChild(), key, position);
 		} else if (key[position] > node.getCharacter()) {
@@ -251,79 +297,99 @@ public class HybridTrie implements IHybridTrie {
 		}
 	}
 
-	// used for getPrefixCount
+    /**
+     * Helper method for {@link #getPrefixCount(String)}.
+     * Counting all the stored words for a given node.
+     *
+     * @param node The given node
+     * @return The word count
+     */
 	private int countWords(HybridTrieNode node) {
 		if (isEmpty()) {
 			return 0;
 		}
+
 		return countWordsRecursively(node, 0);
 	}
 
 	@Override
 	public boolean remove(String word) {		
 		if (word == null || word.isEmpty()) {
-			throw new HybridTrieError("remove(word): word should not be null or empty!");
+			throw new HybridTrieError("Removing word: Word should not be null or empty!");
 		}
+
 	    return removeRecursively(null, root, word.toCharArray(), 0);
 	}
 	
 	private boolean removeRecursively(HybridTrieNode parent, HybridTrieNode node, char[] key, int position) {
 	    if (node == null) {
 	        return false;
-	    } 	 
-    	boolean log = true;    	
-    	if (key[position] < node.getCharacter()) {
+	    }
+
+    	boolean log = true;
+
+        if (key[position] < node.getCharacter()) {
     		log = removeRecursively(node, node.getLeftChild(), key, position);
     	} else if (key[position] > node.getCharacter()) {
     		log = removeRecursively(node, node.getRightChild(), key, position);
     	} else {
-    		// if we are on our last character and	
+    		// If we are on our last character
     		if (position == key.length - 1) {
     			if (node.isFinalNode()) {
-    				// node is an end node, remove the end value
+    				// The node is an end node, remove the end value
     				node.setIsFinalNode(0);
     			} else {
-    				// if there is no end key as it does not exist within the tree
+    				// If there is no end key as it does not exist within the tree
     				return false;
     			}
     		} else if (position < key.length + 1) {
     			log = removeRecursively(node, node.getMiddleChild(), key, position + 1);
     		}
     	}
-    	// only remove if node's middle is nil and if node is not an end key
-    	// if log is false, means the value was never found. Thus the key does not exist within this tree
+
+    	// Only remove if the node's middle child is null and if the node is not an end key!
+    	// If log is false, the value has never been found. Thus the key does not exist within this tree.
     	if (log && node.getMiddleChild() == null && !node.isFinalNode()) {
-    		// case 1: no children, safe to delete
+    		// Case 1: No children, safe to delete
     		if (!node.hasChildren()) {
     			transplant(parent, node, null);
     		}
-    		// case 2: right is null, transplant it to left
+    		// Case 2: Right is null, transplant it to left
     		else if (node.getRightChild() == null) {
     			transplant(parent, node, node.getLeftChild());
     		}
-    		// case 3: left is null, transplant it to right
+    		// Case 3: Left is null, transplant it to right
     		else if (node.getLeftChild() == null) {
     			transplant(parent, node, node.getRightChild());
     		}
-    		// case 4: both left and right children exists, find successor and transplant
+    		// Case 4: Both left and right children exists, find successor and transplant
     		else {    			
 	            HybridTrieNode successor = findSuccessor(node.getRightChild());	            	        	            
 	            HybridTrieNode successorParent = findSuccessorParent(successor);
-            	// if successor node has left child(s)
+            	// If successor node has left child(ren)
 	            if (successorParent != node) {
 	                transplant(parent, node, node.getRightChild());
 	            } else {
 	            	transplant(parent, node, successor);
 	            }
-	            // make the node's left child as left child for successor node
+	            // Make the node's left child as left child for successor node
             	successor.setLeftChild(node.getLeftChild());
     		}
+
     		node = null;
     	}
+
     	return log;
 	}
-	
-	// make link between parent node and its child's successor node, used for deletion
+
+    /**
+     * Helper method for {@link #removeRecursively(HybridTrieNode, HybridTrieNode, char[], int)}.
+     * Make a link between a parent node and its child's successor node.
+     *
+     * @param parent The parent node of the current node
+     * @param node The current node
+     * @param successor The successor node of the current node
+     */
 	private void transplant(HybridTrieNode parent, HybridTrieNode node, HybridTrieNode successor) {		
 	    if (parent == null) {
 	        root = successor;
@@ -336,7 +402,13 @@ public class HybridTrie implements IHybridTrie {
 	    }
 	}
 
-	// find the successor (in in-order traversal) in right child, used for deletion
+    /**
+     * Helper method for {@link #removeRecursively(HybridTrieNode, HybridTrieNode, char[], int)}.
+     * Find the successor (in in-order traversal) in the right child.
+     *
+     * @param node The current node
+     * @return The successor node of the current node
+     */
 	private static HybridTrieNode findSuccessor(HybridTrieNode node) {
 		if (node.getLeftChild() == null) {
 			return node;
@@ -344,11 +416,18 @@ public class HybridTrie implements IHybridTrie {
 			return findSuccessor(node.getLeftChild());
 		}
 	}
-	
-	// find the successor parent, used for deletion
+
+    /**
+     * Helper method for {@link #removeRecursively(HybridTrieNode, HybridTrieNode, char[], int)}.
+     * Find the successor's parent
+     *
+     * @param successor The current node
+     * @return The parent node of the current node
+     */
 	private HybridTrieNode findSuccessorParent(HybridTrieNode successor) {		
 		HybridTrieNode parent = null;
 		HybridTrieNode node = root;
+
 		while (node != null) {			
 			if (successor.getCharacter() < node.getCharacter()) {
 				parent = node;
@@ -357,13 +436,14 @@ public class HybridTrie implements IHybridTrie {
 				parent = node;
 				node = node.getRightChild();
 			} else {
-				if (successor.getId() == node.getId()) {
+				if (node.getId().equals(successor.getId())) {
 					break;
 				}				
 				parent = node;
 				node = node.getMiddleChild();
 			}
-		}		
+		}
+
 		return parent;
 	}
 
@@ -371,13 +451,16 @@ public class HybridTrie implements IHybridTrie {
 	public void print(String fileName) {
 		GraphPrinter graphPrinter = new GraphPrinter(fileName);
 		graphPrinter.beginDirected();
+
 		if (!root.isFinalNode()) {
 			graphPrinter.printNode(root);
 		} else {
 			graphPrinter.printNode(root, Color.BLACK, Color.BLACK, Style.DASHED);
 		}
+
 		graphPrinter.printNodeLabel(root);
 		printRecursively(null, root, Color.BLUE, graphPrinter);
+
 		graphPrinter.end();
 	}
 
@@ -391,6 +474,7 @@ public class HybridTrie implements IHybridTrie {
 				} else if (color.equals(Color.GREEN)) {
 					graphPrinter.printEdge(previousNode, nextNode, Color.GREEN);
 				}
+
 				if (nextNode.isFinalNode()) {
 					if (color.equals(Color.BLUE)) {
 						graphPrinter.printNode(nextNode, Color.BLUE, Color.BLUE, Style.DASHED);
@@ -400,8 +484,10 @@ public class HybridTrie implements IHybridTrie {
 						graphPrinter.printNode(nextNode, Color.GREEN, Color.GREEN, Style.DASHED);
 					}
 				}
+
 				graphPrinter.printNodeLabel(nextNode);
 			}
+
 			printRecursively(nextNode, nextNode.getLeftChild(), Color.BLUE, graphPrinter);
 			printRecursively(nextNode, nextNode.getMiddleChild(), Color.RED, graphPrinter);
 			printRecursively(nextNode, nextNode.getRightChild(), Color.GREEN, graphPrinter);
@@ -411,10 +497,11 @@ public class HybridTrie implements IHybridTrie {
 	@Override
 	public void insertBalanced(String word) {
 		if (word == null || word.isEmpty()) {
-			throw new HybridTrieError("insertBalanced(word): word should not be null or empty!");
-		} else if (search(word) == true) {
-			/* word exist? -> ignore.. */ 
+			throw new HybridTrieError("Inserting word balanced: Word should not be null or empty!");
+		} else if (search(word)) {
+			// Word does already exist, do nothing!
 		}
+
 		root = insertBalancedRecursively(root, word.toCharArray(), 0);
 	}
 
@@ -422,6 +509,7 @@ public class HybridTrie implements IHybridTrie {
 		if (node == null) {
 			node = new HybridTrieNode(key[position]);
 		}
+
 		if (key[position] < node.getCharacter()) {
 			node.setLeftChild(insertBalancedRecursively(node.getLeftChild(), key, position));
 			if (node.getLeftChild().getPriority() > node.getPriority()) {
@@ -436,7 +524,7 @@ public class HybridTrie implements IHybridTrie {
 			if (position < key.length - 1) {
 				node.setMiddleChild(insertBalancedRecursively(node.getMiddleChild(), key, position + 1));
 			} else if (!node.isFinalNode()) {
-				node.setIsFinalNode(randomInteger(1, MAX_WORDS));
+				node.setIsFinalNode(generateRandomInteger(1, MAX_WORDS));
 			}
 			if (node.getMiddleChild() == null) {
 				node.setPriority(node.getStringPriority());
@@ -444,40 +532,39 @@ public class HybridTrie implements IHybridTrie {
 				node.setPriority(max(node.getStringPriority(), node.getMiddleChild().getPriority()));
 			}
 		}
+
 		return node;
 	}
 
-	// used for insertBalanced
 	private static HybridTrieNode rotateWithLeft(HybridTrieNode nodeX) {
 		HybridTrieNode nodeY = nodeX.getLeftChild();
 		nodeX.setLeftChild(nodeY.getRightChild());
 		nodeY.setRightChild(nodeX);
+
 		return nodeY;
 	}
 	
-	// used for insertBalanced
 	private static HybridTrieNode rotateWithRight(HybridTrieNode nodeX) {
 		HybridTrieNode nodeY = nodeX.getRightChild();
 		nodeX.setRightChild(nodeY.getLeftChild());
 		nodeY.setLeftChild(nodeX);
+
 		return nodeY;
 	}
 
-	// generate a random unique integer, used for insertBalanced
-	private static int randomInteger(int min, int max) {
+	private static int generateRandomInteger(int min, int max) {
 		OfInt iterator = ThreadLocalRandom.current().ints(min, max).distinct().iterator();
 		return iterator.next();
 	}
 	
-	// return the max between two numbers, used for insertBalanced
-	private static int max(int n1, int n2) {		
+	private static int max(int n1, int n2) {
 		return (n1 > n2) ? n1 : n2;
 	}
  	
 	@Override
 	public void insertBalanced(ArrayList<String> words) {
 		if (words == null || words.size() < 1) {
-			throw new HybridTrieError("insertBalanced(words): words should not be null or empty!");
+			throw new HybridTrieError("Inserting words balanced: Words should not be null or empty!");
 		}
 		for (String word : words) {
 			insertBalanced(word);
@@ -489,6 +576,7 @@ public class HybridTrie implements IHybridTrie {
 		if (isEmpty()) {
 			return null;
 		}
+
 		return toPatriciaTrieRecursively(root, "", new PatriciaTrie(new Alphabet()));
 	}
 

@@ -128,7 +128,8 @@ public class PatriciaTrie implements IPatriciaTrie {
 	
 	@Override
 	public void removeAll() {
-		// TODO
+        this.nodeCount = 0;
+        this.rootNode = new PatriciaTrieNode(getNewNodeId(), usedAlphabet.getNodeArity(), true);
 	}
 	
 	@Override

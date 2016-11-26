@@ -4,12 +4,14 @@ import java.util.UUID;
 
 public class HybridTrieNode {
 
-	private char character;	
-	
-	private int priority; // used when balancing the tree
-	private int stringPriority; // used when balancing the tree
-	
-	private String uniqueId; // used to identify the node when printing the tree
+	private char character;
+
+    // Used for balancing the trie
+	private int priority;
+	private int stringPriority;
+
+    // Used to identify the node when printing the tree
+	private String uniqueId;
 	
 	private HybridTrieNode leftChild;
 	private HybridTrieNode middleChild;
@@ -18,7 +20,8 @@ public class HybridTrieNode {
 	public HybridTrieNode(char character) {
 		this.character = character;
 		this.priority = 0;
-		this.stringPriority = 0; // nonterminal node, stringPriority value is 0
+        // Non-terminal node, stringPriority value is 0
+		this.stringPriority = 0;
 		this.uniqueId = character + UUID.randomUUID().toString();
 		this.leftChild = null;
 		this.middleChild = null;

@@ -241,6 +241,16 @@ public class PatriciaTrieTest extends AbstractTrieTest {
 	}
 
 	@Test
+	public final void runNominalTestRemoveAll_byManipulatingTheRootNode() {
+		assertEquals(WORD_COUNT_BEFORE_REMOVAL, patriciaTrie.getWordCount());
+
+		patriciaTrie.removeAll();
+
+		assertEquals(0, patriciaTrie.getWordCount());
+		assertTrue(patriciaTrie.isEmpty());
+	}
+
+	@Test
 	public final void runNominalTestInsert() {
 		final int wordCount = patriciaTrie.getWordCount();
 
