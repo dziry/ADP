@@ -1,5 +1,6 @@
 package fr.upmc.algav.patriciatries;
 
+import fr.upmc.algav.errors.PatriciaTrieError;
 import fr.upmc.algav.patriciatries.helper.AlphabetHelper;
 
 public class Alphabet {
@@ -19,6 +20,26 @@ public class Alphabet {
 
     public static boolean isInAlphabet(int chardId) {
         return chardId >= ALPHABET_MIN_CHAR_ID && chardId <= ALPHABET_MAX_CHAR_ID;
+    }
+
+    public boolean isValidWord(String word) {
+        boolean res = false;
+
+        if (word != null && !word.isEmpty()) {
+            char[] chars = word.toCharArray();
+
+            for (int i = 0; i < chars.length; i++) {
+                res = isInAlphabet(chars[i]);
+
+                if (!res) {
+                    // At least one character is not valid. Word is therefore not valid.
+                    res = false;
+                    break;
+                }
+            }
+        }
+
+        return res;
     }
 
     public int getNodeArity() {

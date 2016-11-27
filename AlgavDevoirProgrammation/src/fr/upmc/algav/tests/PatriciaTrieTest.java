@@ -4,6 +4,7 @@ import fr.upmc.algav.hybridtries.IHybridTrie;
 import fr.upmc.algav.patriciatries.Alphabet;
 import fr.upmc.algav.patriciatries.IPatriciaTrie;
 import fr.upmc.algav.patriciatries.PatriciaTrie;
+import fr.upmc.algav.tools.GraphReader;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -326,6 +327,15 @@ public class PatriciaTrieTest extends AbstractTrieTest {
 	@Test
 	public final void runNominalTestPrint() {
 		patriciaTrie.print("patricia_test_print.dot");
+	}
+
+	@Test
+	public final void runNominalTestPrint_baseExample() {
+        PatriciaTrie alternateTrie = new PatriciaTrie(new Alphabet());
+        GraphReader graphReader = new GraphReader("AlgavDevoirProgrammation/files/basicExample.txt");
+
+        alternateTrie.insert(graphReader.read());
+        alternateTrie.print("patricia_trie_basic_example.dot");
 	}
 
 	@Test
