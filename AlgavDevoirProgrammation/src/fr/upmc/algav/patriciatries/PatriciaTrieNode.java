@@ -5,9 +5,6 @@ import fr.upmc.algav.patriciatries.helper.AlphabetHelper;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
-/**
- * Created by amadeus on 19.10.16.
- */
 public class PatriciaTrieNode {
     private int arity;
     private boolean isLeaf;
@@ -57,8 +54,8 @@ public class PatriciaTrieNode {
         String edgeValue;
 
         try {
-            int a = AlphabetHelper.getIndexForFirstCharOfWord(value);
-            edgeValue = edgeValues.get(a);
+            int index = AlphabetHelper.getIndexForFirstCharOfWord(value);
+            edgeValue = edgeValues.get(index);
         } catch (ArrayIndexOutOfBoundsException e) {
             edgeValue = null;
         }
@@ -136,20 +133,6 @@ public class PatriciaTrieNode {
         int edgeIndex = AlphabetHelper.getIndexForFirstCharOfWord(edgeValue);
         edgeValues.set(edgeIndex, null);
         childNodes.set(edgeIndex, null);
-    }
-
-    private void testForStateChangeToLeaf() {
-        boolean isChangeToLeaf = true;
-
-        for (int i = 0; i < arity; i++) {
-            isChangeToLeaf = edgeValues.get(i) == null && childNodes.get(i) == null;
-
-            if (!isChangeToLeaf) {
-               break;
-            }
-        }
-
-        this.isLeaf = isChangeToLeaf;
     }
 
     public LinkedHashMap<String, PatriciaTrieNode> getAllNonNullEdgesToChildNodes() {

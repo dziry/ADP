@@ -7,9 +7,6 @@ import fr.upmc.algav.patriciatries.PatriciaTrieNode;
 import java.util.ArrayList;
 import java.util.Set;
 
-/**
- * Created by amadeus on 11.11.16.
- */
 public class PatriciaTrieHelper {
 
     private PatriciaTrieHelper() {
@@ -81,7 +78,7 @@ public class PatriciaTrieHelper {
 
         // Test for special cases
         if (edgeValue != null && !edgeValue.isEmpty() && edgesList != null && !edgesList.isEmpty()) {
-            // Get the edge corresponding to the edge value
+            // Get the other edge corresponding to the edge value
             for (String otherEdge : edgesList) {
                 if (otherEdge != null && !otherEdge.isEmpty() &&
                     edgeValue.charAt(0) == otherEdge.charAt(0)) {
@@ -125,10 +122,6 @@ public class PatriciaTrieHelper {
 
         for (PatriciaTrieNode childNode : currentNode.getAllChildNodes()) {
             if (childNode != null) {
-                // First update the node child's id
-                childNode.updateNodeId(currentNodeCount);
-                currentNodeCount++;
-                // Then update the id's for all children of the child node
                 currentNodeCount = updateNodeIfOfNode(childNode, currentNodeCount);
             }
         }

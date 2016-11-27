@@ -48,14 +48,14 @@ public class PatriciaTrie implements IPatriciaTrie {
 
 	private void insertCharacterSequenceForNode(PatriciaTrieNode currentNode, String word) {
 		if (currentNode.isLeaf()) {
-			// There are no edges yet to test. Just insert the whole word as new edge.
+			// There are no edges to test. Just insert the whole word as new edge.
 			currentNode.addNewValuedResultEdge(getNewNodeId(), word);
 		} else {
-			// There are already edge values for this node
+			// There are already edge values for this node.
 			String commonPrefix = PatriciaTrieHelper.getCommonPrefix(currentNode, word);
 
 			if (commonPrefix == null) {
-				// We have no shared getPrefixCount. Just insert the whole word as new edge
+				// We have no shared prefix. Just insert the whole word as new edge.
 				currentNode.addNewValuedResultEdge(getNewNodeId(), word);
 			} else if (PatriciaTrieHelper.wordIsAlreadyStoredForNode(currentNode, word)) {
                 // Word is already stored --> Do nothing!
@@ -65,19 +65,19 @@ public class PatriciaTrie implements IPatriciaTrie {
 				String edgeValueWithoutCommonPrefix = edgeValue.substring(commonPrefix.length());
 
 				if (edgeValueWithoutCommonPrefix.length() <= 0) {
-					// The inserted word contains the whole edge getPrefixCount.
+					// The inserted word contains the whole edge prefix.
+                    PatriciaTrieNode concernedChildNode = currentNode.getChildNodeForEdgeValue(edgeValue);
 
 					if (wordWithoutCommonPrefix.length() <= 0) {
 						// The word itself is also finished.
-						// E.g. Inserted word = "why" and edge getPrefixCount = "why"
+						// E.g. Inserted word = "why" and edge prefix = "why"
 						// -> We add a result edge for signaling that a word ends here.
-						currentNode.getChildNodeForEdgeValue(edgeValue).addNewResultOnlyEdge(getNewNodeId());
+						concernedChildNode.addNewResultOnlyEdge(getNewNodeId());
 					} else {
 						// The word itself is not yet finished.
-						// E.g. Inserted word = "however" and edge getPrefixCount = "how"
+						// E.g. Inserted word = "however" and edge prefix = "how"
 						// -> Insert the remaining characters of the word for the child node of the current edge.
-						insertCharacterSequenceForNode(currentNode.getChildNodeForEdgeValue(edgeValue),
-														wordWithoutCommonPrefix);
+						insertCharacterSequenceForNode(concernedChildNode, wordWithoutCommonPrefix);
 					}
 				} else {
 					// The inserted word contains only a part of the edge getPrefixCount.
@@ -534,6 +534,7 @@ public class PatriciaTrie implements IPatriciaTrie {
         } else {
             res = createMergedTrie(rootNode, otherTrie.getRootNode());
 
+            // TODO
             // Better complexity method. Not yet working because of bugs.
             /*PatriciaTrie mergedTree =
                     new PatriciaTrie(mergeCurrentNodeLevel(
@@ -790,20 +791,9 @@ public class PatriciaTrie implements IPatriciaTrie {
 		return resultRootNode;
 	}
 
-	@Override
-    public void clearTrie() {
-        this.nodeCount = 0;
-        this.rootNode = new PatriciaTrieNode(getNewNodeId(), usedAlphabet.getNodeArity(), true);
-    }
-
     @Override
     public PatriciaTrieNode getRootNode() {
         return rootNode;
-    }
-
-    @Override
-    public int getNodeCount() {
-        return nodeCount;
     }
 
     @Override

@@ -2,17 +2,15 @@ package fr.upmc.algav.patriciatries;
 
 import fr.upmc.algav.patriciatries.helper.AlphabetHelper;
 
-/**
- * Created by amadeus on 19.10.16.
- */
 public class Alphabet {
-    // Use the "DEL" character to signal the end of a word in the tree
+    /**
+       Use the "DEL" ASCII character with decimal value 127 for signaling the end of a word in the trie.
+     */
     private static final int END_OF_WORD_CHAR_ID = 127;
     private static final int ALPHABET_MIN_CHAR_ID = 0;
     private static final int ALPHABET_MAX_CHAR_ID = 126;
 
     public Alphabet() {
-
     }
 
     public boolean isInAlphabet(char c) {
@@ -24,6 +22,7 @@ public class Alphabet {
     }
 
     public int getNodeArity() {
+        // We have 128 edges for each node
         return ALPHABET_MAX_CHAR_ID + 2;
     }
 
