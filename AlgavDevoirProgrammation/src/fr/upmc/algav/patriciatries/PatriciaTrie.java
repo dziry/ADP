@@ -804,11 +804,17 @@ public class PatriciaTrie implements IPatriciaTrie {
 								if (AlphabetHelper.isResultCharacter(edgeValueChars[charIndex])) {
                                     // End of word, mark as final node
 									wordCount++;
-									tempHybridTrieNode.setIsFinalNode(wordCount);
+
+                                    if (tempHybridTrieNode != null) {
+                                        tempHybridTrieNode.setIsFinalNode(wordCount);
+                                    }
 								} else {
                                     // Otherwise append middle children until the end of a prefix or word has been reached.
 									HybridTrieNode newMiddleChild = new HybridTrieNode(edgeValueChars[charIndex]);
-									tempHybridTrieNode.setMiddleChild(newMiddleChild);
+
+                                    if (tempHybridTrieNode != null) {
+                                        tempHybridTrieNode.setMiddleChild(newMiddleChild);
+                                    }
 
                                     // Update the current hybrid node for chaining
 									tempHybridTrieNode = newMiddleChild;
@@ -840,7 +846,7 @@ public class PatriciaTrie implements IPatriciaTrie {
 				// We already have a root node for the current sub-trie.
 				} else {
                     // There's still empty space to append a new edge as right child to the result root node.
-                    if (resultRootNode.getRightChild() == null && edgeValueChars.length > 0) {
+                    if (resultRootNode != null && resultRootNode.getRightChild() == null && edgeValueChars.length > 0) {
 
                         HybridTrieNode tempHybridTrieNode = null;
 
@@ -859,10 +865,16 @@ public class PatriciaTrie implements IPatriciaTrie {
                                 if (AlphabetHelper.isResultCharacter(edgeValueChars[charIndex])) {
                                     // We have a result word, set the according mark.
                                     wordCount++;
-                                    tempHybridTrieNode.setIsFinalNode(wordCount);
+
+                                    if (tempHybridTrieNode != null) {
+                                        tempHybridTrieNode.setIsFinalNode(wordCount);
+                                    }
                                 } else {
                                     HybridTrieNode newMiddleChild = new HybridTrieNode(edgeValueChars[charIndex]);
-                                    tempHybridTrieNode.setMiddleChild(newMiddleChild);
+
+                                    if (tempHybridTrieNode != null) {
+                                        tempHybridTrieNode.setMiddleChild(newMiddleChild);
+                                    }
 
                                     tempHybridTrieNode = newMiddleChild;
                                 }
@@ -881,10 +893,12 @@ public class PatriciaTrie implements IPatriciaTrie {
                     } else {
                         // There's no more space left to append a new edge as right child to the result root node.
                         // Therefore try to append the edges to the right child of the current right child.
-                        HybridTrieNode rightChild = resultRootNode.getRightChild();
-                        rightChild.setRightChild(convertToHybridTrie(
-                                new LinkedHashMap<>(), wordCount, remainingEdges, rightChild
-                        ));
+                        if (resultRootNode != null) {
+                            HybridTrieNode rightChild = resultRootNode.getRightChild();
+                            rightChild.setRightChild(convertToHybridTrie(
+                                    new LinkedHashMap<>(), wordCount, remainingEdges, rightChild
+                            ));
+                        }
                     }
                 }
 		    }
