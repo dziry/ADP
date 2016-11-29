@@ -218,8 +218,7 @@ public class HybridTrie implements IHybridTrie {
 			return 0.0;
 		}
 
-		// TODO: This should be totalLeafDepth / totalLeafCount
-		return (double) countTotalDepthRecursively(root, -1, 0) / (double) countNodesRecursively(root, 0);
+		return (double)countTotalLeafDepthRecursively(root, -1, 0) / (double)countTotalLeafRecursively(root, 0);
 	}
 
     /**
@@ -231,36 +230,36 @@ public class HybridTrie implements IHybridTrie {
      * @param nodesCounter The current node count
      * @return The count of all nodes for this node including itself
      */
-	private static int countNodesRecursively(HybridTrieNode node, int nodesCounter) {
+	private static int countTotalLeafRecursively(HybridTrieNode node, int leavesCounter) {
 		if (node != null) {
-			nodesCounter++;
-			nodesCounter = countNodesRecursively(node.getLeftChild(), nodesCounter);
-			nodesCounter = countNodesRecursively(node.getRightChild(), nodesCounter);
-			nodesCounter = countNodesRecursively(node.getMiddleChild(), nodesCounter);
+			if (!node.hasChildren()) {
+				leavesCounter++;
+			}			
+			leavesCounter = countTotalLeafRecursively(node.getLeftChild(), leavesCounter);
+			leavesCounter = countTotalLeafRecursively(node.getRightChild(), leavesCounter);
+			leavesCounter = countTotalLeafRecursively(node.getMiddleChild(), leavesCounter);
 		}
 
-		return nodesCounter;
+		return leavesCounter;
 	}
 
     /**
      * Helper method for {@link #getAverageDepthOfLeaves()}.
-     * TODO: Are we're really calculating the total depth of all leaves here? Don't we rather need to to add
-     * TODO: the depth of each found leaf to a total value?
      *
      * @param node
      * @param depthCounter
      * @param totalDepth
      * @return
      */
-	private static int countTotalDepthRecursively(HybridTrieNode node, int depthCounter, int totalDepth) {
+	private static int countTotalLeafDepthRecursively(HybridTrieNode node, int depthCounter, int totalDepth) {
 		if (node != null) {
 			depthCounter++;
-			if (node.isFinalNode()) {
+			if (!node.hasChildren()) {
 				totalDepth += depthCounter;
 			}
-			totalDepth = countTotalDepthRecursively(node.getLeftChild(), depthCounter, totalDepth);
-			totalDepth = countTotalDepthRecursively(node.getRightChild(), depthCounter, totalDepth);
-			totalDepth = countTotalDepthRecursively(node.getMiddleChild(), depthCounter, totalDepth);
+			totalDepth = countTotalLeafDepthRecursively(node.getLeftChild(), depthCounter, totalDepth);
+			totalDepth = countTotalLeafDepthRecursively(node.getRightChild(), depthCounter, totalDepth);
+			totalDepth = countTotalLeafDepthRecursively(node.getMiddleChild(), depthCounter, totalDepth);
 		}
 
 		return totalDepth;

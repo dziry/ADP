@@ -16,7 +16,6 @@ import org.junit.Test;
 
 import fr.upmc.algav.errors.HybridTrieError;
 import fr.upmc.algav.hybridtries.HybridTrie;
-import fr.upmc.algav.hybridtries.IHybridTrie;
 import fr.upmc.algav.interfaces.ITrie;
 import fr.upmc.algav.tools.GraphReader;
 
@@ -51,11 +50,12 @@ public class HybridTrieTest extends AbstractTrieTest {
 	}
 
 	@Test
-	public final void testIsEmpty() {
-		// Before adding words
+	public final void testIsEmpty_beforeAddingWords() {
 		assertTrue("Hybrid trie is not empty: ", new HybridTrie().isEmpty());
-
-		// After adding words
+	}
+	
+	@Test
+	public final void testIsEmpty_afterAddingWords() {
 		assertFalse("Hybrid trie is not empty: ", hybridTrie.isEmpty());
 	}
 	
@@ -131,12 +131,13 @@ public class HybridTrieTest extends AbstractTrieTest {
 	}
 	
 	@Test
-	public final void runNominalTestSearch() {				
-		// Before adding words
+	public final void runNominalTestSearch_beforeAddingWords() {				
 		testSearch(new HybridTrie(), "lourds", false);
 		testSearch(new HybridTrie(), "dans", false);
-		
-		// After adding words
+	}
+	
+	@Test
+	public final void runNominalTestSearch_afterAddingWords() {				
 		testSearch(hybridTrie, "lourds", true);
 		testSearch(hybridTrie, "dans", true);
 		testSearch(hybridTrie, "le", true);
@@ -146,74 +147,78 @@ public class HybridTrieTest extends AbstractTrieTest {
 	}
 	
 	@Test (expected = HybridTrieError.class)
-	public final void runExceptionalTestSearch_1() {
-		// Case for word is null
+	public final void runExceptionalTestSearch_CaseForWordIsNull() {
 		testSearch(hybridTrie, null, false);
 	}
 	
 	@Test (expected = HybridTrieError.class)
-	public final void runExceptionalTestSearch_2() {
-		// Case for word is empty
+	public final void runExceptionalTestSearch_CaseForWordIsEmpty() {
 		testSearch(hybridTrie, "", false);
 	}
 	
 	@Test
-	public final void runNominalTestCountWords() {				
-		// Before adding words
+	public final void runNominalTestCountWords_beforeAddingWords() {				
 		testCountWords(new HybridTrie(), 0);
-		
-		// After adding words
+	}
+	
+	@Test
+	public final void runNominalTestCountWords_afterAddingWords() {
 		testCountWords(hybridTrie, 12);
 	}
 	
 	@Test
-	public final void runNominalTestListWords() {				
-		// Before adding words
+	public final void runNominalTestListWords_beforeAddingWords() {				
 		testListWords(new HybridTrie(), null);
-		
-		// After adding words
+	}
+	
+	@Test
+	public final void runNominalTestListWords_afterAddingWords() {
 		ArrayList<String> wordsListClone = new ArrayList<String>(wordsList);		
 		Collections.sort(wordsListClone);
 		testListWords(hybridTrie, wordsListClone);
 	}
 		
 	@Test
-	public final void runNominalTestCountNull() {
-		// Before adding words
+	public final void runNominalTestCountNull_beforeAddingWords() {
 		testCountNull(new HybridTrie(), 0);
-		
-		// After adding words
+	}
+	
+	@Test
+	public final void runNominalTestCountNull_afterAddingWords() {
 		testCountNull(hybridTrie, 69);
 	}
 	
 	@Test
-	public final void runNominalTestHeight() {
-		// Before adding words
+	public final void runNominalTestHeight_beforeAddingWords() {
 		testHeight(new HybridTrie(), 0);
-		
-		// After adding words
+	}
+	
+	@Test
+	public final void runNominalTestHeight_afterAddingWords() {
 		testHeight(hybridTrie, 6);
 	}
 
 	@Test
-	public final void runNominalTestAverageDepth() {
-		// Before adding words
+	public final void runNominalTestAverageDepth_beforeAddingWords() {
 		testAverageDepth(new HybridTrie(), 0);
-
-		// After adding words
-		final double someDepths = 49.0;
-		final double someNodes = 34.0;
-		testAverageDepth(hybridTrie, someDepths/someNodes);
+	}
+	
+	@Test
+	public final void runNominalTestAverageDepth_afterAddingWords() {
+		final double totalDepthForLeaves = 45.0;
+		final double leavesCount = 10.0;
+		testAverageDepth(hybridTrie, totalDepthForLeaves / leavesCount);
 	}
 
 	@Test
-	public final void runNominalTestPrefix() {
-		// Before adding words
+	public final void runNominalTestPrefix_beforeAddingWords() {
 		testPrefix(new HybridTrie(), "lou", 0);
 		testPrefix(new HybridTrie(), "ta", 0);
 		testPrefix(new HybridTrie(), "l", 0);
-		
-		// After adding words
+	}
+	
+	@Test
+	public final void runNominalTestPrefix_afterAddingWords() {
 		testPrefix(hybridTrie, "lou", 3);
 		testPrefix(hybridTrie, "ta", 1);
 		testPrefix(hybridTrie, "lox", 0);
@@ -225,29 +230,29 @@ public class HybridTrieTest extends AbstractTrieTest {
 	}
 	
 	@Test (expected = HybridTrieError.class)
-	public final void runExceptionalTestPrefix_1() {
-		// Case for word is null
+	public final void runExceptionalTestPrefix_caseForWordIsNull() {
 		testPrefix(hybridTrie, null, -1);
 	}
 	
 	@Test (expected = HybridTrieError.class)
-	public final void runExceptionalTestPrefix_2() {
-		// Case for word is empty
+	public final void runExceptionalTestPrefix_caseForWordIsEmpty() {
 		testPrefix(hybridTrie, "", -1);
 	}
 	
 	@Test
-	public final void runNominalTestRemove() {
-		// Before adding words
+	public final void runNominalTestRemove_beforeAddingWords() {
 		assertFalse("Removing from an empty hybrid trie: ", new HybridTrie().remove("hello"));
-		
+	}
+	
+	@Test
+	public final void runNominalTestRemove_afterAddingWords() {
 		// Set up before starting removing words
 		ITrie hybridTrie = new HybridTrie();
 		hybridTrie.insert(wordsList);
 		hybridTrie.insert("l");
 		hybridTrie.print("original");
 			
-		// After adding words
+		// Run tests after adding words
 		assertFalse("Removing a word that does not exist in the hybrid trie: ", hybridTrie.remove("lourd"));
 		assertFalse("Removing a word that does not exist in the hybrid trie: ", hybridTrie.remove("lourdss"));
 		testRemove(hybridTrie, "luxe", hybridTrie.getNullPointerCount() - 6, hybridTrie.getHeight() - 0);
@@ -266,50 +271,88 @@ public class HybridTrieTest extends AbstractTrieTest {
 	}
 
 	@Test (expected = HybridTrieError.class)
-	public final void runExceptionalTestRemove_1() {
-		// Case for word is null
+	public final void runExceptionalTestRemove_caseForWordIsNull() {
 		new HybridTrie().remove(null);
 	}
 	
 	@Test (expected = HybridTrieError.class)
-	public final void runExceptionalTestRemove_2() {
-		// Case for word is empty
+	public final void runExceptionalTestRemove_caseForWordIsEmpty() {
 		new HybridTrie().remove("");
 	}
 	
 	@Test
+	public final void testPrint() {
+		hybridTrie.print("HT_printTest");
+		final String expectedPrintResult = "\n"
+				 + "In order to know if the print test goes well, you should make a visual check.\n"
+				 + "First, go to '/drawables' and open the file HT_printTest.txt with a DOT Viewer.\n"
+				 + "Then, make sure that this properties are correct :\n"
+				 + "- The number of nodes is 34,\n"
+				 + "- The number of final nodes is 12,\n"
+				 + "- The number of leaves is 10,\n"
+				 + "- The number of red arcs is 24,\n"
+				 + "- The number of blue arcs is 4,\n"
+				 + "- The number of green arcs is 5,\n"
+				 + "- The number of nil pointers is 69,\n"
+				 + "- The average depth is 4.5,\n"
+				 + "- The height is 6.\n";
+		System.out.println(expectedPrintResult);		   
+	}
+	
+	@Test
 	public final void testInsertBalanced() {
+		/* The purpose of this manipulation is to make an unbalanced tries by inserting a few words in order. */
 		GraphReader graphReader = new GraphReader("files/Shakespeare/john.txt");
-		ArrayList<String> wordsList = new ArrayList<>();
-		wordsList = graphReader.read();
+		ArrayList<String> wordsListFromFile = new ArrayList<>();
+		ArrayList<String> sortedList = new ArrayList<>();
+		ArrayList<String> ordinaryList = new ArrayList<>();
+
+		wordsListFromFile = graphReader.read();
+		
+		// Split the original list to two other lists. 
+		for (int wordIndex = 0; wordIndex < wordsListFromFile.size(); wordIndex++) {
+			if (wordIndex % 500 == 0) {
+				sortedList.add(wordsListFromFile.get(wordIndex));
+			} else {
+				ordinaryList.add(wordsListFromFile.get(wordIndex));
+			}
+		}
+		
+		// Sort the first list in an ascending order and keep the second one as it is.
+		Collections.sort(sortedList);
+
+		// Insert both lists in each trie
 		HybridTrie hybridTrie = new HybridTrie();
-		IHybridTrie balancedHybridTrie = new HybridTrie();
+		hybridTrie.insert(sortedList);
+		hybridTrie.insert(ordinaryList);
 		
-		hybridTrie.insert(wordsList);
-		balancedHybridTrie.insertBalanced(wordsList);
+		HybridTrie balancedHybridTrie = new HybridTrie();		
+		balancedHybridTrie.insertBalanced(sortedList);
+		balancedHybridTrie.insertBalanced(ordinaryList);
 		
+		// insertBalanced() method should guarantee a better average depth i.e. a balanced trie.
 		assertTrue("Insert balanced: ", balancedHybridTrie.getAverageDepthOfLeaves() < hybridTrie.getAverageDepthOfLeaves());
 	}
 	
 	@Test (expected = HybridTrieError.class)
-	public final void testInsertBalancedNullWord() {
+	public final void testInsertBalanced_caseForWordIsNull() {
 		final String word = null;
 		((HybridTrie) hybridTrie).insertBalanced(word);
 	}
 
 	@Test (expected = HybridTrieError.class)
-	public final void testInsertBalancedEmptyWord() {
+	public final void testInsertBalanced_caseForWordIsEmpty() {
 		((HybridTrie) hybridTrie).insertBalanced("");
 	}
 
 	@Test (expected = HybridTrieError.class)
-	public final void testInsertBalancedNullWords() {
+	public final void testInsertBalanced_caseForWordsListIsNull() {
 		final ArrayList<String> words = null;
 		((HybridTrie) hybridTrie).insertBalanced(words);
 	}
 	
 	@Test (expected = HybridTrieError.class)
-	public final void testInsertBalancedEmptyWords() {
+	public final void testInsertBalanced_caseForWordsListIsEmpty() {
 		final ArrayList<String> words = new ArrayList<String>();
 		((HybridTrie) hybridTrie).insertBalanced(words);
 	}
