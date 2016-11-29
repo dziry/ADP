@@ -1,8 +1,6 @@
 package fr.upmc.algav.patriciatries.helper;
 
-import fr.upmc.algav.patriciatries.Alphabet;
-import fr.upmc.algav.patriciatries.PatriciaTrie;
-import fr.upmc.algav.patriciatries.PatriciaTrieNode;
+import fr.upmc.algav.patriciatries.*;
 
 import java.util.ArrayList;
 import java.util.Set;
@@ -110,7 +108,7 @@ public class PatriciaTrieHelper {
         PatriciaTrie res = trie;
 
         int nodeCount = updateNodeIfOfNode(trie.getRootNode(), 0);
-        res.setNodeCount(nodeCount);
+        //res.setNodeCount(nodeCount);
 
         return res;
     }
@@ -129,23 +127,21 @@ public class PatriciaTrieHelper {
         return currentNodeCount;
     }
 
-    public static PatriciaTrieNode copyNode(PatriciaTrieNode currentNode) {
+    public static PatriciaTrieNode copyNode(PatriciaTrieNode node, PatriciaTrieNodeManager nodeManager) {
         PatriciaTrieNode res = null;
 
-        if (currentNode != null) {
+        if (node != null) {
             ArrayList<PatriciaTrieNode> newChildNodes = new ArrayList<>();
-            int nodeIdCounter = 0;
 
-            for (PatriciaTrieNode oldChildNode : currentNode.getAllChildNodes()) {
-                PatriciaTrieNode newChildNode = copyNode(oldChildNode);
+            for (PatriciaTrieNode oldChildNode : node.getAllChildNodes()) {
+                PatriciaTrieNode newChildNode = copyNode(oldChildNode, nodeManager);
                 newChildNodes.add(newChildNode);
-                nodeIdCounter++;
             }
 
-            ArrayList<String> newEdgeValues = new ArrayList<>(currentNode.getAllEdgeValues());
+            ArrayList<String> newEdgeValues = new ArrayList<>(node.getAllEdgeValues());
 
-            res = new PatriciaTrieNode(nodeIdCounter, currentNode.getNodeArity(),
-                    newEdgeValues, newChildNodes, currentNode.isLeaf());
+            res = new PatriciaTrieNode(nodeManager.generateNewNodeId(), node.getNodeArity(),
+                    newEdgeValues, newChildNodes, node.isLeaf());
         }
 
         return res;
@@ -165,6 +161,37 @@ public class PatriciaTrieHelper {
                     if (!res) {
                         break;
                     }
+                }
+            }
+        }
+
+        return res;
+    }
+
+    public static EdgesWithSharedPrefix getEdgeWithCommonPrefixForEdge(String edgeValue, Set<String> otherEdges) {
+        EdgesWithSharedPrefix res = null;
+
+        if (edgeValue != null && otherEdges != null && !otherEdges.isEmpty()) {
+            String commonPrefix = "";
+
+            for (String otherEdge : otherEdges) {
+                if (otherEdge != null && !otherEdge.isEmpty()) {
+                    try {
+                        int index = 0;
+
+                        while (edgeValue.charAt(index) == otherEdge.charAt(index)) {
+                            commonPrefix += edgeValue.charAt(index);
+                            index++;
+                        }
+                    } catch (IndexOutOfBoundsException e) {
+                        // No longer the same getPrefixCount
+                    }
+                }
+
+                if (!commonPrefix.isEmpty()) {
+                    // We found an edge with a common prefix
+                    res = new EdgesWithSharedPrefix(edgeValue, otherEdge, commonPrefix);
+                    break;
                 }
             }
         }

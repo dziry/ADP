@@ -9,5 +9,4 @@ public interface IPatriciaTrie extends ITrie {
 	IPatriciaTrie merge(IPatriciaTrie otherTrie);
 	IHybridTrie toHybridTrie();
 	PatriciaTrieNode getRootNode();
-    void setNodeCount(int nodeCount);
 }
