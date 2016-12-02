@@ -560,7 +560,7 @@ public class HybridTrie implements IHybridTrie {
 	}
  	
 	@Override
-	public void insertBalanced(ArrayList<String> words) {
+	public void insertBalanced(Collection<String> words) {
 		if (words == null || words.size() < 1) {
 			throw new HybridTrieError("Inserting words balanced: Words should not be null or empty!");
 		}
