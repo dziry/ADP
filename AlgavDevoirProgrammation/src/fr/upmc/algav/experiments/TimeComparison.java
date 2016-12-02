@@ -9,6 +9,7 @@ import java.nio.file.Paths;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Stream;
@@ -41,8 +42,8 @@ public class TimeComparison {
     private static final String SEPARATOR_LINE = "------------------------------------------------------------------";
 
     private static Writer resultsWriter;
-    private static int numberOfFiles;
-	private static HashSet<String> shakespeareWords;
+    private static int numberOfFiles;    
+	private static Collection<String> shakespeareWords;	
 
     private static final int REPETITIONS_PER_TEST = 10;
 
@@ -53,14 +54,15 @@ public class TimeComparison {
 
 	public static void main(String[] args) {
         initWriter();
-        initWordsSet();
+        // true to accept duplicated words, false else
+        initWordsSet(false);
 
         printTestBegin();
 
         doTrieConstructionTest();
-        doUnknownWordInsertionTest();
-        doSetOfWordsRemovalTest();
-        doPatriciaConstructionsTest();
+//        doUnknownWordInsertionTest();
+//        doSetOfWordsRemovalTest();
+//        doPatriciaConstructionsTest();
 
         printTestEnd();
     }
@@ -143,11 +145,17 @@ public class TimeComparison {
         }
     }
 
-    private static void initWordsSet() {
-        shakespeareWords = new HashSet<>();
+    private static void initWordsSet(boolean isDuplicatedWordsAccepted) {
+    	if (isDuplicatedWordsAccepted) {
+    		// Duplicated words
+    		shakespeareWords = new ArrayList<>();
+    	} else {
+    		// Distinct words
+    		shakespeareWords = new HashSet<>();
+    	}
         numberOfFiles = 0;
 
-		try(Stream<Path> paths = Files.walk(Paths.get(DIRECTORY_PATH))) {
+		try (Stream<Path> paths = Files.walk(Paths.get(DIRECTORY_PATH))) {
 			paths.forEach(filePath -> {
 				if (Files.isRegularFile(filePath)) {
 					numberOfFiles++;
@@ -188,7 +196,7 @@ public class TimeComparison {
                             "Total time for Balanced Hybrid Trie: " + balancedHybridTrieConstructionTimes.get(i) + " ms\n" +
                             "Total time for Patricia Trie: " + patriciaTrieConstructionTimes.get(i) + " ms\n";
 
-            System.out.println(times);
+//            System.out.println(times);
             writeToResultsFile(times);
         }
 
@@ -242,8 +250,8 @@ public class TimeComparison {
             start = Instant.now();
             pTrie.insert(shakespeareWords);
             end = Instant.now();
+            System.out.println(pTrie.getWordCount());
         }
-
         return (double) Duration.between(start, end).toMillis();
     }
 
@@ -273,7 +281,7 @@ public class TimeComparison {
                             "Insertion time for Balanced Hybrid Trie: " + balancedHybridTrieInsertionTimes.get(i) + " ns\n" +
                             "Insertion time for Patricia Trie: " + patriciaTrieInsertionTimes.get(i) + " ns\n";
 
-            System.out.println(times);
+//            System.out.println(times);
             writeToResultsFile(times);
         }
 
@@ -282,7 +290,7 @@ public class TimeComparison {
                 "Average insertion time for Balanced Hybrid Trie: " + calculateAverageForSeveralResults(balancedHybridTrieInsertionTimes) + " ns\n" +
                 "Average insertion time for Patricia Trie: " + calculateAverageForSeveralResults(patriciaTrieInsertionTimes) + " ns\n";
 
-        System.out.println(aTimes);
+//        System.out.println(aTimes);
         writeToResultsFile(aTimes);
     }
 
@@ -354,7 +362,7 @@ public class TimeComparison {
                             "Removal time for Balanced Hybrid Trie: " + balancedHybridTrieRemovalTimes.get(i) + " ns\n" +
                             "Removal time for Patricia Trie: " + patriciaTrieRemovalTimes.get(i) + " ns\n";
 
-            System.out.println(times);
+//            System.out.println(times);
             writeToResultsFile(times);
         }
 
@@ -442,7 +450,7 @@ public class TimeComparison {
                     "Construction time for all words insertion: " + constructionByAllWordsInsertionTimes.get(i) + " ms\n" +
                     "Construction time for tries merge: " + constructionByMergeTimes.get(i) + " ms\n";
 
-            System.out.println(times);
+//            System.out.println(times);
             writeToResultsFile(times);
         }
 

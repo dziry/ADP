@@ -7,7 +7,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.stream.Stream;
 
 import fr.upmc.algav.hybridtries.HybridTrie;
@@ -15,7 +14,6 @@ import fr.upmc.algav.interfaces.ITrie;
 import fr.upmc.algav.patriciatries.Alphabet;
 import fr.upmc.algav.patriciatries.PatriciaTrie;
 import fr.upmc.algav.tools.GraphReader;
-
 
 public class StructureComparison {
 	private final static String CONFIG = "%-25s%-15s%-15s%-15s%-20s%s\n";

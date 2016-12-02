@@ -35,8 +35,6 @@ public class HybridTrie implements IHybridTrie {
 	public void insert(String word) {
 		if (word == null || word.isEmpty()) {
 			throw new HybridTrieError("Inserting word: Word should not be null or empty!");
-		} else if (search(word)) {
-			// Word exists, do nothing
 		}
 
 		root = insertRecursively(root, word.toCharArray(), 0);
