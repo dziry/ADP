@@ -12,9 +12,10 @@ import fr.upmc.algav.tools.GraphReader;
 public class DataStatistics {
 
 	private final static String CONFIG = "%-25s%-20s%-20s%-20s%-20s\n";
-	//private final static String DIRECTORY_PATH = "files/Shakespeare";
-	// Alternate path for IntelliJ
-	private final static String DIRECTORY_PATH = "AlgavDevoirProgrammation/files/Shakespeare";
+	// Eclipse IDE
+	private final static String DIRECTORY_PATH = "files/Shakespeare";
+	// IntelliJ IDE
+	//private final static String DIRECTORY_PATH = "AlgavDevoirProgrammation/files/Shakespeare";
 	
 	public static void main(String[] args) {
 		File directoryFile = new File(DIRECTORY_PATH);

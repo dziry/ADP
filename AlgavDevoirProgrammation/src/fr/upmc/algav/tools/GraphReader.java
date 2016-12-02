@@ -37,14 +37,14 @@ public class GraphReader {
 				addWordToList();
 			}
 		} else if (fileContent() == Content.UNKNOWN) {			
-			throw new Error("Unknown file content.");
+			//throw new Error("Unknown file content.");
 		}
 
 		return wordsList;
 	}
 	
-	private Content fileContent() {		
-		String[] tokens = scanner.nextLine().split(SPACE);
+	private Content fileContent() {
+		String[] tokens = scanner.hasNextLine() ? scanner.nextLine().split(SPACE) : new String[0];
 		int wordsCounter = tokens.length;
 
         if (wordsCounter > 1) {

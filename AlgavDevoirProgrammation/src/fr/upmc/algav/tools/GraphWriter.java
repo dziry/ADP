@@ -6,7 +6,10 @@ import java.io.IOException;
 
 public class GraphWriter {
 
+	// Eclipse IDE
 	private final String DRAWABLES_DIRECTORY = System.getProperty("user.dir") + "/drawables/";
+	// IntelliJ IDE
+	//private final String DRAWABLES_DIRECTORY = System.getProperty("user.dir") + "/AlgavDevoirProgrammation/drawables/";
 	private String fileName;
 	private String filePath;
 	BufferedWriter output;

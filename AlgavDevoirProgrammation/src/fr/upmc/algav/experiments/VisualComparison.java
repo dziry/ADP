@@ -10,11 +10,21 @@ import fr.upmc.algav.tools.GraphReader;
 
 public class VisualComparison {
 
+	// Eclipse IDE
+	private final static String EXERCISE_EXAMPLE_FILE_PATH = "files/exerciseExample.txt";
+	// IntelliJ IDE
+	//private final static String EXERCISE_EXAMPLE_FILE_PATH = "AlgavDevoirProgrammation/files/exerciseExample.txt";
+
+	// Eclipse IDE
+	private final static String BASIC_EXAMPLE_FILE_PATH = "files/basicExample.txt";
+	// IntelliJ IDE
+	//private final static String BASIC_EXAMPLE_FILE_PATH = "AlgavDevoirProgrammation/files/basicExample.txt";
+
 	public static void main(String[] args) {
 		ArrayList<String> list ;
 
 		System.out.println("Course example | One word by line :\n");
-		GraphReader graphReaderOne = new GraphReader("AlgavDevoirProgrammation/files/exerciseExample.txt");
+		GraphReader graphReaderOne = new GraphReader(EXERCISE_EXAMPLE_FILE_PATH);
 		list = graphReaderOne.read();
 
 		ITrie hybridTrieExerciseExample = new HybridTrie();
@@ -26,7 +36,7 @@ public class VisualComparison {
         patriciaTrieExerciseExample.print("visual_comparison_example_course_PT.dot");
 
         System.out.println("\nBasic example | Full text :\n");
-		GraphReader graphReaderFull = new GraphReader("AlgavDevoirProgrammation/files/basicExample.txt");
+		GraphReader graphReaderFull = new GraphReader(BASIC_EXAMPLE_FILE_PATH);
 		list = graphReaderFull.read();
 
 		ITrie hybridTrieBasicExample = new HybridTrie();

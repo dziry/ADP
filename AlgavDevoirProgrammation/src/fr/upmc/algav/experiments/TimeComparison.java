@@ -1,12 +1,13 @@
 package fr.upmc.algav.experiments;
 
-import java.io.File;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.Duration;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.PrimitiveIterator.OfInt;
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.HashSet;
+import java.util.stream.Stream;
 
 import fr.upmc.algav.hybridtries.HybridTrie;
 import fr.upmc.algav.interfaces.ITrie;
@@ -16,17 +17,25 @@ import fr.upmc.algav.tools.GraphReader;
 
 public class TimeComparison {
 
-	private final static int NUMBER_OF_ATTEMPTS = 10;
-	//private final static String DIRECTORY_PATH = "files/Shakespeare";
-	// Alternate path for IntelliJ
-	private final static String DIRECTORY_PATH = "AlgavDevoirProgrammation/files/Shakespeare";
-	private static int numberOfFiles = 0;
+    // Eclipse IDE
+	private final static String DIRECTORY_PATH = "files/Shakespeare";
+	// IntelliJ IDE
+    //private final static String DIRECTORY_PATH = "AlgavDevoirProgrammation/files/Shakespeare";
 
-	private static ArrayList<ArrayList<String>> shakespeareWordsList = new ArrayList<>();
+    //private final static String RESULTS_PATH = "results/results.txt";
+    // Alternate path for IntelliJ
+    private final static String RESULTS_PATH = "AlgavDevoirProgrammation/results/results.txt";
+    private final static String RESULTS_ENCODING = "utf-8";
 
-	private static ITrie hybridTrie = new HybridTrie();
-	private static ITrie balancedHybridTrie = new HybridTrie();
-    private static ITrie patriciaTrie = new PatriciaTrie(new Alphabet());
+    private static final String SEPARATOR_LINE = "------------------------------------------------------------------";
+
+    private static Writer resultsWriter;
+    private static int numberOfFiles;
+	private static HashSet<String> shakespeareWords;
+
+	private static ITrie hybridTrie;
+	private static ITrie balancedHybridTrie;
+    private static ITrie patriciaTrie;
 	
 	private static double insertionTimeInHybridTrie = 0;
 	private static double insertionTimeInBalancedHybridTrie = 0;
@@ -42,32 +51,126 @@ public class TimeComparison {
 	private static double removeWordsTimeInPatriciaTrie = 0;
 
 	public static void main(String[] args) {
-		System.out.println("Les résultats obtenu sont la moyenne de " + NUMBER_OF_ATTEMPTS + " essais");
-		System.out.println("------------------------------------------------");
+        initWriter();
+        initWordsSet();
 
-		numberOfFiles = new File(DIRECTORY_PATH).listFiles().length;
+        printTestBegin();
 
-		initWordsList();
+        constructTries();
 
-		for (int attempt = 0; attempt < NUMBER_OF_ATTEMPTS; attempt++) {
+        printTestEnd();
+
+        /*for (int attempt = 0; attempt < NUMBER_OF_ATTEMPTS; attempt++) {
 			runTests(attempt);
 		}
 
-		printAverageResults();					
+		printAverageResults();	*/
     }
-    
-	private static void initWordsList() {
-		final File folder = new File(DIRECTORY_PATH);
 
-		for (final File fileEntry : folder.listFiles()) {
-			final String filePath = folder + "/" + fileEntry.getName();			
-			GraphReader graphReader = new GraphReader(filePath);
+    private static void initWriter() {
+        resultsWriter = null;
 
-			shakespeareWordsList.add(graphReader.read());
+        try {
+            resultsWriter = new BufferedWriter(new OutputStreamWriter(
+                    new FileOutputStream(RESULTS_PATH), RESULTS_ENCODING));
+        } catch (IOException ex) {
+            System.err.println("Error while initializing results writer!");
+            ex.printStackTrace();
+        }
+    }
+
+    private static void printTestBegin() {
+        String begin =  "BEGIN OF TIME COMPARISON\n" +
+                        SEPARATOR_LINE + "\n" +
+                        SEPARATOR_LINE + "\n" +
+                        SEPARATOR_LINE + "\n\n";
+
+        System.out.println(begin);
+        writeToResultsFile(begin);
+
+
+        String totalOfWords = "Total of distinct words in Shakespeare's works: " + shakespeareWords.size() + "\n\n";
+
+        System.out.println(totalOfWords);
+        writeToResultsFile(totalOfWords);
+    }
+
+    private static void printTestEnd() {
+        String end =    "\n" + SEPARATOR_LINE + "\n" +
+                        SEPARATOR_LINE + "\n" +
+                        SEPARATOR_LINE + "\n" +
+                        "END OF TIME COMPARISON";
+
+        System.out.println(end);
+        writeToResultsFile(end);
+
+        try {
+            resultsWriter.close();
+        } catch (Exception ex) {
+            System.err.println("Error while closing results file writer!");
+            ex.printStackTrace();
+        }
+    }
+
+    private static void writeToResultsFile(String stringToWrite) {
+        try {
+            resultsWriter.write(stringToWrite);
+        } catch (Exception e) {
+            System.err.println("Error while writing to results file!");
+            e.printStackTrace();
+        }
+    }
+
+    private static void initWordsSet() {
+        shakespeareWords = new HashSet<>();
+        numberOfFiles = 0;
+
+		try(Stream<Path> paths = Files.walk(Paths.get(DIRECTORY_PATH))) {
+			paths.forEach(filePath -> {
+				if (Files.isRegularFile(filePath)) {
+					numberOfFiles++;
+
+                    GraphReader graphReader = new GraphReader(filePath.toString());
+                    shakespeareWords.addAll(graphReader.read());
+				}
+			});
+		} catch (Exception e) {
+			System.err.println("Error while reading the files for all works of Shakespeare: ");
+			e.printStackTrace();
 		}
 	}
+
+    private static void constructTries() {
+        hybridTrie = new HybridTrie();
+        balancedHybridTrie = new HybridTrie();
+        patriciaTrie = new PatriciaTrie(new Alphabet());
+
+        double hybridTrieDuration = getDurationForTrieConstruction(hybridTrie);
+        double balancedHybridTrieDuration = getDurationForTrieConstruction(balancedHybridTrie);
+        double patriciaTrieDuration = getDurationForTrieConstruction(patriciaTrie);
+
+        String times =  "Construction of tries:\n" +
+                        SEPARATOR_LINE + "\n" +
+                        "Total time for Hybrid Trie: " + hybridTrieDuration + " ms\n" +
+                        "Total time for Balanced Hybrid Trie: " + balancedHybridTrieDuration + " ms\n" +
+                        "Total time for Patricia Trie: " + patriciaTrieDuration + " ms\n\n";
+
+        System.out.println(times);
+        writeToResultsFile(times);
+    }
+
+    private static double getDurationForTrieConstruction(ITrie trie) {
+        Instant start = null;
+        Instant end = null;
+
+        start = Instant.now();
+        trie.insert(shakespeareWords);
+        end = Instant.now();
+
+        return (double) Duration.between(start, end).toMillis();
+    }
 	
-	private static void runTests(int attempt) {
+	/*private static void runTests(int attempt) {
 		insertExperiments();
 
 		// getting ready for the next three experiments
@@ -121,7 +224,7 @@ public class TimeComparison {
 
 		trie.removeAll();
 		start = Instant.now();
-		trie.insert(shakespeareWordsList.get(fileIndex));
+		trie.insert(shakespeareWords.get(fileIndex));
 		end = Instant.now();
 
     	return (double) Duration.between(start, end).toNanos();
@@ -133,7 +236,7 @@ public class TimeComparison {
 
 		trie.removeAll();
 		start = Instant.now();
-		trie.insertBalanced(shakespeareWordsList.get(fileIndex));
+		trie.insertBalanced(shakespeareWords.get(fileIndex));
 		end = Instant.now();
 
     	return (double) Duration.between(start, end).toNanos();
@@ -185,7 +288,7 @@ public class TimeComparison {
 			int randomWordIndex = getRandomWordIndex(numberOfWords);
 
 			start = Instant.now();
-			trie.search(shakespeareWordsList.get(fileIndex).get(randomWordIndex));
+			trie.search(shakespeareWords.get(fileIndex).get(randomWordIndex));
 			end = Instant.now();
 
 			duration += (double) Duration.between(start, end).toNanos();
@@ -201,7 +304,7 @@ public class TimeComparison {
 
 		for (int wordsCount = 0; wordsCount < numberOfWords; wordsCount++) {
 			int randomWordPrefix = getRandomWordIndex(numberOfWords);
-			String randomWord = shakespeareWordsList.get(fileIndex).get(randomWordPrefix);
+			String randomWord = shakespeareWords.get(fileIndex).get(randomWordPrefix);
 			String randomPrefix = getRandomPrefix(randomWord);
 
 			start = Instant.now();
@@ -234,7 +337,7 @@ public class TimeComparison {
 			int randomWordIndex = getRandomWordIndex(numberOfWords);
 
 			start = Instant.now();
-			trie.remove(shakespeareWordsList.get(fileIndex).get(randomWordIndex));
+			trie.remove(shakespeareWords.get(fileIndex).get(randomWordIndex));
 			end = Instant.now();
 
 			duration += (double) Duration.between(start, end).toNanos();
@@ -249,7 +352,7 @@ public class TimeComparison {
 	}
 	
 	private static void insertPartiallyOrientedListsInTrie(int fileIndex) {
-		ArrayList<String> wordsListFromFile = new ArrayList<String>(shakespeareWordsList.get(fileIndex));
+		ArrayList<String> wordsListFromFile = new ArrayList<String>(shakespeareWords.get(fileIndex));
 		ArrayList<String> listToSort = new ArrayList<String>();
 		ArrayList<String> ordinaryList = new ArrayList<String>();
 
@@ -289,6 +392,6 @@ public class TimeComparison {
 		System.out.println("    Trie Hybride: " + hybridTrie.getHeight());
 		System.out.println("    Trie Hybride équilibré: " + balancedHybridTrie.getHeight());
 		System.out.println("    Patricia Trie: " + patriciaTrie.getHeight());
-	}
+	}*/
 }
 

@@ -227,7 +227,6 @@ public class HybridTrie implements IHybridTrie {
      * its successors.
      *
      * @param node The current node
-     * @param nodesCounter The current node count
      * @return The count of all nodes for this node including itself
      */
 	private static int countTotalLeafRecursively(HybridTrieNode node, int leavesCounter) {

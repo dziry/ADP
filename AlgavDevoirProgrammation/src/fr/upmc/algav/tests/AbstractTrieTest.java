@@ -8,9 +8,6 @@ import java.util.ArrayList;
 
 import fr.upmc.algav.interfaces.ITrie;
 
-/**
- * TODO: Is this class really necessary?
- */
 public abstract class AbstractTrieTest {
 
 	protected final void testSearch(ITrie trie, String word, boolean expectedTrieSerchResult) {						

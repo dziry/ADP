@@ -19,9 +19,11 @@ import fr.upmc.algav.tools.GraphReader;
 
 public class StructureComparison {
 	private final static String CONFIG = "%-25s%-15s%-15s%-15s%-20s%s\n";
-    //private final static String DIRECTORY_PATH = "files/Shakespeare";
-    // Alternate path for IntelliJ
-    private final static String DIRECTORY_PATH = "AlgavDevoirProgrammation/files/Shakespeare";
+
+	// Eclipse IDE
+	private final static String DIRECTORY_PATH = "files/Shakespeare";
+    // IntelliJ IDE
+    //private final static String DIRECTORY_PATH = "AlgavDevoirProgrammation/files/Shakespeare";
 
 	private enum Struct {
         Hybrid, BalancedHybrid, SortedHybrid, SortedBalancedHybrid, Patricia

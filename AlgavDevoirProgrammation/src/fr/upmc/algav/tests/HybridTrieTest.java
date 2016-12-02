@@ -20,8 +20,10 @@ import fr.upmc.algav.interfaces.ITrie;
 import fr.upmc.algav.tools.GraphReader;
 
 public class HybridTrieTest extends AbstractTrieTest {
-
+	// Eclipse IDE
 	private static final String EXAMPLE_PATH = "files/exerciseExample.txt";
+	// IntelliJ IDE
+	//private static final String EXAMPLE_PATH = "AlgavDevoirProgrammation/files/exerciseExample.txt";
 	private static ArrayList<String> wordsList = null;
     private static ITrie hybridTrie = null;
 		
@@ -302,7 +304,10 @@ public class HybridTrieTest extends AbstractTrieTest {
 	@Test
 	public final void testInsertBalanced() {
 		/* The purpose of this manipulation is to make an unbalanced tries by inserting a few words in order. */
+		// Eclipse IDE
 		GraphReader graphReader = new GraphReader("files/Shakespeare/john.txt");
+		// IntelliJ IDE
+		//GraphReader graphReader = new GraphReader("AlgavDevoirProgrammation/files/Shakespeare/john.txt");
 		ArrayList<String> wordsListFromFile = new ArrayList<>();
 		ArrayList<String> sortedList = new ArrayList<>();
 		ArrayList<String> ordinaryList = new ArrayList<>();
