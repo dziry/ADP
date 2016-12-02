@@ -24,18 +24,12 @@ public class StructureComparison {
 	private final static String DIRECTORY_PATH = "files/Shakespeare";
     // IntelliJ IDE
     //private final static String DIRECTORY_PATH = "AlgavDevoirProgrammation/files/Shakespeare";
-
-	private enum Struct {
-        Hybrid, BalancedHybrid, SortedHybrid, SortedBalancedHybrid, Patricia
-	}
 	
 	public static void main(String[] args) {
 		ITrie originalHT = new HybridTrie();
 		ITrie balancedHT = new HybridTrie();
 		ITrie patricia = new PatriciaTrie(new Alphabet());
-		ITrie originalSortedHT = new HybridTrie();
-		ITrie balancedSortedHT = new HybridTrie();		
-				
+
 		String arg1 = "File";
 		String arg2 = "Words";
 		String arg3 = "Null Pointers";
@@ -49,11 +43,9 @@ public class StructureComparison {
 		    
 			paths.forEach(filePath -> {
 		        if (Files.isRegularFile(filePath)) {
-		        	run(originalHT, filePath, Struct.Hybrid); 
-		        	run(balancedHT, filePath, Struct.BalancedHybrid);
-		        	run(originalSortedHT, filePath, Struct.SortedHybrid); 
-		        	run(balancedSortedHT, filePath, Struct.SortedBalancedHybrid);
-                    run(patricia, filePath, Struct.Patricia);
+		        	run(originalHT, filePath, TrieType.HYBRID);
+		        	run(balancedHT, filePath, TrieType.BALANCED_HYBRID);
+                    run(patricia, filePath, TrieType.PATRICIA);
 		        	System.out.println("------------------------------------------------------------------------------------------------------\n");
 		        }
 		    });
@@ -62,19 +54,13 @@ public class StructureComparison {
 		} 	
 	}
 	
-	private static void run(ITrie trie, Path filePath, Struct struct) {
+	private static void run(ITrie trie, Path filePath, TrieType type) {
 		GraphReader graphReader = new GraphReader(filePath.toString());
 		ArrayList<String> wordsList = graphReader.read();
 		
-		if (struct == Struct.Hybrid || struct == Struct.Patricia) {
+		if (type == TrieType.HYBRID || type == TrieType.PATRICIA) {
 			trie.insert(wordsList);			
-		} else if (struct == Struct.BalancedHybrid) {
-			((HybridTrie) trie).insertBalanced(wordsList);
-		} else if (struct == Struct.SortedHybrid) {
-			Collections.sort(wordsList);
-			trie.insert(wordsList);
-		} else if (struct == Struct.SortedBalancedHybrid) {
-			Collections.sort(wordsList);
+		} else if (type == TrieType.BALANCED_HYBRID) {
 			((HybridTrie) trie).insertBalanced(wordsList);
 		}
 			
@@ -87,10 +73,8 @@ public class StructureComparison {
 		double averageDepth = aDepth.doubleValue();
 		String structMsg;
 
-		if (struct == Struct.Hybrid) structMsg = "Original-HT";			
-		else if (struct == Struct.BalancedHybrid) structMsg = "Balanced-HT";
-		else if (struct == Struct.SortedHybrid) structMsg = "O-HT sorted";
-		else if (struct == Struct.SortedBalancedHybrid) structMsg = "B-HT sorted";
+		if (type == TrieType.HYBRID) structMsg = "Original-HT";
+		else if (type == TrieType.BALANCED_HYBRID) structMsg = "Balanced-HT";
 		else structMsg = "Patricia";
 			
 		System.out.format(CONFIG, fileName, words, nil, height, averageDepth, structMsg);

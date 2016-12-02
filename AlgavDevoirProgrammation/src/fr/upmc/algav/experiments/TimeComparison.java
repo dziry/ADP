@@ -15,9 +15,16 @@ import java.util.stream.Stream;
 
 import fr.upmc.algav.hybridtries.HybridTrie;
 import fr.upmc.algav.patriciatries.Alphabet;
+import fr.upmc.algav.patriciatries.IPatriciaTrie;
 import fr.upmc.algav.patriciatries.PatriciaTrie;
 import fr.upmc.algav.tools.GraphReader;
 
+/**
+ * TODO:
+ * - Test for conversion UHT/BHT vs. PT
+ * - Test for getWordCount
+ * - Test for prefix count
+ */
 public class TimeComparison {
 
     // Eclipse IDE
@@ -53,6 +60,7 @@ public class TimeComparison {
         doTrieConstructionTest();
         doUnknownWordInsertionTest();
         doSetOfWordsRemovalTest();
+        doPatriciaConstructionsTest();
 
         printTestEnd();
     }
@@ -409,6 +417,82 @@ public class TimeComparison {
         }
 
         return (double) Duration.between(start, end).toNanos();
+    }
+
+    private static void doPatriciaConstructionsTest() {
+        ArrayList<Double> constructionByAllWordsInsertionTimes = new ArrayList<>();
+        ArrayList<Double> constructionByMergeTimes = new ArrayList<>();
+
+        for (int i = 0; i < REPETITIONS_PER_TEST; i++) {
+            double allWordsConstructionDuration = getDurationForPatriciaConstruction(false);
+            double mergeConstructionDuration = getDurationForPatriciaConstruction(true);
+
+            constructionByAllWordsInsertionTimes.add(allWordsConstructionDuration);
+            constructionByMergeTimes.add(mergeConstructionDuration);
+        }
+
+        String heading = "\nInsertions vs. Merge: Comparing the construction of a Patricia trie for " + REPETITIONS_PER_TEST + " repetitions:\n" +
+                        SEPARATOR_LINE + "\n";
+        System.out.println(heading);
+        writeToResultsFile(heading);
+
+
+        for (int i = 0; i < REPETITIONS_PER_TEST; i++) {
+            String times =  "Repetition " + (i + 1) + ":\n" +
+                    "Construction time for all words insertion: " + constructionByAllWordsInsertionTimes.get(i) + " ms\n" +
+                    "Construction time for tries merge: " + constructionByMergeTimes.get(i) + " ms\n";
+
+            System.out.println(times);
+            writeToResultsFile(times);
+        }
+
+        String aTimes =  "Average construction times:\n" +
+                "Average construction time for all words insertion: " + calculateAverageForSeveralResults(constructionByAllWordsInsertionTimes) + " ms\n" +
+                "Average construction time for tries merge: " + calculateAverageForSeveralResults(constructionByMergeTimes) + " ms\n";
+
+        System.out.println(aTimes);
+        writeToResultsFile(aTimes);
+    }
+
+    private static double getDurationForPatriciaConstruction(boolean isMerge) {
+        Instant start = null;
+        Instant end = null;
+
+        if (isMerge) {
+            ArrayList<PatriciaTrie> subTries = new ArrayList<>();
+
+            try(Stream<Path> paths = Files.walk(Paths.get(DIRECTORY_PATH))) {
+                paths.forEach(filePath -> {
+                    if (Files.isRegularFile(filePath)) {
+                        GraphReader graphReader = new GraphReader(filePath.toString());
+
+                        PatriciaTrie pt = new PatriciaTrie(new Alphabet());
+                        pt.insert(graphReader.read());
+                        subTries.add(pt);
+                    }
+                });
+            } catch (Exception e) {
+                System.err.println("Error while reading the files for Patricia trie merging: ");
+                e.printStackTrace();
+            }
+
+            IPatriciaTrie tempTrie = new PatriciaTrie(new Alphabet());
+            start = Instant.now();
+
+            for (PatriciaTrie subTrie : subTries) {
+                tempTrie = tempTrie.merge(subTrie);
+            }
+
+            end = Instant.now();
+        } else {
+            PatriciaTrie patriciaTrie = new PatriciaTrie(new Alphabet());
+
+            start = Instant.now();
+            patriciaTrie.insert(shakespeareWords);
+            end = Instant.now();
+        }
+
+        return (double) Duration.between(start, end).toMillis();
     }
 }
 
