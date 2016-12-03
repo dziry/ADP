@@ -540,18 +540,18 @@ public class TimeComparison {
 
         for (int i = 0; i < REPETITIONS_PER_TEST; i++) {
             String times =  "Repetition " + (i + 1) + ":\n" +
-                            "Counting operation time for Hybrid Trie: " + hybridTrieCountWordsTimes.get(i) + " ns\n" +
-                            "Counting operation time for Balanced Hybrid Trie: " + balancedHybridTrieCountWordsTimes.get(i) + " ns\n" +
-                            "Counting operation time for Patricia Trie: " + patriciaTrieCountWordsTimes.get(i) + " ns\n";
+                            "Counting operation time for Hybrid Trie: " + hybridTrieCountWordsTimes.get(i) + " ms\n" +
+                            "Counting operation time for Balanced Hybrid Trie: " + balancedHybridTrieCountWordsTimes.get(i) + " ms\n" +
+                            "Counting operation time for Patricia Trie: " + patriciaTrieCountWordsTimes.get(i) + " ms\n";
 
             System.out.println(times);
             writeToResultsFile(times);
         }
 
         String aTimes =  "Average Counting operation times:\n" +
-                "Average counting operation time for Hybrid Trie: " + calculateAverageForSeveralResults(hybridTrieCountWordsTimes) + " ns\n" +
-                "Average counting operation time for Balanced Hybrid Trie: " + calculateAverageForSeveralResults(balancedHybridTrieCountWordsTimes) + " ns\n" +
-                "Average counting operation time for Patricia Trie: " + calculateAverageForSeveralResults(patriciaTrieCountWordsTimes) + " ns\n";
+                "Average counting operation time for Hybrid Trie: " + calculateAverageForSeveralResults(hybridTrieCountWordsTimes) + " ms\n" +
+                "Average counting operation time for Balanced Hybrid Trie: " + calculateAverageForSeveralResults(balancedHybridTrieCountWordsTimes) + " ms\n" +
+                "Average counting operation time for Patricia Trie: " + calculateAverageForSeveralResults(patriciaTrieCountWordsTimes) + " ms\n";
 
         System.out.println(aTimes);
         writeToResultsFile(aTimes);
@@ -583,7 +583,7 @@ public class TimeComparison {
             end = Instant.now();
         }
 
-        return (double) Duration.between(start, end).toNanos();
+        return (double) Duration.between(start, end).toMillis();
     }
     
     private static void doCountPrefixesTest() {
@@ -618,18 +618,18 @@ public class TimeComparison {
 
         for (int i = 0; i < REPETITIONS_PER_TEST; i++) {
             String times =  "Repetition " + (i + 1) + ":\n" +
-                            "Counting prefix time for Hybrid Trie: " + hybridTrieCountPrefixTimes.get(i) + " ns\n" +
-                            "Counting prefix time for Balanced Hybrid Trie: " + balancedHybridTrieCountPrefixTimes.get(i) + " ns\n" +
-                            "Counting prefix time for Patricia Trie: " + patriciaTrieCountPrefixTimes.get(i) + " ns\n";
+                            "Counting prefix time for Hybrid Trie: " + hybridTrieCountPrefixTimes.get(i) + " ms\n" +
+                            "Counting prefix time for Balanced Hybrid Trie: " + balancedHybridTrieCountPrefixTimes.get(i) + " ms\n" +
+                            "Counting prefix time for Patricia Trie: " + patriciaTrieCountPrefixTimes.get(i) + " ms\n";
 
             System.out.println(times);
             writeToResultsFile(times);
         }
 
         String aTimes =  "Average counting prefix times:\n" +
-                "Average counting prefix time for Hybrid Trie: " + calculateAverageForSeveralResults(hybridTrieCountPrefixTimes) + " ns\n" +
-                "Average counting prefix time for Balanced Hybrid Trie: " + calculateAverageForSeveralResults(balancedHybridTrieCountPrefixTimes) + " ns\n" +
-                "Average counting prefix time for Patricia Trie: " + calculateAverageForSeveralResults(patriciaTrieCountPrefixTimes) + " ns\n";
+                "Average counting prefix time for Hybrid Trie: " + calculateAverageForSeveralResults(hybridTrieCountPrefixTimes) + " ms\n" +
+                "Average counting prefix time for Balanced Hybrid Trie: " + calculateAverageForSeveralResults(balancedHybridTrieCountPrefixTimes) + " ms\n" +
+                "Average counting prefix time for Patricia Trie: " + calculateAverageForSeveralResults(patriciaTrieCountPrefixTimes) + " ms\n";
 
         System.out.println(aTimes);
         writeToResultsFile(aTimes);
@@ -692,7 +692,7 @@ public class TimeComparison {
             end = Instant.now();
         }
 
-        return (double) Duration.between(start, end).toNanos();
+        return (double) Duration.between(start, end).toMillis();
     }
     
     private static void doConversionTest() {
