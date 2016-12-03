@@ -1,0 +1,137 @@
+BEGIN OF TIME COMPARISON
+------------------------------------------------------------------
+------------------------------------------------------------------
+------------------------------------------------------------------
+
+Total of distinct words in Shakespeare's works: 23086
+
+Construction of tries for 1 repetitions:
+------------------------------------------------------------------
+Repetition 1:
+Total time for Hybrid Trie: 311.0 ms
+Total time for Balanced Hybrid Trie: 270.0 ms
+Total time for Patricia Trie: 496.0 ms
+Average times:
+Average time for Hybrid Trie: 311.0 ms
+Average time for Balanced Hybrid Trie: 270.0 ms
+Average time for Patricia Trie: 496.0 ms
+
+Looking for a set of existing words for 1 repetitions:
+------------------------------------------------------------------
+Words to find:
+[
+"fellies"
+"praised"
+"indrench"
+"toby"
+"mourner"
+"misgovern"
+"hot"
+"leaden"
+"canvass"
+"nephews"
+"malecontents"
+"instigated"
+"lambs"
+"sepulchre"
+"humidity"
+"shortness"
+"greatly"
+"statute"
+"mortal"
+"countenance"
+]
+
+Repetition 1:
+Searching time for Hybrid Trie: 0.0 ns
+Searching time for Balanced Hybrid Trie: 0.0 ns
+Searching time for Patricia Trie: 1000000.0 ns
+Average searching times:
+Average searching time for Hybrid Trie: 0.0 ns
+Average searching time for Balanced Hybrid Trie: 0.0 ns
+Average searching time for Patricia Trie: 1000000.0 ns
+
+Counting all existing words in the Trie for 1 repetitions:
+------------------------------------------------------------------
+Repetition 1:
+Counting operation time for Hybrid Trie: 5000000.0 ns
+Counting operation time for Balanced Hybrid Trie: 3000000.0 ns
+Counting operation time for Patricia Trie: 1.58E8 ns
+Average Counting operation times:
+Average counting operation time for Hybrid Trie: 5000000.0 ns
+Average counting operation time for Balanced Hybrid Trie: 3000000.0 ns
+Average counting operation time for Patricia Trie: 1.58E8 ns
+
+Counting prefixes for 1 repetitions:
+------------------------------------------------------------------
+Prefixes to count:
+[established, a, amor, amo, bishops, d, e, priz, inn, brisk, l, co, n, crafts, wi, undinted, ccessful, end, menda, li]
+
+Repetition 1:
+Counting prefix time for Hybrid Trie: 1000000.0 ns
+Counting prefix time for Balanced Hybrid Trie: 1000000.0 ns
+Counting prefix time for Patricia Trie: 2.4E7 ns
+Average counting prefix times:
+Average counting prefix time for Hybrid Trie: 1000000.0 ns
+Average counting prefix time for Balanced Hybrid Trie: 1000000.0 ns
+Average counting prefix time for Patricia Trie: 2.4E7 ns
+
+Insertion of unknown word "osahezrnthxshekdzsdfjdgefjhtnsh" for 1 repetitions:
+------------------------------------------------------------------
+Repetition 1:
+Insertion time for Hybrid Trie: 0.0 ns
+Insertion time for Balanced Hybrid Trie: 0.0 ns
+Insertion time for Patricia Trie: 0.0 ns
+Average insertion times:
+Average insertion time for Hybrid Trie: 0.0 ns
+Average insertion time for Balanced Hybrid Trie: 0.0 ns
+Average insertion time for Patricia Trie: 0.0 ns
+
+Removal of set of existing words for 1 repetitions:
+------------------------------------------------------------------
+Removed words:
+[
+"muffle"
+"added"
+"bermoothes"
+"delivered"
+"debility"
+"fangless"
+"magnanimous"
+"orphan"
+"shaping"
+"variation"
+"intention"
+"rumours"
+"neighing"
+"treats"
+"entreat"
+"diurnal"
+"restrained"
+"wildness"
+"merited"
+"cloth"
+]
+
+Repetition 1:
+Removal time for Hybrid Trie: 0.0 ns
+Removal time for Balanced Hybrid Trie: 0.0 ns
+Removal time for Patricia Trie: 2000000.0 ns
+Average removal times:
+Average removal time for Hybrid Trie: 0.0 ns
+Average removal time for Balanced Hybrid Trie: 0.0 ns
+Average removal time for Patricia Trie: 2000000.0 ns
+
+Insertions vs. Merge: Comparing the construction of a Patricia trie for 1 repetitions:
+------------------------------------------------------------------
+Repetition 1:
+Construction time for all words insertion: 230.0 ms
+Construction time for tries merge: 3084.0 ms
+Average construction times:
+Average construction time for all words insertion: 230.0 ms
+Average construction time for tries merge: 3084.0 ms
+
+------------------------------------------------------------------
+------------------------------------------------------------------
+------------------------------------------------------------------
+END OF TIME COMPARISON

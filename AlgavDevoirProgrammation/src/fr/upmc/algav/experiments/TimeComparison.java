@@ -39,7 +39,7 @@ public class TimeComparison {
     private static int numberOfFiles;    
 	private static Collection<String> shakespeareWords;	
 
-    private static final int REPETITIONS_PER_TEST = 1;
+    private static final int REPETITIONS_PER_TEST = 10;
 
     private static final String UNKNOWN_INSERTED_WORD = "osahezrnthxshekdzsdfjdgefjhtnsh";
 
@@ -54,13 +54,13 @@ public class TimeComparison {
         printTestBegin();
 
         doTrieConstructionTest();
-//        doSetOfWordsSearchTest();
-//        doCountAllWordsInTrieTest();
-//        doCountPrefixesTest();
-        doConversionTest();
-//        doUnknownWordInsertionTest();
-//        doSetOfWordsRemovalTest();
-//        doPatriciaConstructionsTest();
+        doSetOfWordsSearchTest();
+        doCountAllWordsInTrieTest();
+        doCountPrefixesTest();
+        //doConversionTest();
+        doUnknownWordInsertionTest();
+        doSetOfWordsRemovalTest();
+        doPatriciaConstructionsTest();
 
         printTestEnd();
     }
@@ -194,8 +194,8 @@ public class TimeComparison {
                             "Total time for Balanced Hybrid Trie: " + balancedHybridTrieConstructionTimes.get(i) + " ms\n" +
                             "Total time for Patricia Trie: " + patriciaTrieConstructionTimes.get(i) + " ms\n";
 
-//            System.out.println(times);
-//            writeToResultsFile(times);
+            System.out.println(times);
+            writeToResultsFile(times);
         }
 
         String aTimes =  "Average times:\n" +
@@ -278,8 +278,8 @@ public class TimeComparison {
                             "Insertion time for Balanced Hybrid Trie: " + balancedHybridTrieInsertionTimes.get(i) + " ns\n" +
                             "Insertion time for Patricia Trie: " + patriciaTrieInsertionTimes.get(i) + " ns\n";
 
-//            System.out.println(times);
-//            writeToResultsFile(times);
+            System.out.println(times);
+            writeToResultsFile(times);
         }
 
         String aTimes =  "Average insertion times:\n" +
@@ -349,8 +349,8 @@ public class TimeComparison {
 
         removedWordsCaption += "]\n\n";
 
-//        System.out.println(removedWordsCaption);
-//        writeToResultsFile(removedWordsCaption);
+        System.out.println(removedWordsCaption);
+        writeToResultsFile(removedWordsCaption);
 
 
         for (int i = 0; i < REPETITIONS_PER_TEST; i++) {
@@ -359,8 +359,8 @@ public class TimeComparison {
                             "Removal time for Balanced Hybrid Trie: " + balancedHybridTrieRemovalTimes.get(i) + " ns\n" +
                             "Removal time for Patricia Trie: " + patriciaTrieRemovalTimes.get(i) + " ns\n";
 
-//            System.out.println(times);
-//            writeToResultsFile(times);
+            System.out.println(times);
+            writeToResultsFile(times);
         }
 
         String aTimes =  "Average removal times:\n" +
@@ -455,8 +455,8 @@ public class TimeComparison {
 
         searchedWordsCaption += "]\n\n";
 
-//        System.out.println(searchedWordsCaption);
-//        writeToResultsFile(searchedWordsCaption);
+        System.out.println(searchedWordsCaption);
+        writeToResultsFile(searchedWordsCaption);
 
 
         for (int i = 0; i < REPETITIONS_PER_TEST; i++) {
@@ -465,8 +465,8 @@ public class TimeComparison {
                             "Searching time for Balanced Hybrid Trie: " + balancedHybridTrieSearchTimes.get(i) + " ns\n" +
                             "Searching time for Patricia Trie: " + patriciaTrieSearchTimes.get(i) + " ns\n";
 
-//            System.out.println(times);
-//            writeToResultsFile(times);
+            System.out.println(times);
+            writeToResultsFile(times);
         }
 
         String aTimes =  "Average searching times:\n" +
@@ -544,8 +544,8 @@ public class TimeComparison {
                             "Counting operation time for Balanced Hybrid Trie: " + balancedHybridTrieCountWordsTimes.get(i) + " ns\n" +
                             "Counting operation time for Patricia Trie: " + patriciaTrieCountWordsTimes.get(i) + " ns\n";
 
-//            System.out.println(times);
-//            writeToResultsFile(times);
+            System.out.println(times);
+            writeToResultsFile(times);
         }
 
         String aTimes =  "Average Counting operation times:\n" +
@@ -613,7 +613,7 @@ public class TimeComparison {
         PrefixesCaption += "\n\n";
 
         System.out.println(PrefixesCaption);
-//        writeToResultsFile(PrefixesCaption);
+        writeToResultsFile(PrefixesCaption);
 
 
         for (int i = 0; i < REPETITIONS_PER_TEST; i++) {
@@ -622,8 +622,8 @@ public class TimeComparison {
                             "Counting prefix time for Balanced Hybrid Trie: " + balancedHybridTrieCountPrefixTimes.get(i) + " ns\n" +
                             "Counting prefix time for Patricia Trie: " + patriciaTrieCountPrefixTimes.get(i) + " ns\n";
 
-//            System.out.println(times);
-//            writeToResultsFile(times);
+            System.out.println(times);
+            writeToResultsFile(times);
         }
 
         String aTimes =  "Average counting prefix times:\n" +
@@ -721,8 +721,8 @@ public class TimeComparison {
                             "Conversion time for Balanced Hybrid Trie: " + balancedHybridTrieConversionTimes.get(i) + " ns\n" +
                             "Conversion time for Patricia Trie: " + patriciaTrieConversionTimes.get(i) + " ns\n";
 
-//            System.out.println(times);
-//            writeToResultsFile(times);
+            System.out.println(times);
+            writeToResultsFile(times);
         }
 
         String aTimes =  "Average conversion times:\n" +
@@ -786,8 +786,8 @@ public class TimeComparison {
                     "Construction time for all words insertion: " + constructionByAllWordsInsertionTimes.get(i) + " ms\n" +
                     "Construction time for tries merge: " + constructionByMergeTimes.get(i) + " ms\n";
 
-//            System.out.println(times);
-//            writeToResultsFile(times);
+            System.out.println(times);
+            writeToResultsFile(times);
         }
 
         String aTimes =  "Average construction times:\n" +
