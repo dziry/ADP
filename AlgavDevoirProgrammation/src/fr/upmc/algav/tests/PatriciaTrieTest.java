@@ -1,8 +1,8 @@
 package fr.upmc.algav.tests;
 
-import fr.upmc.algav.hybridtries.IHybridTrie;
+import fr.upmc.algav.interfaces.IHybridTrie;
 import fr.upmc.algav.patriciatries.Alphabet;
-import fr.upmc.algav.patriciatries.IPatriciaTrie;
+import fr.upmc.algav.interfaces.IPatriciaTrie;
 import fr.upmc.algav.patriciatries.PatriciaTrie;
 import fr.upmc.algav.tools.GraphReader;
 import org.junit.After;
@@ -332,15 +332,11 @@ public class PatriciaTrieTest extends AbstractTrieTest {
 	@Test
 	public final void runNominalTestPrint_baseExample() {
         PatriciaTrie alternateTrie = new PatriciaTrie(new Alphabet());
-        String path = null;
-        
-        if (isRunningFromIntelliJ()) {
-        	// InteliJ IDE
-        	path = "AlgavDevoirProgrammation/files/basicExample.txt";
-        } else {
-        	// Eclipse IDE
-        	path = "files/basicExample.txt";
-        } 
+
+		// Eclipe IDE
+		String path = "files/basicExample.txt";
+		// InteliJ IDE
+		//String path = "AlgavDevoirProgrammation/files/basicExample.txt";
         
         GraphReader graphReader = new GraphReader(path);
         
@@ -348,11 +344,6 @@ public class PatriciaTrieTest extends AbstractTrieTest {
         alternateTrie.print("patricia_trie_basic_example.dot");
 	}
 	
-	private static boolean isRunningFromIntelliJ() {
-	    String classPath = System.getProperty("java.class.path");
-	    return classPath.contains("IntelliJ IDEA");
-	}
-
 	@Test
 	public final void runNominalTestMerge() {
 		PatriciaTrie otherTrie = new PatriciaTrie(new Alphabet());

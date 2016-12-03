@@ -6,8 +6,9 @@ import java.util.PrimitiveIterator.OfInt;
 import java.util.concurrent.ThreadLocalRandom;
 
 import fr.upmc.algav.errors.HybridTrieError;
+import fr.upmc.algav.interfaces.IHybridTrie;
 import fr.upmc.algav.patriciatries.Alphabet;
-import fr.upmc.algav.patriciatries.IPatriciaTrie;
+import fr.upmc.algav.interfaces.IPatriciaTrie;
 import fr.upmc.algav.patriciatries.PatriciaTrie;
 import fr.upmc.algav.tools.Color;
 import fr.upmc.algav.tools.GraphPrinter;

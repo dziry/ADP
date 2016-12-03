@@ -4,7 +4,8 @@ import java.util.*;
 
 import fr.upmc.algav.hybridtries.HybridTrie;
 import fr.upmc.algav.hybridtries.HybridTrieNode;
-import fr.upmc.algav.hybridtries.IHybridTrie;
+import fr.upmc.algav.interfaces.IHybridTrie;
+import fr.upmc.algav.interfaces.IPatriciaTrie;
 import fr.upmc.algav.patriciatries.helper.AlphabetHelper;
 import fr.upmc.algav.patriciatries.helper.PatriciaTrieHelper;
 import fr.upmc.algav.tools.GraphPrinter;

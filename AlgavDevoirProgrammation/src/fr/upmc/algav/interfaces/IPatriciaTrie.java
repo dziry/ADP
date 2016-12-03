@@ -1,7 +1,6 @@
-package fr.upmc.algav.patriciatries;
+package fr.upmc.algav.interfaces;
 
-import fr.upmc.algav.hybridtries.IHybridTrie;
-import fr.upmc.algav.interfaces.ITrie;
+import fr.upmc.algav.patriciatries.PatriciaTrieNode;
 
 public interface IPatriciaTrie extends ITrie {
 

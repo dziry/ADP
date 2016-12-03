@@ -16,7 +16,7 @@ import java.util.stream.Stream;
 
 import fr.upmc.algav.hybridtries.HybridTrie;
 import fr.upmc.algav.patriciatries.Alphabet;
-import fr.upmc.algav.patriciatries.IPatriciaTrie;
+import fr.upmc.algav.interfaces.IPatriciaTrie;
 import fr.upmc.algav.patriciatries.PatriciaTrie;
 import fr.upmc.algav.tools.GraphReader;
 

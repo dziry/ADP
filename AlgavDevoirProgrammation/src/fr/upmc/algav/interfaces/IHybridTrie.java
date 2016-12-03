@@ -1,10 +1,6 @@
-package fr.upmc.algav.hybridtries;
+package fr.upmc.algav.interfaces;
 
-import java.util.ArrayList;
 import java.util.Collection;
-
-import fr.upmc.algav.interfaces.ITrie;
-import fr.upmc.algav.patriciatries.IPatriciaTrie;
 
 public interface IHybridTrie extends ITrie {
 
