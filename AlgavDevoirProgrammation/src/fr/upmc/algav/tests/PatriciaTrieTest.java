@@ -328,14 +328,29 @@ public class PatriciaTrieTest extends AbstractTrieTest {
 	public final void runNominalTestPrint() {
 		patriciaTrie.print("patricia_test_print.dot");
 	}
-
+	
 	@Test
 	public final void runNominalTestPrint_baseExample() {
         PatriciaTrie alternateTrie = new PatriciaTrie(new Alphabet());
-        GraphReader graphReader = new GraphReader("AlgavDevoirProgrammation/files/basicExample.txt");
-
+        String path = null;
+        
+        if (isRunningFromIntelliJ()) {
+        	// InteliJ IDE
+        	path = "AlgavDevoirProgrammation/files/basicExample.txt";
+        } else {
+        	// Eclipse IDE
+        	path = "files/basicExample.txt";
+        } 
+        
+        GraphReader graphReader = new GraphReader(path);
+        
         alternateTrie.insert(graphReader.read());
         alternateTrie.print("patricia_trie_basic_example.dot");
+	}
+	
+	private static boolean isRunningFromIntelliJ() {
+	    String classPath = System.getProperty("java.class.path");
+	    return classPath.contains("IntelliJ IDEA");
 	}
 
 	@Test
