@@ -81,6 +81,11 @@ public class HybridTrie implements IHybridTrie {
 	}
 
 	@Override
+	public int getNodeCount() {
+		return 0;
+	}
+
+	@Override
 	public boolean search(String word) {
 		if (word == null || word.isEmpty()) {
 			throw new HybridTrieError("Searching word: word should not be null or empty!");

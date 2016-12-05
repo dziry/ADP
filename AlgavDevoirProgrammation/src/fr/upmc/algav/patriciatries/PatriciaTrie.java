@@ -128,8 +128,33 @@ public class PatriciaTrie implements IPatriciaTrie {
         this.patriciaTrieNodeManager = new PatriciaTrieNodeManager();
         this.rootNode = new PatriciaTrieNode(patriciaTrieNodeManager.generateNewNodeId(), usedAlphabet.getNodeArity(), true);
 	}
-	
-	@Override
+
+    @Override
+    public int getNodeCount() {
+        return getNodeCountForNode(rootNode);
+    }
+
+    private int getNodeCountForNode(PatriciaTrieNode currentNode) {
+        // Count the current node itself
+        int count = 1;
+
+        if (!currentNode.isLeaf()) {
+            // If we're not visiting a leaf, we have to visit also all possible children.
+            ArrayList<String> edgeValues = currentNode.getAllEdgeValues();
+            ArrayList<PatriciaTrieNode> childNodes = currentNode.getAllChildNodes();
+
+            for (int i = 0; i < currentNode.getNodeArity(); i++) {
+                if (edgeValues.get(i) != null && childNodes.get(i) != null) {
+                    // We have a null pointer
+                    count += getNodeCountForNode(childNodes.get(i));
+                }
+            }
+        }
+
+        return count;
+    }
+
+    @Override
 	public boolean search(String word) {
         boolean hasBeenFound = false;
 

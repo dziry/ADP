@@ -10,6 +10,7 @@ public interface ITrie {
 	void insert(String word);
 	void insert(Collection<String> words);
 	void removeAll();
+	int getNodeCount();
 	
 	// Advanced functions
 	boolean search(String word);

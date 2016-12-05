@@ -30,6 +30,9 @@ public class PatriciaTrieTest extends AbstractTrieTest {
 	private static final String PREFIX_PARTLY_IN_TREE_OVER_EDGES = "ROM";
 	private static final String PREFIX_PARTLY_IN_TREE_ONE_EDGE = "ULUS";
 
+    private static final int NODE_COUNT_FULL_TRIE = 18;
+    private static final int NODE_COUNT_EMPTY_TRIE = 1;
+
     private static final String PREFIX_COUNT_FOR_SEVERAL = "ROM";
     private static final int PREFIX_COUNT_FOR_SEVERAL_COUNT = 4;
     private static final String PREFIX_COUNT_WITH_RESULT_ONLY = "RUB";
@@ -130,6 +133,17 @@ public class PatriciaTrieTest extends AbstractTrieTest {
 		assertFalse(patriciaTrie.search(NEW_INSERTED_WORD));
 		patriciaTrie.insert(NEW_INSERTED_WORD);
 		assertTrue(patriciaTrie.search(NEW_INSERTED_WORD));
+	}
+
+	@Test
+	public void getNodeCount_fullTrie() {
+		assertEquals(NODE_COUNT_FULL_TRIE, patriciaTrie.getNodeCount());
+	}
+
+	@Test
+	public void getNodeCount_emptyTrie() {
+        patriciaTrie.removeAll();
+        assertEquals(NODE_COUNT_EMPTY_TRIE, patriciaTrie.getNodeCount());
 	}
 
 	@Test
