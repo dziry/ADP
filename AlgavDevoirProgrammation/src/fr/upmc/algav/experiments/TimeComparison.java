@@ -28,9 +28,9 @@ public class TimeComparison {
     //private final static String DIRECTORY_PATH = "AlgavDevoirProgrammation/files/Shakespeare";
 
     // Eclipse IDE
-    private final static String RESULTS_PATH = "results/results.txt";
+    private final static String RESULTS_PATH = "results/time-results.txt";
     // IntelliJ IDE
-    //private final static String RESULTS_PATH = "AlgavDevoirProgrammation/results/results.txt";
+    //private final static String RESULTS_PATH = "AlgavDevoirProgrammation/results/time-results.txt";
     private final static String RESULTS_ENCODING = "utf-8";
 
     private static final String SEPARATOR_LINE = "------------------------------------------------------------------";
@@ -40,16 +40,14 @@ public class TimeComparison {
 	private static Collection<String> shakespeareWords;	
 
     private static final int REPETITIONS_PER_TEST = 10;
+    private static final int NUMBER_OF_WORDS_SEARCH_REMOVE_PREFIX = 400;
 
     private static final String UNKNOWN_INSERTED_WORD = "osahezrnthxshekdzsdfjdgefjhtnsh";
-
-    private static final int NUMBER_OF_WORDS_TO_REMOVE_SEARCH_PREFIX = 20;
-
 
 	public static void main(String[] args) {
         initWriter();
         // true to accept duplicated words, false else
-        initWordsSet(false);
+        initWordsSet(true);
 
         printTestBegin();
 
@@ -57,7 +55,6 @@ public class TimeComparison {
         doSetOfWordsSearchTest();
         doCountAllWordsInTrieTest();
         doCountPrefixesTest();
-        //doConversionTest();
         doUnknownWordInsertionTest();
         doSetOfWordsRemovalTest();
         doPatriciaConstructionsTest();
@@ -111,7 +108,7 @@ public class TimeComparison {
         writeToResultsFile(begin);
 
 
-        String totalOfWords = "Total of distinct words in Shakespeare's works: " + shakespeareWords.size() + "\n\n";
+        String totalOfWords = "Total of words in Shakespeare's works: " + shakespeareWords.size() + "\n\n";
 
         System.out.println(totalOfWords);
         writeToResultsFile(totalOfWords);
@@ -377,7 +374,7 @@ public class TimeComparison {
 
         ArrayList<String> existingWords = new ArrayList<>(shakespeareWords);
 
-        while (res.size() < NUMBER_OF_WORDS_TO_REMOVE_SEARCH_PREFIX) {
+        while (res.size() < NUMBER_OF_WORDS_SEARCH_REMOVE_PREFIX) {
             int randomWordIndex = ThreadLocalRandom.current().nextInt(0, existingWords.size());
             res.add(existingWords.get(randomWordIndex));
         }
@@ -639,7 +636,7 @@ public class TimeComparison {
 		ArrayList<String> existingWords = new ArrayList<>(shakespeareWords);
 		HashSet<String> result = new HashSet<>();
 		
-		while (result.size() < NUMBER_OF_WORDS_TO_REMOVE_SEARCH_PREFIX) {
+		while (result.size() < NUMBER_OF_WORDS_SEARCH_REMOVE_PREFIX) {
 			int randomWordIndex = ThreadLocalRandom.current().nextInt(0, existingWords.size());
 			String randomWord = existingWords.get(randomWordIndex);
 			
@@ -694,75 +691,7 @@ public class TimeComparison {
 
         return (double) Duration.between(start, end).toMillis();
     }
-    
-    private static void doConversionTest() {
-        ArrayList<Double> hybridTrieConversionTimes = new ArrayList<>();
-        ArrayList<Double> balancedHybridTrieConversionTimes = new ArrayList<>();
-        ArrayList<Double> patriciaTrieConversionTimes = new ArrayList<>();
 
-        for (int i = 0; i < REPETITIONS_PER_TEST; i++) {
-            double hybridTrieDuration = getDurationForConversion(TrieType.HYBRID);
-            double balancedHybridTrieDuration = getDurationForConversion(TrieType.BALANCED_HYBRID);
-            double patriciaTrieDuration = getDurationForConversion(TrieType.PATRICIA);
-
-            hybridTrieConversionTimes.add(hybridTrieDuration);
-            balancedHybridTrieConversionTimes.add(balancedHybridTrieDuration);
-            patriciaTrieConversionTimes.add(patriciaTrieDuration);
-        }
-
-        String heading = "\nConversion for " + REPETITIONS_PER_TEST + " repetitions:\n" +
-                         SEPARATOR_LINE + "\n";
-        System.out.println(heading);
-        writeToResultsFile(heading);
-
-        for (int i = 0; i < REPETITIONS_PER_TEST; i++) {
-            String times =  "Repetition " + (i + 1) + ":\n" +
-                            "Conversion time for Hybrid Trie: " + hybridTrieConversionTimes.get(i) + " ns\n" +
-                            "Conversion time for Balanced Hybrid Trie: " + balancedHybridTrieConversionTimes.get(i) + " ns\n" +
-                            "Conversion time for Patricia Trie: " + patriciaTrieConversionTimes.get(i) + " ns\n";
-
-            System.out.println(times);
-            writeToResultsFile(times);
-        }
-
-        String aTimes =  "Average conversion times:\n" +
-                "Average conversion time for Hybrid Trie: " + calculateAverageForSeveralResults(hybridTrieConversionTimes) + " ns\n" +
-                "Average conversion time for Balanced Hybrid Trie: " + calculateAverageForSeveralResults(balancedHybridTrieConversionTimes) + " ns\n" +
-                "Average conversion time for Patricia Trie: " + calculateAverageForSeveralResults(patriciaTrieConversionTimes) + " ns\n";
-
-        System.out.println(aTimes);
-        writeToResultsFile(aTimes);
-    }
-    
-    private static double getDurationForConversion(TrieType type) {
-        Instant start = null;
-        Instant end = null;
-
-        if (type == TrieType.BALANCED_HYBRID) {
-            final HybridTrie balancedHTrie = createNewAlreadyConstructedBalancedHybridTrie();
-
-            start = Instant.now();
-            balancedHTrie.toPatriciaTrie();
-            end = Instant.now();
-            
-        } else if (type == TrieType.HYBRID) {
-            final HybridTrie hTrie = createNewAlreadyConstructedHybridTrie();
-
-            start = Instant.now();
-            hTrie.toPatriciaTrie();
-            end = Instant.now();
-            
-        } else {
-            final PatriciaTrie pTrie = createNewAlreadyConstructedPatriciaTrie();
-
-            start = Instant.now();
-            pTrie.toHybridTrie();
-            end = Instant.now();
-        }
-
-        return (double) Duration.between(start, end).toNanos();
-    }
-    
     private static void doPatriciaConstructionsTest() {
         ArrayList<Double> constructionByAllWordsInsertionTimes = new ArrayList<>();
         ArrayList<Double> constructionByMergeTimes = new ArrayList<>();

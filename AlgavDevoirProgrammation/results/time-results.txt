@@ -1,0 +1,1140 @@
+BEGIN OF TIME COMPARISON
+------------------------------------------------------------------
+------------------------------------------------------------------
+------------------------------------------------------------------
+
+Total of words in Shakespeare's works: 905534
+
+Construction of tries for 10 repetitions:
+------------------------------------------------------------------
+Repetition 1:
+Total time for Hybrid Trie: 787.0 ms
+Total time for Balanced Hybrid Trie: 1149.0 ms
+Total time for Patricia Trie: 6945.0 ms
+Repetition 2:
+Total time for Hybrid Trie: 295.0 ms
+Total time for Balanced Hybrid Trie: 526.0 ms
+Total time for Patricia Trie: 6596.0 ms
+Repetition 3:
+Total time for Hybrid Trie: 293.0 ms
+Total time for Balanced Hybrid Trie: 470.0 ms
+Total time for Patricia Trie: 7309.0 ms
+Repetition 4:
+Total time for Hybrid Trie: 343.0 ms
+Total time for Balanced Hybrid Trie: 639.0 ms
+Total time for Patricia Trie: 6654.0 ms
+Repetition 5:
+Total time for Hybrid Trie: 339.0 ms
+Total time for Balanced Hybrid Trie: 509.0 ms
+Total time for Patricia Trie: 6708.0 ms
+Repetition 6:
+Total time for Hybrid Trie: 331.0 ms
+Total time for Balanced Hybrid Trie: 600.0 ms
+Total time for Patricia Trie: 6422.0 ms
+Repetition 7:
+Total time for Hybrid Trie: 293.0 ms
+Total time for Balanced Hybrid Trie: 459.0 ms
+Total time for Patricia Trie: 6747.0 ms
+Repetition 8:
+Total time for Hybrid Trie: 298.0 ms
+Total time for Balanced Hybrid Trie: 572.0 ms
+Total time for Patricia Trie: 6416.0 ms
+Repetition 9:
+Total time for Hybrid Trie: 310.0 ms
+Total time for Balanced Hybrid Trie: 515.0 ms
+Total time for Patricia Trie: 6602.0 ms
+Repetition 10:
+Total time for Hybrid Trie: 298.0 ms
+Total time for Balanced Hybrid Trie: 473.0 ms
+Total time for Patricia Trie: 6647.0 ms
+Average times:
+Average time for Hybrid Trie: 358.7 ms
+Average time for Balanced Hybrid Trie: 591.2 ms
+Average time for Patricia Trie: 6704.6 ms
+
+Looking for a set of existing words for 10 repetitions:
+------------------------------------------------------------------
+Words to find:
+[
+"been"
+"hands"
+"bad"
+"meed"
+"your"
+"beasts"
+"setting"
+"doth"
+"twins"
+"would"
+"poor"
+"legs"
+"[to"
+"you"
+"knowledge"
+"pass"
+"possess"
+"am"
+"an"
+"as"
+"entreat"
+"stop"
+"ay"
+"much"
+"ferdinand"
+"tamora"
+"be"
+"menenius"
+"how"
+"see"
+"by"
+"whom"
+"dear"
+"hand"
+"a"
+"set"
+"d"
+"words"
+"i"
+"rowland"
+"laertes"
+"neck"
+"o"
+"the"
+"battle"
+"inverness"
+"straight"
+"s"
+"meet"
+"t"
+"answer"
+"shallow"
+"under"
+"spit"
+"god"
+"spider"
+"bed"
+"die"
+"thy"
+"beg"
+"sometimes"
+"questions"
+"robbers"
+"do"
+"good"
+"down"
+"discords"
+"leave"
+"woo"
+"laugh"
+"tis"
+"richard"
+"which"
+"count"
+"beset"
+"consent"
+"strange"
+"lack"
+"take"
+"fenton"
+"blame"
+"necessity"
+"little"
+"hark"
+"harm"
+"rather"
+"for"
+"methinks"
+"sheets"
+"sin"
+"trouble"
+"sir"
+"live"
+"prince"
+"bound"
+"rich"
+"praise"
+"home"
+"with"
+"tame"
+"antony"
+"well"
+"bid"
+"he"
+"plantagenet"
+"agony"
+"sons"
+"rim"
+"goodly"
+"write"
+"if"
+"hath"
+"fear"
+"in"
+"made"
+"nothing"
+"is"
+"hast"
+"it"
+"iv"
+"winchester"
+"somebody"
+"captains"
+"exit"
+"juliet"
+"bringing"
+"spot"
+"gave"
+"aid"
+"blessing"
+"queen"
+"too"
+"grudge"
+"have"
+"lineal"
+"man"
+"stand"
+"knows"
+"hastings"
+"may"
+"within"
+"loves"
+"spirit"
+"indirectly"
+"bardolph"
+"off"
+"picture"
+"witch"
+"ll"
+"ipse"
+"inheritance"
+"manner"
+"pray"
+"trial"
+"second"
+"that"
+"find"
+"than"
+"me"
+"dissolutions"
+"took"
+"terror"
+"pardon"
+"less"
+"sort"
+"my"
+"fill"
+"steps"
+"friends"
+"heart"
+"senator"
+"army"
+"martial"
+"regan"
+"bob"
+"were"
+"flaws"
+"true"
+"mock"
+"since"
+"no"
+"behind"
+"twas"
+"prisoner"
+"best"
+"cassius"
+"head"
+"and"
+"of"
+"kindred"
+"ills"
+"hear"
+"heard"
+"on"
+"keech"
+"or"
+"wring"
+"enobarbus]"
+"any"
+"master"
+"doctor"
+"ladder"
+"quarrel"
+"spokes"
+"walk"
+"dull"
+"thought"
+"scene"
+"let"
+"welcome"
+"they"
+"height"
+"thee"
+"old"
+"want"
+"spirits"
+"them"
+"then"
+"athens"
+"ducats"
+"horse"
+"himself"
+"buckingham"
+"letter"
+"must"
+"device"
+"cut"
+"melting"
+"two"
+"long"
+"into"
+"does"
+"grace"
+"came"
+"so"
+"st"
+"think"
+"surplus"
+"one"
+"desires"
+"makes"
+"ta"
+"people"
+"single"
+"such"
+"paulina"
+"livery"
+"to"
+"thing"
+"thine"
+"but"
+"surely"
+"jove"
+"forced"
+"officer"
+"anointed"
+"tedious"
+"had"
+"confine"
+"exeunt"
+"wishes"
+"last"
+"town"
+"beard"
+"might"
+"this"
+"wont"
+"warwick"
+"girl"
+"look"
+"pined"
+"scar"
+"valiant"
+"slept"
+"name"
+"know"
+"page"
+"fields"
+"full"
+"next"
+"unlawful"
+"parapets"
+"lord"
+"father"
+"prophesy"
+"cold"
+"augmented"
+"life"
+"we"
+"nor"
+"topas"
+"not"
+"gloves"
+"now"
+"virtue"
+"news"
+"unto"
+"junius"
+"was"
+"macbeth"
+"yet"
+"war"
+"indeed"
+"bona"
+"unvulnerable"
+"what"
+"time"
+"gentleman"
+"expressure"
+"whole"
+"lyingest"
+"when"
+"fain"
+"cleopatra"
+"her"
+"road"
+"far"
+"dreadful"
+"enter"
+"give"
+"flowers"
+"having"
+"waits"
+"lives"
+"cadwal"
+"purr"
+"masterdom"
+"word"
+"care"
+"bastard"
+"love"
+"tongue"
+"our"
+"out"
+"fall"
+"get"
+"eat"
+"dare"
+"means"
+"bawd"
+"multitude"
+"more"
+"thou"
+"polydote"
+"riotous"
+"fellow"
+"cannot"
+"catesby"
+"certain"
+"gloucester"
+"door"
+"seduced"
+"villain"
+"luck"
+"before"
+"prepared"
+"own"
+"husband"
+"him"
+"his"
+"chamber"
+"should"
+"bear"
+"majesty"
+"king"
+"borne"
+"falstaff"
+"like"
+"tree"
+"earthquake"
+"both"
+"square"
+"andronicus"
+"send"
+"bosom"
+"who"
+"here"
+"wondrous"
+"death"
+"their"
+"winter"
+"forbid"
+"died"
+"can"
+"mistook"
+"hair"
+"heartily"
+"wit"
+"revenge"
+"will"
+"spent"
+"say"
+"enough"
+"claudio"
+"increase"
+"betimes"
+"creeping"
+"york"
+"further"
+"wild"
+]
+
+Repetition 1:
+Searching time for Hybrid Trie: 1000000.0 ns
+Searching time for Balanced Hybrid Trie: 1000000.0 ns
+Searching time for Patricia Trie: 4000000.0 ns
+Repetition 2:
+Searching time for Hybrid Trie: 1000000.0 ns
+Searching time for Balanced Hybrid Trie: 0.0 ns
+Searching time for Patricia Trie: 4000000.0 ns
+Repetition 3:
+Searching time for Hybrid Trie: 0.0 ns
+Searching time for Balanced Hybrid Trie: 0.0 ns
+Searching time for Patricia Trie: 5000000.0 ns
+Repetition 4:
+Searching time for Hybrid Trie: 0.0 ns
+Searching time for Balanced Hybrid Trie: 0.0 ns
+Searching time for Patricia Trie: 3000000.0 ns
+Repetition 5:
+Searching time for Hybrid Trie: 0.0 ns
+Searching time for Balanced Hybrid Trie: 1000000.0 ns
+Searching time for Patricia Trie: 3000000.0 ns
+Repetition 6:
+Searching time for Hybrid Trie: 0.0 ns
+Searching time for Balanced Hybrid Trie: 1000000.0 ns
+Searching time for Patricia Trie: 3000000.0 ns
+Repetition 7:
+Searching time for Hybrid Trie: 0.0 ns
+Searching time for Balanced Hybrid Trie: 0.0 ns
+Searching time for Patricia Trie: 5000000.0 ns
+Repetition 8:
+Searching time for Hybrid Trie: 0.0 ns
+Searching time for Balanced Hybrid Trie: 0.0 ns
+Searching time for Patricia Trie: 3000000.0 ns
+Repetition 9:
+Searching time for Hybrid Trie: 0.0 ns
+Searching time for Balanced Hybrid Trie: 0.0 ns
+Searching time for Patricia Trie: 3000000.0 ns
+Repetition 10:
+Searching time for Hybrid Trie: 0.0 ns
+Searching time for Balanced Hybrid Trie: 0.0 ns
+Searching time for Patricia Trie: 5000000.0 ns
+Average searching times:
+Average searching time for Hybrid Trie: 200000.0 ns
+Average searching time for Balanced Hybrid Trie: 300000.0 ns
+Average searching time for Patricia Trie: 3800000.0 ns
+
+Counting all existing words in the Trie for 10 repetitions:
+------------------------------------------------------------------
+Repetition 1:
+Counting operation time for Hybrid Trie: 6.0 ms
+Counting operation time for Balanced Hybrid Trie: 2.0 ms
+Counting operation time for Patricia Trie: 143.0 ms
+Repetition 2:
+Counting operation time for Hybrid Trie: 3.0 ms
+Counting operation time for Balanced Hybrid Trie: 3.0 ms
+Counting operation time for Patricia Trie: 83.0 ms
+Repetition 3:
+Counting operation time for Hybrid Trie: 3.0 ms
+Counting operation time for Balanced Hybrid Trie: 2.0 ms
+Counting operation time for Patricia Trie: 28.0 ms
+Repetition 4:
+Counting operation time for Hybrid Trie: 3.0 ms
+Counting operation time for Balanced Hybrid Trie: 3.0 ms
+Counting operation time for Patricia Trie: 33.0 ms
+Repetition 5:
+Counting operation time for Hybrid Trie: 4.0 ms
+Counting operation time for Balanced Hybrid Trie: 2.0 ms
+Counting operation time for Patricia Trie: 27.0 ms
+Repetition 6:
+Counting operation time for Hybrid Trie: 5.0 ms
+Counting operation time for Balanced Hybrid Trie: 4.0 ms
+Counting operation time for Patricia Trie: 29.0 ms
+Repetition 7:
+Counting operation time for Hybrid Trie: 4.0 ms
+Counting operation time for Balanced Hybrid Trie: 4.0 ms
+Counting operation time for Patricia Trie: 28.0 ms
+Repetition 8:
+Counting operation time for Hybrid Trie: 4.0 ms
+Counting operation time for Balanced Hybrid Trie: 4.0 ms
+Counting operation time for Patricia Trie: 29.0 ms
+Repetition 9:
+Counting operation time for Hybrid Trie: 4.0 ms
+Counting operation time for Balanced Hybrid Trie: 4.0 ms
+Counting operation time for Patricia Trie: 27.0 ms
+Repetition 10:
+Counting operation time for Hybrid Trie: 3.0 ms
+Counting operation time for Balanced Hybrid Trie: 4.0 ms
+Counting operation time for Patricia Trie: 27.0 ms
+Average Counting operation times:
+Average counting operation time for Hybrid Trie: 3.9 ms
+Average counting operation time for Balanced Hybrid Trie: 3.2 ms
+Average counting operation time for Patricia Trie: 45.4 ms
+
+Counting prefixes for 10 repetitions:
+------------------------------------------------------------------
+Prefixes to count:
+[dost, almanac, your, kiss, yout, without, doth, these, poor, near, you, viola, eate, ad, past, ah, ai, al, am, cours, an, ar, as, at, left, wink, ay, much, wine, ba, strong, deal, be, unaccustom, hasten, iqu, abuses, hos, sea, how, bu, by, ca, policy, a, b, c, d, e, f, g, namely, subjects, h, i, k, co, l, m, n, o, cr, the, p, r, s, t, thi, u, v, w, sherif, y, imag, god, freely, did, thr, bed, cimber, thy, do, sworn, good, tia, dr, wise, brings, morrow, ea, reo, ec, ed, which, par, ade, amend, el, en, sha, er, take, onst, trust, fi, for, fo, back, overtake, vol, ga, end, hard, just, prince, over, gh, ent, und, better, with, henry, there, baby, antony, ha, well, he, begot, age, hi, ho, agamemnon, else, if, hath, crown, il, went, in, made, ir, is, it, iv, redeliver, heaven, ever, gave, john, pageants, become, other, fathers, indee, queen, uncle, matter, conserves, world, have, speak, wail, ke, eri, mar, knows, kl, side, may, drugs, off, urs, le, com, ll, lo, duke, ls, lt, pray, that, high, revenue, than, host, me, quite, las, all, lest, my, friends, shalt, nc, were, true, noble, no, nt, bow, boy, ron, and, oe, of, men, oi, saying, ol, syracuse, hear, ank, on, oo, or, ou, blunt, ov, ow, ple, ille, followed, cousin, any, drew, pe, uarr, pr, metriu, marry, tun, soldiership, nio, english, friend, state, sta, ste, pleasure, night, them, gertrude, thel, rro, himself, re, ro, rt, appi, urselve, sun, sa, seen, sb, into, se, evans, silv, are, bucki, nought, quene, grace, where, so, escape, sp, st, esteem, though, sw, rth, closet, many, ta, beloved, confirm, te, th, to, but, attend, lie, treacherous, oos, hal, ath, overspr, ul, un, up, has, rva, five, those, pra, ut, nna, perish, this, camp, thin, ve, vi, name, fixed, sinc, allow, appliance, nod, befall, lord, show, ruffian, banish, wa, house, we, life, xtrem, ntur, nor, wh, malicious, not, wi, now, sickened, elizabeth, riss, conquer, lli, was, yet, indeed, nhuma, xi, what, clifton, hea, igh, fair, oth, come, matc, love, messe, iii, oun, loo, ourselves, out, madam, ways, web, wee, ear, dark, place, bawd, cook, more, thou, aught, songs, lastly, devour, runs, before, bonds, him, his, shows, should, from, day, rogue, like, moth, king, borne, bottom, esse, keep, whi, here, eec, purpose, why, mus, aufidius, stead, rlan, paper, uish, will, theseus, proclai, iump]
+
+Repetition 1:
+Counting prefix time for Hybrid Trie: 6.0 ms
+Counting prefix time for Balanced Hybrid Trie: 6.0 ms
+Counting prefix time for Patricia Trie: 121.0 ms
+Repetition 2:
+Counting prefix time for Hybrid Trie: 8.0 ms
+Counting prefix time for Balanced Hybrid Trie: 8.0 ms
+Counting prefix time for Patricia Trie: 43.0 ms
+Repetition 3:
+Counting prefix time for Hybrid Trie: 6.0 ms
+Counting prefix time for Balanced Hybrid Trie: 5.0 ms
+Counting prefix time for Patricia Trie: 51.0 ms
+Repetition 4:
+Counting prefix time for Hybrid Trie: 6.0 ms
+Counting prefix time for Balanced Hybrid Trie: 6.0 ms
+Counting prefix time for Patricia Trie: 44.0 ms
+Repetition 5:
+Counting prefix time for Hybrid Trie: 6.0 ms
+Counting prefix time for Balanced Hybrid Trie: 5.0 ms
+Counting prefix time for Patricia Trie: 52.0 ms
+Repetition 6:
+Counting prefix time for Hybrid Trie: 6.0 ms
+Counting prefix time for Balanced Hybrid Trie: 6.0 ms
+Counting prefix time for Patricia Trie: 43.0 ms
+Repetition 7:
+Counting prefix time for Hybrid Trie: 5.0 ms
+Counting prefix time for Balanced Hybrid Trie: 5.0 ms
+Counting prefix time for Patricia Trie: 44.0 ms
+Repetition 8:
+Counting prefix time for Hybrid Trie: 6.0 ms
+Counting prefix time for Balanced Hybrid Trie: 5.0 ms
+Counting prefix time for Patricia Trie: 50.0 ms
+Repetition 9:
+Counting prefix time for Hybrid Trie: 5.0 ms
+Counting prefix time for Balanced Hybrid Trie: 7.0 ms
+Counting prefix time for Patricia Trie: 63.0 ms
+Repetition 10:
+Counting prefix time for Hybrid Trie: 5.0 ms
+Counting prefix time for Balanced Hybrid Trie: 5.0 ms
+Counting prefix time for Patricia Trie: 42.0 ms
+Average counting prefix times:
+Average counting prefix time for Hybrid Trie: 5.9 ms
+Average counting prefix time for Balanced Hybrid Trie: 5.8 ms
+Average counting prefix time for Patricia Trie: 55.3 ms
+
+Insertion of unknown word "osahezrnthxshekdzsdfjdgefjhtnsh" for 10 repetitions:
+------------------------------------------------------------------
+Repetition 1:
+Insertion time for Hybrid Trie: 0.0 ns
+Insertion time for Balanced Hybrid Trie: 0.0 ns
+Insertion time for Patricia Trie: 0.0 ns
+Repetition 2:
+Insertion time for Hybrid Trie: 0.0 ns
+Insertion time for Balanced Hybrid Trie: 0.0 ns
+Insertion time for Patricia Trie: 0.0 ns
+Repetition 3:
+Insertion time for Hybrid Trie: 0.0 ns
+Insertion time for Balanced Hybrid Trie: 0.0 ns
+Insertion time for Patricia Trie: 0.0 ns
+Repetition 4:
+Insertion time for Hybrid Trie: 0.0 ns
+Insertion time for Balanced Hybrid Trie: 0.0 ns
+Insertion time for Patricia Trie: 0.0 ns
+Repetition 5:
+Insertion time for Hybrid Trie: 0.0 ns
+Insertion time for Balanced Hybrid Trie: 0.0 ns
+Insertion time for Patricia Trie: 0.0 ns
+Repetition 6:
+Insertion time for Hybrid Trie: 1000000.0 ns
+Insertion time for Balanced Hybrid Trie: 0.0 ns
+Insertion time for Patricia Trie: 0.0 ns
+Repetition 7:
+Insertion time for Hybrid Trie: 0.0 ns
+Insertion time for Balanced Hybrid Trie: 0.0 ns
+Insertion time for Patricia Trie: 0.0 ns
+Repetition 8:
+Insertion time for Hybrid Trie: 0.0 ns
+Insertion time for Balanced Hybrid Trie: 0.0 ns
+Insertion time for Patricia Trie: 0.0 ns
+Repetition 9:
+Insertion time for Hybrid Trie: 1000000.0 ns
+Insertion time for Balanced Hybrid Trie: 1000000.0 ns
+Insertion time for Patricia Trie: 0.0 ns
+Repetition 10:
+Insertion time for Hybrid Trie: 0.0 ns
+Insertion time for Balanced Hybrid Trie: 0.0 ns
+Insertion time for Patricia Trie: 0.0 ns
+Average insertion times:
+Average insertion time for Hybrid Trie: 200000.0 ns
+Average insertion time for Balanced Hybrid Trie: 100000.0 ns
+Average insertion time for Patricia Trie: 0.0 ns
+
+Removal of set of existing words for 10 repetitions:
+------------------------------------------------------------------
+Removed words:
+[
+"truest"
+"honester"
+"bad"
+"innocent"
+"bag"
+"hall"
+"your"
+"doth"
+"quote"
+"would"
+"honest"
+"because"
+"you"
+"possess"
+"am"
+"court"
+"an"
+"senior"
+"as"
+"yonder"
+"at"
+"stop"
+"ay"
+"much"
+"humble"
+"hang"
+"strong"
+"be"
+"wherefore"
+"jupiter"
+"eyes"
+"sea"
+"how"
+"servant"
+"grasp"
+"by"
+"quiet"
+"reigns"
+"a"
+"d"
+"forbear"
+"words"
+"i"
+"right"
+"blood"
+"o"
+"the"
+"straight"
+"s"
+"brutus"
+"throw"
+"v"
+"planetary"
+"days"
+"god"
+"did"
+"bed"
+"de"
+"thy"
+"do"
+"good"
+"hold"
+"tale"
+"wise"
+"helenus"
+"ambition"
+"besides"
+"others"
+"tis"
+"which"
+"brows"
+"emilia"
+"never"
+"she"
+"fated"
+"parts"
+"trust"
+"bred"
+"beginning"
+"young"
+"for"
+"soldiers"
+"caesar"
+"trifles"
+"lent"
+"deed"
+"gates"
+"tidings"
+"skill"
+"medal"
+"sin"
+"sir"
+"live"
+"vow"
+"magnifiest"
+"sold"
+"living"
+"wouldst"
+"worcester"
+"go"
+"with"
+"cowardly"
+"henry"
+"lady"
+"well"
+"antony"
+"extenuate"
+"fresh"
+"he"
+"very"
+"envy"
+"flourish"
+"else"
+"hath"
+"if"
+"fear"
+"tongueless"
+"in"
+"nay"
+"frail"
+"is"
+"being"
+"it"
+"wives"
+"forth"
+"iv"
+"heaven"
+"juliet"
+"woman"
+"uncle"
+"[within]"
+"air"
+"whereupon"
+"leonato"
+"world"
+"too"
+"have"
+"speak"
+"together"
+"highness"
+"side"
+"may"
+"forward"
+"change"
+"proteus"
+"slip"
+"regard"
+"oft"
+"lucentio"
+"thousand"
+"infect"
+"ignominious"
+"ll"
+"knees"
+"office"
+"while"
+"upon"
+"pray"
+"patroclus"
+"coz"
+"that"
+"son"
+"than"
+"peesel"
+"me"
+"beguiled"
+"all"
+"pleasant"
+"kings"
+"less"
+"my"
+"petruchio"
+"heart"
+"friends"
+"army"
+"villanous"
+"true"
+"noble"
+"hawk"
+"no"
+"appears"
+"best"
+"times"
+"hour"
+"and"
+"men"
+"of"
+"hear"
+"mew"
+"on"
+"bourbon"
+"doubtful"
+"any"
+"master"
+"amen"
+"wall"
+"profess"
+"craftsmen"
+"untruths"
+"scene"
+"brow"
+"above"
+"friend"
+"state"
+"welcome"
+"curs"
+"they"
+"dukedoms"
+"thee"
+"pleasure"
+"old"
+"want"
+"pace"
+"them"
+"then"
+"something"
+"benefit"
+"accept"
+"whitest"
+"buckingham"
+"must"
+"cut"
+"seek"
+"two"
+"into"
+"are"
+"patience"
+"knight"
+"grace"
+"so"
+"free"
+"prevented"
+"latest"
+"st"
+"think"
+"art"
+"though"
+"laying"
+"forbidden"
+"one"
+"makes"
+"accused"
+"stay"
+"call"
+"such"
+"appear"
+"mistress"
+"ti"
+"to"
+"dogberry"
+"distemperature"
+"open"
+"thine"
+"withal"
+"but"
+"swallowing"
+"till"
+"goods"
+"anne"
+"had"
+"doves"
+"exeunt"
+"view"
+"provost"
+"beseech"
+"consort"
+"houses"
+"infallible"
+"us"
+"last"
+"might"
+"this"
+"bold"
+"stole"
+"worse"
+"youthful"
+"imogen"
+"father"
+"lord"
+"show"
+"prisoners"
+"non"
+"house"
+"life"
+"we"
+"willingly"
+"not"
+"defend"
+"themselves"
+"now"
+"gar"
+"wag"
+"chaste"
+"news"
+"was"
+"frown"
+"yet"
+"valentine"
+"way"
+"grey"
+"detested"
+"colour"
+"what"
+"nights"
+"gentleman"
+"shadow"
+"none"
+"fair"
+"when"
+"three"
+"put"
+"physicians"
+"her"
+"wrath"
+"voluntary"
+"teeth"
+"enter"
+"truly"
+"guide"
+"humbleness"
+"roan"
+"give"
+"having"
+"lives"
+"wife"
+"lose"
+"come"
+"mate"
+"vincere"
+"suit"
+"love"
+"harsh"
+"dower"
+"our"
+"out"
+"impress"
+"course"
+"spills"
+"swallow"
+"more"
+"thou"
+"great"
+"aught"
+"wings"
+"cannot"
+"chorus"
+"first"
+"gloucester"
+"shut"
+"hid"
+"quick"
+"own"
+"sound"
+"tell"
+"husband"
+"him"
+"strewings"
+"canst"
+"his"
+"plain"
+"should"
+"only"
+"from"
+"day"
+"keeps"
+"england"
+"like"
+"king"
+"falstaff"
+"enobarbus"
+"both"
+"andronicus"
+"keep"
+"who"
+"here"
+"tent"
+"repair"
+"death"
+"purpose"
+"their"
+"faith"
+"clouds"
+"radiant"
+"can"
+"sounds"
+"sad"
+"said"
+"grieves"
+"quantity"
+"revenge"
+"villages"
+"will"
+"say"
+"claudio"
+"bites"
+"wilt"
+"york"
+"andromache"
+"earl"
+"intend"
+]
+
+Repetition 1:
+Removal time for Hybrid Trie: 2000000.0 ns
+Removal time for Balanced Hybrid Trie: 0.0 ns
+Removal time for Patricia Trie: 1.4E7 ns
+Repetition 2:
+Removal time for Hybrid Trie: 1000000.0 ns
+Removal time for Balanced Hybrid Trie: 1000000.0 ns
+Removal time for Patricia Trie: 8000000.0 ns
+Repetition 3:
+Removal time for Hybrid Trie: 0.0 ns
+Removal time for Balanced Hybrid Trie: 0.0 ns
+Removal time for Patricia Trie: 6000000.0 ns
+Repetition 4:
+Removal time for Hybrid Trie: 0.0 ns
+Removal time for Balanced Hybrid Trie: 0.0 ns
+Removal time for Patricia Trie: 5000000.0 ns
+Repetition 5:
+Removal time for Hybrid Trie: 1000000.0 ns
+Removal time for Balanced Hybrid Trie: 0.0 ns
+Removal time for Patricia Trie: 3000000.0 ns
+Repetition 6:
+Removal time for Hybrid Trie: 0.0 ns
+Removal time for Balanced Hybrid Trie: 1000000.0 ns
+Removal time for Patricia Trie: 4000000.0 ns
+Repetition 7:
+Removal time for Hybrid Trie: 0.0 ns
+Removal time for Balanced Hybrid Trie: 0.0 ns
+Removal time for Patricia Trie: 5000000.0 ns
+Repetition 8:
+Removal time for Hybrid Trie: 0.0 ns
+Removal time for Balanced Hybrid Trie: 1000000.0 ns
+Removal time for Patricia Trie: 4000000.0 ns
+Repetition 9:
+Removal time for Hybrid Trie: 0.0 ns
+Removal time for Balanced Hybrid Trie: 0.0 ns
+Removal time for Patricia Trie: 4000000.0 ns
+Repetition 10:
+Removal time for Hybrid Trie: 0.0 ns
+Removal time for Balanced Hybrid Trie: 0.0 ns
+Removal time for Patricia Trie: 4000000.0 ns
+Average removal times:
+Average removal time for Hybrid Trie: 400000.0 ns
+Average removal time for Balanced Hybrid Trie: 300000.0 ns
+Average removal time for Patricia Trie: 5700000.0 ns
+
+Insertions vs. Merge: Comparing the construction of a Patricia trie for 10 repetitions:
+------------------------------------------------------------------
+Repetition 1:
+Construction time for all words insertion: 6678.0 ms
+Construction time for tries merge: 3065.0 ms
+Repetition 2:
+Construction time for all words insertion: 6710.0 ms
+Construction time for tries merge: 3052.0 ms
+Repetition 3:
+Construction time for all words insertion: 6920.0 ms
+Construction time for tries merge: 3015.0 ms
+Repetition 4:
+Construction time for all words insertion: 6776.0 ms
+Construction time for tries merge: 2893.0 ms
+Repetition 5:
+Construction time for all words insertion: 7014.0 ms
+Construction time for tries merge: 2881.0 ms
+Repetition 6:
+Construction time for all words insertion: 6574.0 ms
+Construction time for tries merge: 2839.0 ms
+Repetition 7:
+Construction time for all words insertion: 6574.0 ms
+Construction time for tries merge: 3036.0 ms
+Repetition 8:
+Construction time for all words insertion: 7053.0 ms
+Construction time for tries merge: 2980.0 ms
+Repetition 9:
+Construction time for all words insertion: 6633.0 ms
+Construction time for tries merge: 2780.0 ms
+Repetition 10:
+Construction time for all words insertion: 6613.0 ms
+Construction time for tries merge: 2773.0 ms
+Average construction times:
+Average construction time for all words insertion: 6754.5 ms
+Average construction time for tries merge: 2931.4 ms
+
+------------------------------------------------------------------
+------------------------------------------------------------------
+------------------------------------------------------------------
+END OF TIME COMPARISON
