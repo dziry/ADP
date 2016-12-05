@@ -81,29 +81,24 @@ public class HybridTrie implements IHybridTrie {
 	}
 	
 	@Override
-	public int getNodsCount() {
+	public int getNodeCount() {
 		if (isEmpty()) {
 			return 0;
 		}
 
-		return countNodsRecursively(root, 0);
+		return countNodesRecursively(root, 0);
 	}
 
-	private static int countNodsRecursively(HybridTrieNode node, int nodsCounter) {
+	private static int countNodesRecursively(HybridTrieNode node, int nodeCount) {
 		if (node != null) {
-			nodsCounter++;
+			nodeCount++;
 
-			nodsCounter = countWordsRecursively(node.getLeftChild(), nodsCounter);
-			nodsCounter = countWordsRecursively(node.getRightChild(), nodsCounter);
-			nodsCounter = countWordsRecursively(node.getMiddleChild(), nodsCounter);
+			nodeCount = countNodesRecursively(node.getLeftChild(), nodeCount);
+			nodeCount = countNodesRecursively(node.getRightChild(), nodeCount);
+			nodeCount = countNodesRecursively(node.getMiddleChild(), nodeCount);
 		}
 
-		return nodsCounter;
-	}
-
-	@Override
-	public int getNodeCount() {
-		return 0;
+		return nodeCount;
 	}
 
 	@Override

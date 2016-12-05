@@ -8,6 +8,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import fr.upmc.algav.tools.TextFileReader;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -17,7 +18,6 @@ import org.junit.Test;
 import fr.upmc.algav.errors.HybridTrieError;
 import fr.upmc.algav.hybridtries.HybridTrie;
 import fr.upmc.algav.interfaces.ITrie;
-import fr.upmc.algav.tools.GraphReader;
 
 public class HybridTrieTest extends AbstractTrieTest {
 	// Eclipse IDE
@@ -29,9 +29,9 @@ public class HybridTrieTest extends AbstractTrieTest {
 		
 	@BeforeClass
     public static void setUpBeforeClass() throws Exception {
-        GraphReader graphReader = new GraphReader(EXAMPLE_PATH);
+        TextFileReader textFileReader = new TextFileReader(EXAMPLE_PATH);
 		wordsList = new ArrayList<>();
-		wordsList = graphReader.read();
+		wordsList = textFileReader.read();
 
 		hybridTrie = new HybridTrie();
 		hybridTrie.insert(wordsList);
@@ -79,7 +79,7 @@ public class HybridTrieTest extends AbstractTrieTest {
 	
 	@Test
 	public final void runNominalTestNodeCount_afterAddingWords() {				
-		assertTrue("Counting Hybrid Trie's nodes after few inserts ", new hybridTrie.getNodeCount() == 34);
+		assertEquals("Counting Hybrid Trie's nodes after few inserts ", hybridTrie.getNodeCount(), 34);
 	}
 	
 	@Test
@@ -315,14 +315,14 @@ public class HybridTrieTest extends AbstractTrieTest {
 	public final void testInsertBalanced() {
 		/* The purpose of this manipulation is to make an unbalanced tries by inserting a few words in order. */
 		// Eclipse IDE
-		GraphReader graphReader = new GraphReader("files/Shakespeare/john.txt");
+		TextFileReader textFileReader = new TextFileReader("files/Shakespeare/john.txt");
 		// IntelliJ IDE
-		//GraphReader graphReader = new GraphReader("AlgavDevoirProgrammation/files/Shakespeare/john.txt");
+		//TextFileReader textFileReader = new TextFileReader("AlgavDevoirProgrammation/files/Shakespeare/john.txt");
 		ArrayList<String> wordsListFromFile = new ArrayList<>();
 		ArrayList<String> sortedList = new ArrayList<>();
 		ArrayList<String> ordinaryList = new ArrayList<>();
 
-		wordsListFromFile = graphReader.read();
+		wordsListFromFile = textFileReader.read();
 		
 		// Split the original list to two other lists. 
 		for (int wordIndex = 0; wordIndex < wordsListFromFile.size(); wordIndex++) {

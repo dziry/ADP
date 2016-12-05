@@ -3,7 +3,7 @@ package fr.upmc.algav.experiments;
 import java.io.File;
 import java.util.ArrayList;
 
-import fr.upmc.algav.tools.GraphReader;
+import fr.upmc.algav.tools.TextFileReader;
 
 /*
  * Statistics of the data set used in the experiments.
@@ -56,8 +56,8 @@ public class DataStatistics {
 
 		for (final File fileEntry : file.listFiles()) {
 			final String filePath = file + "/" + fileEntry.getName();
-			GraphReader graphReader = new GraphReader(filePath);
-			res.add(graphReader.read());
+			TextFileReader textFileReader = new TextFileReader(filePath);
+			res.add(textFileReader.read());
 		}
 
 		return res;
@@ -73,8 +73,8 @@ public class DataStatistics {
 	}
 	
 	private static void numberOfWordsInFile(String filePath) {
-		GraphReader graphReader = new GraphReader(filePath);
-		ArrayList<String> wordsList = graphReader.read();
+		TextFileReader textFileReader = new TextFileReader(filePath);
+		ArrayList<String> wordsList = textFileReader.read();
 
 		System.out.format("%-20d", wordsList.size());
 	}

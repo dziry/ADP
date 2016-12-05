@@ -4,7 +4,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class GraphWriter {
+public class TextFileWriter {
 
 	// Eclipse IDE
 	private final String DRAWABLES_DIRECTORY = System.getProperty("user.dir") + "/drawables/";
@@ -14,7 +14,7 @@ public class GraphWriter {
 	private String filePath;
 	BufferedWriter output;
 	
-	public GraphWriter(String fileName) {
+	public TextFileWriter(String fileName) {
 		this.fileName = fileName;
 		this.filePath = DRAWABLES_DIRECTORY + fileName;		
 

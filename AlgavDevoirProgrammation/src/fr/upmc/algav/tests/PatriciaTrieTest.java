@@ -4,7 +4,7 @@ import fr.upmc.algav.interfaces.IHybridTrie;
 import fr.upmc.algav.patriciatries.Alphabet;
 import fr.upmc.algav.interfaces.IPatriciaTrie;
 import fr.upmc.algav.patriciatries.PatriciaTrie;
-import fr.upmc.algav.tools.GraphReader;
+import fr.upmc.algav.tools.TextFileReader;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -352,9 +352,9 @@ public class PatriciaTrieTest extends AbstractTrieTest {
 		// InteliJ IDE
 		//String path = "AlgavDevoirProgrammation/files/basicExample.txt";
         
-        GraphReader graphReader = new GraphReader(path);
+        TextFileReader textFileReader = new TextFileReader(path);
         
-        alternateTrie.insert(graphReader.read());
+        alternateTrie.insert(textFileReader.read());
         alternateTrie.print("patricia_trie_basic_example.dot");
 	}
 	

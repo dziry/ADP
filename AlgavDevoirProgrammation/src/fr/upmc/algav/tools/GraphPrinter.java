@@ -7,12 +7,12 @@ import fr.upmc.algav.patriciatries.PatriciaTrieNode;
 
 public class GraphPrinter {
 
-	private GraphWriter fileObject;
+	private TextFileWriter fileObject;
 	private HashMap<Color, String> colorToGraphValue;
 	private HashMap<Style, String> styleToGraphValue;
 	
 	public GraphPrinter(String fileName) {
-		fileObject = new GraphWriter(fileName);
+		fileObject = new TextFileWriter(fileName);
 		colorToGraphValue = new HashMap<>();
 		styleToGraphValue = new HashMap<>();
 		

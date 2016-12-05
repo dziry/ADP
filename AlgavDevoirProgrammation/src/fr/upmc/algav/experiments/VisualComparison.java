@@ -6,7 +6,7 @@ import fr.upmc.algav.hybridtries.HybridTrie;
 import fr.upmc.algav.interfaces.ITrie;
 import fr.upmc.algav.patriciatries.Alphabet;
 import fr.upmc.algav.patriciatries.PatriciaTrie;
-import fr.upmc.algav.tools.GraphReader;
+import fr.upmc.algav.tools.TextFileReader;
 
 public class VisualComparison {
 
@@ -24,8 +24,8 @@ public class VisualComparison {
 		ArrayList<String> list ;
 
 		System.out.println("Course example | One word by line :\n");
-		GraphReader graphReaderOne = new GraphReader(EXERCISE_EXAMPLE_FILE_PATH);
-		list = graphReaderOne.read();
+		TextFileReader textFileReaderOne = new TextFileReader(EXERCISE_EXAMPLE_FILE_PATH);
+		list = textFileReaderOne.read();
 
 		ITrie hybridTrieExerciseExample = new HybridTrie();
 		hybridTrieExerciseExample.insert(list);
@@ -36,8 +36,8 @@ public class VisualComparison {
         patriciaTrieExerciseExample.print("visual_comparison_example_course_PT.dot");
 
         System.out.println("\nBasic example | Full text :\n");
-		GraphReader graphReaderFull = new GraphReader(BASIC_EXAMPLE_FILE_PATH);
-		list = graphReaderFull.read();
+		TextFileReader textFileReaderFull = new TextFileReader(BASIC_EXAMPLE_FILE_PATH);
+		list = textFileReaderFull.read();
 
 		ITrie hybridTrieBasicExample = new HybridTrie();
 		hybridTrieBasicExample.insert(list);

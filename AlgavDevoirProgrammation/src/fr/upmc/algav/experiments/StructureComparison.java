@@ -13,10 +13,10 @@ import fr.upmc.algav.hybridtries.HybridTrie;
 import fr.upmc.algav.interfaces.ITrie;
 import fr.upmc.algav.patriciatries.Alphabet;
 import fr.upmc.algav.patriciatries.PatriciaTrie;
-import fr.upmc.algav.tools.GraphReader;
+import fr.upmc.algav.tools.TextFileReader;
 
 public class StructureComparison {
-	private final static String CONFIG = "%-25s%-15s%-15s%-15s%-20s%s\n";
+	private final static String CONFIG = "%-25s%-15s%-15s%-15s%-15s%-20s%s\n";
 
 	// Eclipse IDE
 	private final static String DIRECTORY_PATH = "files/Shakespeare";
@@ -42,7 +42,8 @@ public class StructureComparison {
 		ITrie balancedHT = new HybridTrie();
 		ITrie patricia = new PatriciaTrie(new Alphabet());
 
-		String arg1 = "File";
+		String arg0 = "File";
+        String arg1 = "Nodes";
 		String arg2 = "Words";
 		String arg3 = "Null Pointers";
 		String arg4 = "Height";
@@ -50,8 +51,8 @@ public class StructureComparison {
 		String arg6 = "Structure";
 
 		try (Stream<Path> paths = Files.walk(Paths.get(DIRECTORY_PATH))) {
-			System.out.format(CONFIG, arg1, arg2, arg3, arg4, arg5, arg6);
-            writeToResultsFileFormatted(arg1, arg2, arg3, arg4, arg5, arg6);
+			System.out.format(CONFIG, arg0, arg1, arg2, arg3, arg4, arg5, arg6);
+            writeToResultsFileFormatted(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
 			System.out.println("------------------------------------------------------------------------------------------------------\n");
 		    writeToResultsFile("------------------------------------------------------------------------------------------------------\n\n");
 
@@ -92,10 +93,10 @@ public class StructureComparison {
         }
     }
 
-    private static void writeToResultsFileFormatted(String arg1, String arg2,
+    private static void writeToResultsFileFormatted(String arg0, String arg1, String arg2,
                                                     String arg3, String arg4, String arg5, String arg6) {
         try {
-            resultsWriter.write(String.format(CONFIG, arg1, arg2, arg3, arg4, arg5, arg6));
+            resultsWriter.write(String.format(CONFIG, arg0, arg1, arg2, arg3, arg4, arg5, arg6));
         } catch (Exception e) {
             System.err.println("Error while writing to results file!");
             e.printStackTrace();
@@ -130,8 +131,8 @@ public class StructureComparison {
     }
 	
 	private static void run(ITrie trie, Path filePath, TrieType type) {
-		GraphReader graphReader = new GraphReader(filePath.toString());
-		ArrayList<String> wordsList = graphReader.read();
+		TextFileReader textFileReader = new TextFileReader(filePath.toString());
+		ArrayList<String> wordsList = textFileReader.read();
 		
 		if (type == TrieType.HYBRID || type == TrieType.PATRICIA) {
 			trie.insert(wordsList);			
@@ -140,6 +141,7 @@ public class StructureComparison {
 		}
 			
 		String fileName = filePath.getFileName().toString();
+        int nodeCount = trie.getNodeCount();
 		int words = trie.getWordCount();
 		int nil = trie.getNullPointerCount();
 		int height = trie.getHeight();
@@ -152,8 +154,8 @@ public class StructureComparison {
 		else if (type == TrieType.BALANCED_HYBRID) structMsg = "Balanced-HT";
 		else structMsg = "Patricia";
 			
-		System.out.format(CONFIG, fileName, words, nil, height, averageDepth, structMsg);
-        writeToResultsFileFormatted(fileName, Integer.toString(words), Integer.toString(nil),
+		System.out.format(CONFIG, fileName, nodeCount, words, nil, height, averageDepth, structMsg);
+        writeToResultsFileFormatted(fileName, Integer.toString(nodeCount), Integer.toString(words), Integer.toString(nil),
                 Integer.toString(height), Double.toString(averageDepth), structMsg);
 	}
 }

@@ -18,7 +18,7 @@ import fr.upmc.algav.hybridtries.HybridTrie;
 import fr.upmc.algav.patriciatries.Alphabet;
 import fr.upmc.algav.interfaces.IPatriciaTrie;
 import fr.upmc.algav.patriciatries.PatriciaTrie;
-import fr.upmc.algav.tools.GraphReader;
+import fr.upmc.algav.tools.TextFileReader;
 
 public class TimeComparison {
 
@@ -158,8 +158,8 @@ public class TimeComparison {
 				if (Files.isRegularFile(filePath)) {
 					numberOfFiles++;
 
-                    GraphReader graphReader = new GraphReader(filePath.toString());
-                    shakespeareWords.addAll(graphReader.read());
+                    TextFileReader textFileReader = new TextFileReader(filePath.toString());
+                    shakespeareWords.addAll(textFileReader.read());
 				}
 			});
 		} catch (Exception e) {
@@ -808,10 +808,10 @@ public class TimeComparison {
             try(Stream<Path> paths = Files.walk(Paths.get(DIRECTORY_PATH))) {
                 paths.forEach(filePath -> {
                     if (Files.isRegularFile(filePath)) {
-                        GraphReader graphReader = new GraphReader(filePath.toString());
+                        TextFileReader textFileReader = new TextFileReader(filePath.toString());
 
                         PatriciaTrie pt = new PatriciaTrie(new Alphabet());
-                        pt.insert(graphReader.read());
+                        pt.insert(textFileReader.read());
                         subTries.add(pt);
                     }
                 });

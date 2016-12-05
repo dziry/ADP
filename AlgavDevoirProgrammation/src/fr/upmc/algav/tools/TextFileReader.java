@@ -5,13 +5,13 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class GraphReader {
+public class TextFileReader {
 
 	private final static String SPACE = " ";
 	private Scanner scanner;
 	private ArrayList<String> wordsList;
 
-	public GraphReader(String file) {
+	public TextFileReader(String file) {
 		try {
 			FileReader fileReader = new FileReader(file);
 			this.scanner = new Scanner(fileReader);
