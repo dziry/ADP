@@ -73,6 +73,16 @@ public class HybridTrieTest extends AbstractTrieTest {
 	}
 	
 	@Test
+	public final void runNominalTestNodCount_beforeAddingWords() {				
+		assertTrue("Counting nodes when Hybrid Trie is empty", new HybridTrie().getNodeCount() == 0);
+	}
+	
+	@Test
+	public final void runNominalTestNodeCount_afterAddingWords() {				
+		assertTrue("Counting Hybrid Trie's nodes after few inserts ", new hybridTrie.getNodeCount() == 34);
+	}
+	
+	@Test
 	public final void testInsertWordsOneByOne() {
 		ITrie hybridTrie = new HybridTrie();
 		hybridTrie.insert("lou");
