@@ -79,6 +79,27 @@ public class HybridTrie implements IHybridTrie {
 	public void removeAll() {
 		this.root = null;
 	}
+	
+	@Override
+	public int getNodsCount() {
+		if (isEmpty()) {
+			return 0;
+		}
+
+		return countNodsRecursively(root, 0);
+	}
+
+	private static int countNodsRecursively(HybridTrieNode node, int nodsCounter) {
+		if (node != null) {
+			nodsCounter++;
+
+			nodsCounter = countWordsRecursively(node.getLeftChild(), nodsCounter);
+			nodsCounter = countWordsRecursively(node.getRightChild(), nodsCounter);
+			nodsCounter = countWordsRecursively(node.getMiddleChild(), nodsCounter);
+		}
+
+		return nodsCounter;
+	}
 
 	@Override
 	public boolean search(String word) {
