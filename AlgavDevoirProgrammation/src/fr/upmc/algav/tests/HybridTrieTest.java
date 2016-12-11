@@ -374,10 +374,9 @@ public class HybridTrieTest extends AbstractTrieTest {
 	
 	@Test
 	public final void testToPatriciaTrie() {
-		// TODO
-//		IPatriciaTrie patriciaTrie = new PatriciaTrie(new Alphabet());
-//		patriciaTrie.insert(wordsList);
-//		IPatriciaTrie patriciaTrieFromHT = ((HybridTrie) hybridTrie).toPatriciaTrie();
-//		assertTrue("insert balanced", patriciaTrie.getStoredWords() == patriciaTrieFromHT.getStoredWords());
+		IPatriciaTrie patriciaTrie = new PatriciaTrie(new Alphabet());
+		patriciaTrie.insert(wordsList);
+		IPatriciaTrie patriciaTrieFromHT = ((HybridTrie) hybridTrie).toPatriciaTrie();
+		assertTrue("insert balanced", patriciaTrie.getStoredWords() == patriciaTrieFromHT.getStoredWords());
 	}
 }
