@@ -35,7 +35,7 @@ For the following example text the corresponding tries are obtained:
 > genre, que toute dactylo connait par coeur puisque elle fait appel a chacune des touches du clavier de la
 > machine a ecrire ?
 
-###### The corresponding patricia trie
+###### The corresponding patricia trie (The mojibake represents the final character DEL)
 ![Patricia trie example](AlgavDevoirProgrammation/examples/patricia_trie_basic_example.png)
 
 ###### The corresponding hybrid trie
