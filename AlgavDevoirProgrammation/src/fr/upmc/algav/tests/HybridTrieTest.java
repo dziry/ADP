@@ -8,6 +8,9 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import fr.upmc.algav.interfaces.IPatriciaTrie;
+import fr.upmc.algav.patriciatries.Alphabet;
+import fr.upmc.algav.patriciatries.PatriciaTrie;
 import fr.upmc.algav.tools.TextFileReader;
 import org.junit.After;
 import org.junit.AfterClass;
