@@ -1,5 +1,5 @@
 # ADP: Patricia Tries vs. Hybrid Tries
-A project for the course "Algorithmique Avancée" at the university UPMC Paris by Adel Larbi and Amadeus Schell.
+A project for the course "Algorithmique Avancée" at the university UPMC Paris.
 
 ## Introduction
 For this project the two advanced data structures patricia trie and hybrid trie have been implemented and compared
