@@ -1,0 +1,14 @@
+digraph G {
+	"d9148b85c-b51e-4c1d-80e6-df5a85cf93b3";
+	"d9148b85c-b51e-4c1d-80e6-df5a85cf93b3" [label="d"];
+	"d9148b85c-b51e-4c1d-80e6-df5a85cf93b3" -> "ada6d4c26-7481-4144-9fe8-2105134aefc9" [color=red];
+	"ada6d4c26-7481-4144-9fe8-2105134aefc9" [label="a"];
+	"ada6d4c26-7481-4144-9fe8-2105134aefc9" -> "nd3a06984-cbfa-4f9c-b470-bdba40b4d306" [color=red];
+	"nd3a06984-cbfa-4f9c-b470-bdba40b4d306" [label="n"];
+	"nd3a06984-cbfa-4f9c-b470-bdba40b4d306" -> "s4cff3d2f-dd8a-47ba-a83c-71ccf068b016" [color=red];
+	"s4cff3d2f-dd8a-47ba-a83c-71ccf068b016" [color=red, fontcolor=red, style=dashed];
+	"s4cff3d2f-dd8a-47ba-a83c-71ccf068b016" [label="s"];
+	"ada6d4c26-7481-4144-9fe8-2105134aefc9" -> "ee5602e64-d9a4-41c2-98cb-891a1db2cc03" [color=green];
+	"ee5602e64-d9a4-41c2-98cb-891a1db2cc03" [color=green, fontcolor=green, style=dashed];
+	"ee5602e64-d9a4-41c2-98cb-891a1db2cc03" [label="e"];
+}

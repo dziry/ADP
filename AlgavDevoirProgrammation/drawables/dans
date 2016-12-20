@@ -1,7 +1,0 @@
-digraph G {
-	"d38909d88-78d0-4151-b716-f503359dddb6";
-	"d38909d88-78d0-4151-b716-f503359dddb6" [label="d"];
-	"d38909d88-78d0-4151-b716-f503359dddb6" -> "e7cb9fde8-1133-4b7b-81ea-718452eb8aad" [color=red];
-	"e7cb9fde8-1133-4b7b-81ea-718452eb8aad" [color=red, fontcolor=red, style=dashed];
-	"e7cb9fde8-1133-4b7b-81ea-718452eb8aad" [label="e"];
-}
