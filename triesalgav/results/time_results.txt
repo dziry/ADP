@@ -1,0 +1,1140 @@
+BEGIN OF TIME COMPARISON
+------------------------------------------------------------------
+------------------------------------------------------------------
+------------------------------------------------------------------
+
+Total of words in Shakespeare's works: 23086
+
+Construction of tries for 10 repetitions:
+------------------------------------------------------------------
+Repetition 1:
+Total time for Hybrid Trie: 405.0 ms
+Total time for Balanced Hybrid Trie: 354.0 ms
+Total time for Patricia Trie: 499.0 ms
+Repetition 2:
+Total time for Hybrid Trie: 192.0 ms
+Total time for Balanced Hybrid Trie: 195.0 ms
+Total time for Patricia Trie: 271.0 ms
+Repetition 3:
+Total time for Hybrid Trie: 208.0 ms
+Total time for Balanced Hybrid Trie: 249.0 ms
+Total time for Patricia Trie: 204.0 ms
+Repetition 4:
+Total time for Hybrid Trie: 179.0 ms
+Total time for Balanced Hybrid Trie: 195.0 ms
+Total time for Patricia Trie: 205.0 ms
+Repetition 5:
+Total time for Hybrid Trie: 176.0 ms
+Total time for Balanced Hybrid Trie: 190.0 ms
+Total time for Patricia Trie: 192.0 ms
+Repetition 6:
+Total time for Hybrid Trie: 174.0 ms
+Total time for Balanced Hybrid Trie: 199.0 ms
+Total time for Patricia Trie: 194.0 ms
+Repetition 7:
+Total time for Hybrid Trie: 173.0 ms
+Total time for Balanced Hybrid Trie: 185.0 ms
+Total time for Patricia Trie: 193.0 ms
+Repetition 8:
+Total time for Hybrid Trie: 174.0 ms
+Total time for Balanced Hybrid Trie: 192.0 ms
+Total time for Patricia Trie: 205.0 ms
+Repetition 9:
+Total time for Hybrid Trie: 174.0 ms
+Total time for Balanced Hybrid Trie: 187.0 ms
+Total time for Patricia Trie: 194.0 ms
+Repetition 10:
+Total time for Hybrid Trie: 175.0 ms
+Total time for Balanced Hybrid Trie: 184.0 ms
+Total time for Patricia Trie: 205.0 ms
+Average times:
+Average time for Hybrid Trie: 203.0 ms
+Average time for Balanced Hybrid Trie: 213.0 ms
+Average time for Patricia Trie: 236.2 ms
+
+Looking for a set of existing words for 10 repetitions:
+------------------------------------------------------------------
+Words to find:
+[
+"easiness"
+"meed"
+"ungarter"
+"backbitten"
+"arbitrate"
+"compassion"
+"hangings"
+"rides"
+"rabbit"
+"racking"
+"menon"
+"snuffed"
+"calculate"
+"prevention"
+"profferer"
+"carefully"
+"titinius"
+"licentious"
+"erpays"
+"billiards"
+"borest"
+"armagnac"
+"size"
+"lazarus"
+"institute"
+"millions"
+"drivelling"
+"touched"
+"panging"
+"contemned"
+"unchaste"
+"smoothly"
+"staines"
+"levying"
+"assembly"
+"drunkenly]"
+"acquisition"
+"latch"
+"passio"
+"deceitful"
+"plummet"
+"lucius"
+"unction"
+"profaneness"
+"barnet"
+"appeals"
+"entering"
+"abuts"
+"stature"
+"river"
+"delicates"
+"lightness"
+"observe"
+"deadly"
+"grizzled"
+"adamant"
+"later"
+"perdonato"
+"leviathan"
+"purgatory"
+"assigns"
+"insupportable"
+"amend"
+"exhaust"
+"clangor"
+"enormous"
+"article"
+"et"
+"avenged"
+"acceptance"
+"lessened"
+"circumstance"
+"folks"
+"paunches"
+"mightily"
+"hautboy"
+"pheeze"
+"sleeping"
+"perhaps"
+"lordships"
+"cheats"
+"await"
+"homo"
+"outstretched"
+"trencher"
+"hallow"
+"unspoke"
+"prettiest"
+"affray"
+"ambitions"
+"mattering"
+"drunkest"
+"tempering"
+"told"
+"shews"
+"drovier"
+"curst"
+"apprendre"
+"number"
+"vere"
+"reformation"
+"hick"
+"admiringly"
+"gauge"
+"scurrilous"
+"vales"
+"briton"
+"sporting"
+"audacity"
+"foolish"
+"oldness"
+"innovator"
+"lamentation"
+"braced"
+"slough"
+"proportion"
+"whorish"
+"stoccata"
+"graybeards"
+"tod"
+"matter"
+"leiger"
+"caterpillar"
+"peer"
+"blackest"
+"blurted"
+"decks"
+"shard"
+"knows"
+"kindreds"
+"dissever"
+"satisfaction"
+"recollect"
+"la"
+"justicer"
+"reveller"
+"discreet"
+"accomplishment"
+"sallets"
+"franchise"
+"repealing"
+"sigh"
+"winnowed"
+"urchins"
+"edward"
+"office"
+"erstunk"
+"platforms"
+"unlettered"
+"cotes"
+"sailed"
+"rove"
+"guienne"
+"inns"
+"mustering"
+"cries"
+"all"
+"brook"
+"windmill"
+"wallow"
+"tempt"
+"slipt"
+"reviled"
+"clotens"
+"gripes"
+"lethargy"
+"taxation"
+"profaners"
+"misprising"
+"cornwall"
+"whencesoever"
+"befallen"
+"gratii"
+"merchante"
+"media"
+"lamented"
+"ellen"
+"unhandled"
+"dribbling"
+"rot"
+"dorcas"
+"brisky"
+"puis"
+"remuneration"
+"misanthropos"
+"mesh"
+"tacklings"
+"allows"
+"badged"
+"auspicious"
+"bickerings"
+"michaelmas"
+"looked"
+"rebuke"
+"constance"
+"kicked"
+"claribel"
+"dismember"
+"lions"
+"callet"
+"labours"
+"featly"
+"privy"
+"earth"
+"thyself"
+"pulse"
+"maintenance"
+"witted"
+"doubtfully"
+"briefer"
+"unpress"
+"sorrow"
+"expedient"
+"enscheduled"
+"lolling"
+"hiding"
+"pamphlets"
+"manka"
+"madeira"
+"injunction"
+"withers"
+"want"
+"unparted"
+"allowance"
+"towton"
+"himself"
+"mongst"
+"poysam"
+"starting"
+"deface"
+"huddled"
+"batters"
+"unpaved"
+"seen"
+"schoolmasters"
+"nessus"
+"increases"
+"fresher"
+"dern"
+"wooingly"
+"spurns"
+"horror"
+"forbidden"
+"intimate"
+"blains"
+"molest"
+"coasting"
+"cricket"
+"thinkings"
+"witches"
+"depths"
+"hailed"
+"to"
+"limping"
+"unfamed"
+"crumble"
+"pelleted"
+"froward"
+"numbers"
+"express"
+"ruler"
+"unable"
+"bias"
+"proclaimed"
+"enticeth"
+"dale"
+"surprise"
+"chess"
+"swearers"
+"eglantine"
+"invited"
+"trojan"
+"bridges"
+"limps"
+"beadles"
+"aching"
+"hint"
+"nursed"
+"enfold"
+"abatement"
+"novelty"
+"traders"
+"flaky"
+"cymbeline"
+"description"
+"thicker"
+"curfew"
+"concupy"
+"unwarily"
+"definement"
+"stronger"
+"attends"
+"elizabeth"
+"fores"
+"parca"
+"stars"
+"fructify"
+"manage"
+"fallen"
+"droop"
+"spared"
+"attested"
+"plump"
+"uncurse"
+"disgorges"
+"excludes"
+"profiting"
+"thisne"
+"obscene"
+"fringe"
+"plume"
+"hamlets"
+"ambles"
+"measures"
+"gens"
+"freckled"
+"stealth"
+"case"
+"peaces"
+"mischiefs"
+"sessions"
+"briefly"
+"contention"
+"brunt"
+"ships"
+"assail"
+"aunts"
+"simonides"
+"ides"
+"suit"
+"embodied"
+"rampired"
+"bright"
+"protector"
+"vaumond"
+"commons"
+"consenting"
+"constringed"
+"ramston"
+"burnet"
+"depute"
+"pirates"
+"doll"
+"curds"
+"wet"
+"climate"
+"clement"
+"spurs"
+"soldier"
+"forswearing"
+"unworthiest"
+"runs"
+"norweyan"
+"proudlier"
+"arrest"
+"purgation"
+"shores"
+"lightest"
+"provoke"
+"changelings"
+"wingdalls"
+"spell"
+"hostess"
+"socks"
+"sunk"
+"history"
+"judged"
+"effigies"
+"shrove"
+"strait"
+"donc"
+"shill"
+"broach"
+"fraud"
+"dazzling"
+"hearkened"
+"permissive"
+"darkling"
+"dash"
+"rakes"
+"leontes"
+"necessities"
+"part"
+"volley"
+"boards"
+"confessions"
+"witnesseth"
+"reproof"
+"hottest"
+"sourly"
+"friar"
+"endowed"
+"iniquities"
+"burdened"
+"diamond"
+"stoutness"
+"third"
+"sicilia"
+"turrets"
+"plagued"
+]
+
+Repetition 1:
+Searching time for Hybrid Trie: 1000000.0 ns
+Searching time for Balanced Hybrid Trie: 1000000.0 ns
+Searching time for Patricia Trie: 5000000.0 ns
+Repetition 2:
+Searching time for Hybrid Trie: 0.0 ns
+Searching time for Balanced Hybrid Trie: 0.0 ns
+Searching time for Patricia Trie: 4000000.0 ns
+Repetition 3:
+Searching time for Hybrid Trie: 0.0 ns
+Searching time for Balanced Hybrid Trie: 0.0 ns
+Searching time for Patricia Trie: 5000000.0 ns
+Repetition 4:
+Searching time for Hybrid Trie: 0.0 ns
+Searching time for Balanced Hybrid Trie: 0.0 ns
+Searching time for Patricia Trie: 4000000.0 ns
+Repetition 5:
+Searching time for Hybrid Trie: 0.0 ns
+Searching time for Balanced Hybrid Trie: 0.0 ns
+Searching time for Patricia Trie: 4000000.0 ns
+Repetition 6:
+Searching time for Hybrid Trie: 0.0 ns
+Searching time for Balanced Hybrid Trie: 0.0 ns
+Searching time for Patricia Trie: 4000000.0 ns
+Repetition 7:
+Searching time for Hybrid Trie: 0.0 ns
+Searching time for Balanced Hybrid Trie: 1000000.0 ns
+Searching time for Patricia Trie: 4000000.0 ns
+Repetition 8:
+Searching time for Hybrid Trie: 0.0 ns
+Searching time for Balanced Hybrid Trie: 0.0 ns
+Searching time for Patricia Trie: 4000000.0 ns
+Repetition 9:
+Searching time for Hybrid Trie: 1000000.0 ns
+Searching time for Balanced Hybrid Trie: 0.0 ns
+Searching time for Patricia Trie: 4000000.0 ns
+Repetition 10:
+Searching time for Hybrid Trie: 0.0 ns
+Searching time for Balanced Hybrid Trie: 0.0 ns
+Searching time for Patricia Trie: 4000000.0 ns
+Average searching times:
+Average searching time for Hybrid Trie: 200000.0 ns
+Average searching time for Balanced Hybrid Trie: 200000.0 ns
+Average searching time for Patricia Trie: 4200000.0 ns
+
+Counting all existing words in the Trie for 10 repetitions:
+------------------------------------------------------------------
+Repetition 1:
+Counting operation time for Hybrid Trie: 5.0 ms
+Counting operation time for Balanced Hybrid Trie: 3.0 ms
+Counting operation time for Patricia Trie: 150.0 ms
+Repetition 2:
+Counting operation time for Hybrid Trie: 4.0 ms
+Counting operation time for Balanced Hybrid Trie: 3.0 ms
+Counting operation time for Patricia Trie: 70.0 ms
+Repetition 3:
+Counting operation time for Hybrid Trie: 3.0 ms
+Counting operation time for Balanced Hybrid Trie: 4.0 ms
+Counting operation time for Patricia Trie: 28.0 ms
+Repetition 4:
+Counting operation time for Hybrid Trie: 4.0 ms
+Counting operation time for Balanced Hybrid Trie: 4.0 ms
+Counting operation time for Patricia Trie: 29.0 ms
+Repetition 5:
+Counting operation time for Hybrid Trie: 3.0 ms
+Counting operation time for Balanced Hybrid Trie: 3.0 ms
+Counting operation time for Patricia Trie: 39.0 ms
+Repetition 6:
+Counting operation time for Hybrid Trie: 3.0 ms
+Counting operation time for Balanced Hybrid Trie: 3.0 ms
+Counting operation time for Patricia Trie: 30.0 ms
+Repetition 7:
+Counting operation time for Hybrid Trie: 4.0 ms
+Counting operation time for Balanced Hybrid Trie: 3.0 ms
+Counting operation time for Patricia Trie: 27.0 ms
+Repetition 8:
+Counting operation time for Hybrid Trie: 4.0 ms
+Counting operation time for Balanced Hybrid Trie: 3.0 ms
+Counting operation time for Patricia Trie: 29.0 ms
+Repetition 9:
+Counting operation time for Hybrid Trie: 4.0 ms
+Counting operation time for Balanced Hybrid Trie: 3.0 ms
+Counting operation time for Patricia Trie: 28.0 ms
+Repetition 10:
+Counting operation time for Hybrid Trie: 3.0 ms
+Counting operation time for Balanced Hybrid Trie: 3.0 ms
+Counting operation time for Patricia Trie: 29.0 ms
+Average Counting operation times:
+Average counting operation time for Hybrid Trie: 3.7 ms
+Average counting operation time for Balanced Hybrid Trie: 3.2 ms
+Average counting operation time for Patricia Trie: 45.9 ms
+
+Counting prefixes for 10 repetitions:
+------------------------------------------------------------------
+Prefixes to count:
+[ege, hnes, greeting, bag, uciqua, academes, lus, handy, eaux, plis, reve, ran, beer, grief, ac, unishe, ai, al, compassing, an, exam, ar, aten, at, au, 7, uncas, brushes, bonad, erform, turf, acquitted, buttock, comes, cited, bl, baitings, elle, eit, indulgent, sailor, rape, capability, climbeth, peeping, weighty, inde, militarist, a, ser, b, c, d, e, ch, f, g, subjects, h, i, k, l, m, n, o, r, s, legged, t, u, v, sanctifies, w, y, swound, accountant, isp, ramst, do, cymbals, parti, betime, pac, woo, tio, ith, ec, rer, che, deform, em, en, eo, er, es, nientl, sand, lessens, coze, shr, stowed, fi, relieving, rthampt, punched, untrad, pathetical, sio, aughtil, siv, xte, unpardonable, recorded, kated, ravat, ribbo, inge, inherit, ha, travell, avoid, he, hum, occupation, monuments, gloze, prettiness, ipod, tried, rin, id, ie, ig, pirac, lisbon, il, in, ulphu, provexit, io, abbeys, jourdain, innocents, conies, misgovern, it, iz, himbl, sings, practisers, mab, edec, inquiry, brewers, shelving, stand, kl, rigg, ritter, reaps, grize, ment, shar, enthroned, ese, mercurial, le, objected, li, refac, lo, lengthe, stomaching, modesties, disp, second, whites, sneap, me, chud, eti, snout, nsil, bristle, mi, odic, read, mp, lay, mu, nc, ng, reverted, allenge, endow, unche, nt, sebastian], veyi, tway, grunt, oa, assuredly, od, cre, anc, smoking, oi, neph, or, erca, pandars, xtor, tti, audaciously, ttl, phoenix, lambs, augurer, mille, exor, pi, pr, deceased, depend, treaties, lea, sapit, galle, lessen, ualit, ape, les, cargo, teems, ra, argues, re, slow, prophe, shrewd, rn, intruding, distribu, knog, scrip, poi, lordings, ward, sc, mil, min, sh, butterfly, sk, insane, arl, so, st, su, itche, slipper, syria, unpurged, cess, tumultuo, th, ti, uncurbed, unthink, to, tr, sion, dazzle, lib, goodw, lig, uc, oon, thewes, ick, ui, smokes, un, ur, thig, town, pro, coragio, sixpenny, spaces, aloud, omar, straightest, guildfords, submit, gaols, wa, quain, nor, peri, gales, gat, ctur, timon, iff, tuati, indeed, enchantress, royalize, oru, mmit, nwill, fable, buzzers, plume, omfo, nqu, chaine, fas, guide, waits, infancy, hostage, mpo, clifford, gluttony, prizer, omet, [rising, sire, swath, vehemence, oug, purely, bosoms, doteth, havior, despiseth, ger, loz, lgen, recall, violate, eat, vows, centre, households, garlands, infectiously, niggard, buckle, infest, suitor, urecar, puts, char, sides, sadd, hull, depop, gga, herds, obscurity, ucket, erworn, ferdinand], ild, requites, ill, unbreech, strait, unyoked, yedward, bridegroom, fetter, elatio, permissive, serge, exorcist, tent, muffler, hoist, shunless, strive, limp, intends, satirical, cav, sheet, weed, delver, mitigat, fruitfully, debts, mean, wharfs, meat, plagued, notched]
+
+Repetition 1:
+Counting prefix time for Hybrid Trie: 5.0 ms
+Counting prefix time for Balanced Hybrid Trie: 3.0 ms
+Counting prefix time for Patricia Trie: 96.0 ms
+Repetition 2:
+Counting prefix time for Hybrid Trie: 5.0 ms
+Counting prefix time for Balanced Hybrid Trie: 5.0 ms
+Counting prefix time for Patricia Trie: 39.0 ms
+Repetition 3:
+Counting prefix time for Hybrid Trie: 4.0 ms
+Counting prefix time for Balanced Hybrid Trie: 5.0 ms
+Counting prefix time for Patricia Trie: 39.0 ms
+Repetition 4:
+Counting prefix time for Hybrid Trie: 5.0 ms
+Counting prefix time for Balanced Hybrid Trie: 4.0 ms
+Counting prefix time for Patricia Trie: 39.0 ms
+Repetition 5:
+Counting prefix time for Hybrid Trie: 4.0 ms
+Counting prefix time for Balanced Hybrid Trie: 5.0 ms
+Counting prefix time for Patricia Trie: 40.0 ms
+Repetition 6:
+Counting prefix time for Hybrid Trie: 4.0 ms
+Counting prefix time for Balanced Hybrid Trie: 5.0 ms
+Counting prefix time for Patricia Trie: 38.0 ms
+Repetition 7:
+Counting prefix time for Hybrid Trie: 5.0 ms
+Counting prefix time for Balanced Hybrid Trie: 3.0 ms
+Counting prefix time for Patricia Trie: 39.0 ms
+Repetition 8:
+Counting prefix time for Hybrid Trie: 4.0 ms
+Counting prefix time for Balanced Hybrid Trie: 4.0 ms
+Counting prefix time for Patricia Trie: 37.0 ms
+Repetition 9:
+Counting prefix time for Hybrid Trie: 4.0 ms
+Counting prefix time for Balanced Hybrid Trie: 5.0 ms
+Counting prefix time for Patricia Trie: 40.0 ms
+Repetition 10:
+Counting prefix time for Hybrid Trie: 4.0 ms
+Counting prefix time for Balanced Hybrid Trie: 4.0 ms
+Counting prefix time for Patricia Trie: 39.0 ms
+Average counting prefix times:
+Average counting prefix time for Hybrid Trie: 4.4 ms
+Average counting prefix time for Balanced Hybrid Trie: 4.3 ms
+Average counting prefix time for Patricia Trie: 44.6 ms
+
+Insertion of unknown word "osahezrnthxshekdzsdfjdgefjhtnsh" for 10 repetitions:
+------------------------------------------------------------------
+Repetition 1:
+Insertion time for Hybrid Trie: 0.0 ns
+Insertion time for Balanced Hybrid Trie: 0.0 ns
+Insertion time for Patricia Trie: 0.0 ns
+Repetition 2:
+Insertion time for Hybrid Trie: 0.0 ns
+Insertion time for Balanced Hybrid Trie: 0.0 ns
+Insertion time for Patricia Trie: 0.0 ns
+Repetition 3:
+Insertion time for Hybrid Trie: 0.0 ns
+Insertion time for Balanced Hybrid Trie: 0.0 ns
+Insertion time for Patricia Trie: 0.0 ns
+Repetition 4:
+Insertion time for Hybrid Trie: 0.0 ns
+Insertion time for Balanced Hybrid Trie: 0.0 ns
+Insertion time for Patricia Trie: 0.0 ns
+Repetition 5:
+Insertion time for Hybrid Trie: 0.0 ns
+Insertion time for Balanced Hybrid Trie: 0.0 ns
+Insertion time for Patricia Trie: 0.0 ns
+Repetition 6:
+Insertion time for Hybrid Trie: 0.0 ns
+Insertion time for Balanced Hybrid Trie: 0.0 ns
+Insertion time for Patricia Trie: 0.0 ns
+Repetition 7:
+Insertion time for Hybrid Trie: 0.0 ns
+Insertion time for Balanced Hybrid Trie: 0.0 ns
+Insertion time for Patricia Trie: 0.0 ns
+Repetition 8:
+Insertion time for Hybrid Trie: 0.0 ns
+Insertion time for Balanced Hybrid Trie: 0.0 ns
+Insertion time for Patricia Trie: 0.0 ns
+Repetition 9:
+Insertion time for Hybrid Trie: 0.0 ns
+Insertion time for Balanced Hybrid Trie: 0.0 ns
+Insertion time for Patricia Trie: 0.0 ns
+Repetition 10:
+Insertion time for Hybrid Trie: 0.0 ns
+Insertion time for Balanced Hybrid Trie: 0.0 ns
+Insertion time for Patricia Trie: 0.0 ns
+Average insertion times:
+Average insertion time for Hybrid Trie: 0.0 ns
+Average insertion time for Balanced Hybrid Trie: 0.0 ns
+Average insertion time for Patricia Trie: 0.0 ns
+
+Removal of set of existing words for 10 repetitions:
+------------------------------------------------------------------
+Removed words:
+[
+"truest"
+"bona]"
+"jumps"
+"misshapen"
+"brink"
+"mackerel"
+"anguish"
+"sinews"
+"worshippers"
+"hunting"
+"stacks"
+"opulent"
+"loyal"
+"milo"
+"revives"
+"buyer"
+"swarth"
+"turning"
+"dealt"
+"guest"
+"milder"
+"didest"
+"folded"
+"lynn"
+"couching"
+"hasten"
+"dead"
+"occupations"
+"reprobation"
+"together]"
+"chares"
+"hipped"
+"sprite"
+"darkens"
+"impasted"
+"thrives"
+"omission"
+"tooth"
+"policy"
+"addle"
+"pailfuls"
+"supplyment"
+"scented"
+"troll"
+"exhalation"
+"l"
+"consisting"
+"tyrian"
+"becks"
+"returned"
+"bretagne"
+"register"
+"runyon"
+"auld"
+"damnation"
+"forsooth"
+"cleopatra]"
+"curvets"
+"diomedes]"
+"monger"
+"interims"
+"down"
+"good"
+"faithful"
+"ambition"
+"tin"
+"uncheck"
+"clipper"
+"fortitude"
+"needy"
+"gash"
+"che"
+"arbour"
+"coinage"
+"fantasy"
+"commonly"
+"abel"
+"learns"
+"thisby"
+"searched"
+"omnes"
+"galled"
+"deeps"
+"upbraidings"
+"commenting"
+"pompion"
+"simpcox"
+"party"
+"federary"
+"vailed"
+"augmentation"
+"prevent"
+"solyman"
+"sir"
+"erswell"
+"harper"
+"chased"
+"slippery"
+"haggard"
+"enlargeth"
+"fresh"
+"family"
+"withstood"
+"caddisses"
+"churchman"
+"ho"
+"wainropes"
+"soon"
+"incensed"
+"compulsive"
+"characterless"
+"gory"
+"attainted"
+"parfect"
+"printless"
+"wives"
+"reform"
+"cords"
+"meeds"
+"john"
+"christopher"
+"undistinguishable"
+"breeding"
+"lupercal"
+"unreconciled"
+"implored"
+"aery"
+"glances"
+"buckles"
+"robert"
+"avouches"
+"shard"
+"unlook"
+"linger"
+"suggestion"
+"aufidiuses"
+"valerius"
+"lychorida"
+"rustle"
+"sweets"
+"spades"
+"toadstool"
+"nipping"
+"underhand"
+"extenuated"
+"alcibiades"
+"tressel"
+"stands"
+"disorders"
+"outlived"
+"directly"
+"cries"
+"terror"
+"camelot"
+"goodwin"
+"mended"
+"friends"
+"bilberry"
+"daniel"
+"anew"
+"cloaks"
+"magistrate"
+"snatched"
+"warped"
+"shuts"
+"spices"
+"confutes"
+"heat"
+"clothair"
+"procrastinate"
+"perused"
+"henchman"
+"pedro"
+"heal"
+"brisky"
+"tufts"
+"rescue"
+"relume"
+"cinna"
+"unprevailing"
+"prompture"
+"pitfall"
+"tyrannical"
+"engenders"
+"untie"
+"toiling"
+"decrepit"
+"changeable"
+"drawling"
+"tempting"
+"clouted"
+"taste"
+"quid"
+"danger"
+"scarlet"
+"naught"
+"massacre"
+"hundreds"
+"strut"
+"prompts"
+"they"
+"extremity"
+"cloten"
+"glose"
+"brained"
+"restrains"
+"penitently"
+"lineally"
+"sear"
+"turkey"
+"puisny"
+"remonstrance"
+"tyrrel"
+"butt"
+"unshapen"
+"actions"
+"estranged"
+"huddled"
+"bucks"
+"poisons"
+"devin"
+"seem"
+"bluish"
+"movables"
+"distasteful"
+"inwardness"
+"pot"
+"archelaus"
+"mettle"
+"reprobate"
+"ingredients"
+"boastful"
+"broken"
+"displant"
+"daisies"
+"babes"
+"inconstant"
+"unpurged"
+"whirled"
+"thorough"
+"prunest"
+"bagot"
+"unmoan"
+"medice"
+"featured"
+"woodland"
+"instinct"
+"cleanly"
+"generations"
+"deject"
+"exchequer"
+"barn"
+"ruled"
+"proclaimed"
+"embracing"
+"dewdrops"
+"farmhouse"
+"beare"
+"talkest"
+"weight"
+"solicitor"
+"dismay"
+"chalk"
+"puling"
+"monde"
+"conspire"
+"diminutives"
+"jutty"
+"ruinate"
+"speeding"
+"gaols"
+"disposer"
+"hibocrates"
+"thronging"
+"screw"
+"glorified"
+"unactive"
+"sicilian"
+"minnows"
+"gay"
+"oppresseth"
+"writings"
+"christendoms"
+"overlook"
+"unharm"
+"situate"
+"mercade"
+"lovell"
+"daunt"
+"sandy"
+"bask"
+"titled"
+"employ"
+"sequent"
+"bestirr"
+"freckles"
+"heretics"
+"gills"
+"churlishly"
+"reproved"
+"nostril"
+"carousing"
+"games"
+"misdoubteth"
+"forbiddenly"
+"counsel"
+"lending"
+"undeck"
+"binaca"
+"doings"
+"placeth"
+"doublet"
+"fabric"
+"ladies"
+"cornish"
+"vater"
+"sorrows"
+"abjure"
+"abridgment"
+"log"
+"dines"
+"conditionally"
+"undeserved"
+"accidental"
+"across"
+"scrape"
+"sestos"
+"consenting"
+"scrivener"
+"amazonian"
+"aeson"
+"blown"
+"speeded"
+"brotherhoods"
+"nook"
+"buttered"
+"miser"
+"comme"
+"insuppressive"
+"unarm"
+"obliged"
+"citizens]"
+"menaced"
+"poll"
+"bootless"
+"unsuitable"
+"bandied"
+"exhort"
+"pointing"
+"decays"
+"beautified"
+"blasphemous"
+"trumpets"
+"obtain"
+"mote"
+"strain"
+"yoemen"
+"upholdeth"
+"minutes"
+"detesting"
+"comprehends"
+"misled"
+"heureux"
+"appoints"
+"shrove"
+"unblinding"
+"persuasion"
+"ils"
+"fielded"
+"creates"
+"sprawl"
+"unviolated"
+"mauvais"
+"thrilling"
+"almighty"
+"perdita"
+"enjoin"
+"riding"
+"whirligig"
+"hers"
+"macduff"
+"purifying"
+"pyramises"
+"terras"
+"taxing"
+"annex"
+"carbuncles"
+"annals"
+"amount"
+"chuffs"
+"stowage"
+"toad"
+"workmanship"
+"balmy"
+"interposer"
+"tempers"
+"rochester"
+"sinner"
+"sware"
+"bourbier"
+]
+
+Repetition 1:
+Removal time for Hybrid Trie: 2000000.0 ns
+Removal time for Balanced Hybrid Trie: 1000000.0 ns
+Removal time for Patricia Trie: 1.3E7 ns
+Repetition 2:
+Removal time for Hybrid Trie: 0.0 ns
+Removal time for Balanced Hybrid Trie: 0.0 ns
+Removal time for Patricia Trie: 1.2E7 ns
+Repetition 3:
+Removal time for Hybrid Trie: 0.0 ns
+Removal time for Balanced Hybrid Trie: 0.0 ns
+Removal time for Patricia Trie: 7000000.0 ns
+Repetition 4:
+Removal time for Hybrid Trie: 0.0 ns
+Removal time for Balanced Hybrid Trie: 0.0 ns
+Removal time for Patricia Trie: 5000000.0 ns
+Repetition 5:
+Removal time for Hybrid Trie: 1000000.0 ns
+Removal time for Balanced Hybrid Trie: 0.0 ns
+Removal time for Patricia Trie: 4000000.0 ns
+Repetition 6:
+Removal time for Hybrid Trie: 0.0 ns
+Removal time for Balanced Hybrid Trie: 0.0 ns
+Removal time for Patricia Trie: 4000000.0 ns
+Repetition 7:
+Removal time for Hybrid Trie: 1000000.0 ns
+Removal time for Balanced Hybrid Trie: 1000000.0 ns
+Removal time for Patricia Trie: 5000000.0 ns
+Repetition 8:
+Removal time for Hybrid Trie: 0.0 ns
+Removal time for Balanced Hybrid Trie: 0.0 ns
+Removal time for Patricia Trie: 4000000.0 ns
+Repetition 9:
+Removal time for Hybrid Trie: 1000000.0 ns
+Removal time for Balanced Hybrid Trie: 1000000.0 ns
+Removal time for Patricia Trie: 5000000.0 ns
+Repetition 10:
+Removal time for Hybrid Trie: 0.0 ns
+Removal time for Balanced Hybrid Trie: 0.0 ns
+Removal time for Patricia Trie: 5000000.0 ns
+Average removal times:
+Average removal time for Hybrid Trie: 500000.0 ns
+Average removal time for Balanced Hybrid Trie: 300000.0 ns
+Average removal time for Patricia Trie: 6400000.0 ns
+
+Insertions vs. Merge: Comparing the construction of a Patricia trie for 10 repetitions:
+------------------------------------------------------------------
+Repetition 1:
+Construction time for all words insertion: 219.0 ms
+Construction time for tries merge: 2828.0 ms
+Repetition 2:
+Construction time for all words insertion: 195.0 ms
+Construction time for tries merge: 2664.0 ms
+Repetition 3:
+Construction time for all words insertion: 192.0 ms
+Construction time for tries merge: 2682.0 ms
+Repetition 4:
+Construction time for all words insertion: 191.0 ms
+Construction time for tries merge: 2586.0 ms
+Repetition 5:
+Construction time for all words insertion: 189.0 ms
+Construction time for tries merge: 2611.0 ms
+Repetition 6:
+Construction time for all words insertion: 193.0 ms
+Construction time for tries merge: 2592.0 ms
+Repetition 7:
+Construction time for all words insertion: 189.0 ms
+Construction time for tries merge: 2405.0 ms
+Repetition 8:
+Construction time for all words insertion: 198.0 ms
+Construction time for tries merge: 2433.0 ms
+Repetition 9:
+Construction time for all words insertion: 204.0 ms
+Construction time for tries merge: 2398.0 ms
+Repetition 10:
+Construction time for all words insertion: 198.0 ms
+Construction time for tries merge: 2651.0 ms
+Average construction times:
+Average construction time for all words insertion: 196.8 ms
+Average construction time for tries merge: 2585.0 ms
+
+------------------------------------------------------------------
+------------------------------------------------------------------
+------------------------------------------------------------------
+END OF TIME COMPARISON

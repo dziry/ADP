@@ -1,5 +1,5 @@
 # ADP: Patricia Tries vs. Hybrid Tries
-A project for the course "Algorithmique Avancée" at the university UPMC Paris by Adel Larbi and Amadeus Schell.
+A project for the course "Algorithmique Avancée" at the university UPMC Paris.
 
 ## Introduction
 For this project the two advanced data structures patricia trie and hybrid trie have been implemented and compared
@@ -35,11 +35,11 @@ For the following example text the corresponding tries are obtained:
 > genre, que toute dactylo connait par coeur puisque elle fait appel a chacune des touches du clavier de la
 > machine a ecrire ?
 
-###### The corresponding patricia trie
-![Patricia trie example](AlgavDevoirProgrammation/examples/patricia_trie_basic_example.png)
+###### The corresponding patricia trie (The mojibake represents the final character DEL)
+![Patricia trie example](triesalgav/examples/patricia_trie_basic_example.png)
 
 ###### The corresponding hybrid trie
-![Hybrid trie example](AlgavDevoirProgrammation/examples/hybrid_trie_basic_example.png)
+![Hybrid trie example](triesalgav/examples/hybrid_trie_basic_example.png)
 
 ## Graphical Representation
 For a visual representation of the graphs, the language [xdot](https://github.com/jrfonseca/xdot.py) was used.
@@ -52,10 +52,10 @@ English poet and writer William Shakespeare into each structure. An extract of t
 tables below and more details results can be found in the folder ```results```.
 
 ###### Results regarding the structural differences
-![Patricia trie example](AlgavDevoirProgrammation/results/structural_results.png)
+![Patricia trie example](triesalgav/results/structural_results.png)
 
 ###### Results regarding the time differences
-![Hybrid trie example](AlgavDevoirProgrammation/results/time_results.png)
+![Hybrid trie example](triesalgav/results/time_results.png)
 
 ## Remarks
 Although both tries were showing good performance times during the tests, there are still several aspects that could
